@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VRBS | Modern Mobility</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .brand-font {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#d9e5e3",
+                      "surface-container-high": "#212c2b",
+                      "on-secondary-fixed": "#002116",
+                      "outline": "#89938d",
+                      "on-surface-variant": "#bec9c3",
+                      "on-secondary-fixed-variant": "#1c4f3e",
+                      "on-primary-fixed": "#002117",
+                      "surface-variant": "#2c3736",
+                      "surface-container-lowest": "#06100f",
+                      "surface-dim": "#0a1514",
+                      "outline-variant": "#3f4944",
+                      "secondary-fixed-dim": "#9dd2bb",
+                      "on-primary-fixed-variant": "#00513d",
+                      "on-tertiary-container": "#003122",
+                      "surface-container": "#172220",
+                      "surface-tint": "#8bd5b9",
+                      "surface": "#0a1514",
+                      "tertiary-fixed-dim": "#9ed2ba",
+                      "secondary-container": "#1f5240",
+                      "on-tertiary": "#003828",
+                      "surface-container-low": "#131e1c",
+                      "background": "#0a1514",
+                      "surface-container-highest": "#2c3736",
+                      "on-secondary": "#003828",
+                      "on-secondary-container": "#90c3ad",
+                      "tertiary-container": "#699b86",
+                      "primary": "#8bd5b9",
+                      "inverse-primary": "#1b6a53",
+                      "tertiary-fixed": "#baeed6",
+                      "tertiary": "#9ed2ba",
+                      "primary-fixed-dim": "#8bd5b9",
+                      "on-background": "#d9e5e3",
+                      "on-primary-container": "#003023",
+                      "secondary-fixed": "#b9eed6",
+                      "secondary": "#9dd2bb",
+                      "on-tertiary-fixed": "#002116",
+                      "error": "#ffb4ab",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#303b3a",
+                      "primary-fixed": "#a6f2d4",
+                      "on-primary": "#003829",
+                      "inverse-surface": "#d9e5e3",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#1e4f3e",
+                      "inverse-on-surface": "#273331",
+                      "error-container": "#93000a",
+                      "primary-container": "#559e84"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-emerald-950/60 backdrop-blur-xl shadow-[0_40px_60px_-15px_rgba(0,33,23,0.1)] flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-2">
+<span class="text-xl font-bold text-emerald-50 brand-font">VRBS</span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-emerald-400 font-bold transition-colors" href="#">Showroom</a>
+<a class="text-emerald-100/70 hover:bg-emerald-800/40 transition-colors px-3 py-1 rounded-xl" href="#">Fleet</a>
+<a class="text-emerald-100/70 hover:bg-emerald-800/40 transition-colors px-3 py-1 rounded-xl" href="#">Bookings</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-emerald-900/20 rounded-full px-4 py-1.5 border border-outline-variant/20">
+<span class="material-symbols-outlined text-emerald-400 text-sm">search</span>
+<span class="ml-2 text-xs text-on-surface-variant">Search fleet...</span>
+</div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-emerald-400 cursor-pointer active:scale-95 duration-200">notifications</span>
+<span class="material-symbols-outlined text-emerald-400 cursor-pointer active:scale-95 duration-200">chat</span>
+<span class="material-symbols-outlined text-emerald-400 cursor-pointer active:scale-95 duration-200">settings</span>
+</div>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-primary/30" data-alt="Professional headshot of a person with friendly expression, soft studio lighting, blurred neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3gW1av6D5TY3q2F0iwyYfIjk-thUvHK7bWwGF67gZxAH7qRPW85t0_5NBUcgGawTgicAgOcAM0AG6wloe4ZGrGe0MdGqZhPsBoLJd4IdFAO1Xr7KBOi8gZI5KMezz9kVYbE67DJIhV3ndXxvxxbwFpgX2XhTkaHR4Jhcs_1f_-4iG_jsu0Dv8aEsBgFnenjXPMhawvAD-N3295aAPGCToqIR9YbhAzCrvjSKoHsEnA7Rlabyh7kj-fHRbXkY3MlVnTESrOz9hjHo"/>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto space-y-6">
+<!-- Hero Bento Grid Section -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[500px]">
+<!-- Hero Text Block -->
+<div class="md:col-span-7 bg-surface-container rounded-xl p-8 md:p-12 flex flex-col justify-center space-y-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+<h1 class="text-4xl md:text-6xl font-extrabold text-on-surface tracking-tight leading-[1.1]">
+                    Modern Mobility <br/>
+<span class="text-primary">for Everyone</span>
+</h1>
+<p class="text-on-surface-variant text-lg max-w-md leading-relaxed">
+                    Experience seamless vehicle rental designed for the contemporary journey. Practical luxury, delivered at your doorstep.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed px-8 py-4 rounded-full font-bold text-sm tracking-wide shadow-lg hover:shadow-primary/20 transition-all active:scale-95">
+                        BOOK YOUR RIDE
+                    </button>
+<button class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-surface-bright transition-all">
+                        VIEW FLEET
+                    </button>
+</div>
+</div>
+<!-- Hero Image Block -->
+<div class="md:col-span-5 bg-surface-container-high rounded-xl overflow-hidden relative group">
+<img alt="Sleek silver sedan" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Side profile of a premium silver sedan parked in a minimalist concrete architectural space with dramatic soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArnkcv6vdUTsC3QXtdMT-B9VDhSHo5GdC3JcjAKEVGJbYv163WYkANFac2wQtc8bspfUhxkWz5avC83v0qqcHKMlszjVIVRCA99NeS2-mPUD6NGnr68eSQ26qZpXV7tsI-to9PWlq9_Z2VlcRZS5d-LLqODmIKxCidQRfQ4uOd6YO0IjoCWEj1h-S0csQFuq4N5JxdTlPov3VOmlPaGzgHy4tUEORwU-ZtwaphTJ5fNFLEHff8pK9qQ7-oO14YofvlVYuqjU6UXds"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<p class="text-primary font-bold text-sm tracking-widest uppercase">Signature Series</p>
+<h3 class="text-white text-xl font-bold">Executive Sedan</h3>
+</div>
+</div>
+</div>
+<!-- Categories and Features Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Vehicle Categories (Large Bento Cells) -->
+<div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Sedan -->
+<div class="bg-surface-container-high rounded-xl p-6 flex flex-col justify-between group cursor-pointer hover:bg-surface-bright transition-colors h-64 relative overflow-hidden">
+<div>
+<h4 class="text-xl font-bold mb-1">Sedan</h4>
+<p class="text-on-surface-variant text-sm">Efficiency &amp; Style</p>
+</div>
+<div class="absolute -right-8 -bottom-4 w-40 opacity-40 group-hover:opacity-100 transition-all group-hover:scale-110">
+<span class="material-symbols-outlined text-8xl text-primary">directions_car</span>
+</div>
+<span class="text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-2 transition-transform">Explore <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</div>
+<!-- SUV -->
+<div class="bg-surface-container-high rounded-xl p-6 flex flex-col justify-between group cursor-pointer hover:bg-surface-bright transition-colors h-64 relative overflow-hidden">
+<div>
+<h4 class="text-xl font-bold mb-1">SUV</h4>
+<p class="text-on-surface-variant text-sm">Versatile Adventure</p>
+</div>
+<div class="absolute -right-8 -bottom-4 w-40 opacity-40 group-hover:opacity-100 transition-all group-hover:scale-110">
+<span class="material-symbols-outlined text-8xl text-primary">minor_crash</span>
+</div>
+<span class="text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-2 transition-transform">Explore <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</div>
+<!-- Hatchback -->
+<div class="bg-surface-container-high rounded-xl p-6 flex flex-col justify-between group cursor-pointer hover:bg-surface-bright transition-colors h-64 relative overflow-hidden">
+<div>
+<h4 class="text-xl font-bold mb-1">Hatchback</h4>
+<p class="text-on-surface-variant text-sm">Urban Agility</p>
+</div>
+<div class="absolute -right-8 -bottom-4 w-40 opacity-40 group-hover:opacity-100 transition-all group-hover:scale-110">
+<span class="material-symbols-outlined text-8xl text-primary">airport_shuttle</span>
+</div>
+<span class="text-primary font-bold text-sm flex items-center gap-1 group-hover:translate-x-2 transition-transform">Explore <span class="material-symbols-outlined text-sm">arrow_forward</span></span>
+</div>
+</div>
+<!-- Feature Tiles (Small Bento Cells) -->
+<div class="md:col-span-1 grid grid-cols-1 gap-6">
+<!-- Feature 1: Contrast Card -->
+<div class="bg-inverse-surface rounded-xl p-6 flex flex-col items-center justify-center text-center space-y-3 group hover:scale-[1.02] transition-transform">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-weight="fill">calendar_month</span>
+</div>
+<div>
+<h5 class="text-on-primary-fixed font-bold text-base">Quick Booking</h5>
+<p class="text-on-primary-fixed-variant text-xs mt-1">Reserve in under 60 seconds</p>
+</div>
+</div>
+<!-- Feature 2: Contrast Card -->
+<div class="bg-inverse-surface rounded-xl p-6 flex flex-col items-center justify-center text-center space-y-3 group hover:scale-[1.02] transition-transform">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-weight="fill">support_agent</span>
+</div>
+<div>
+<h5 class="text-on-primary-fixed font-bold text-base">24/7 Support</h5>
+<p class="text-on-primary-fixed-variant text-xs mt-1">Expert assistance anytime</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Promo (Subtle Asymmetry) -->
+<div class="bg-surface-container rounded-xl overflow-hidden flex flex-col md:flex-row items-center relative">
+<div class="p-8 md:p-12 md:w-1/2 space-y-4">
+<div class="inline-block px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-bold tracking-widest uppercase mb-2">
+                    Member Exclusive
+                </div>
+<h2 class="text-3xl font-bold leading-tight">Elevate Your <br/>Commute with VRBS</h2>
+<p class="text-on-surface-variant max-w-md">Join our premium rewards program for discounted rates and priority fleet access. Your journey, optimized.</p>
+<button class="mt-4 text-primary font-bold underline underline-offset-8 decoration-2 hover:text-primary-container transition-colors">
+                    JOIN THE NETWORK
+                </button>
+</div>
+<div class="md:w-1/2 h-64 md:h-80 w-full relative">
+<img alt="Interior of a modern luxury car" class="w-full h-full object-cover" data-alt="Close-up of a high-end car interior with ambient green lighting, soft leather textures, and a digital dashboard interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRXps0BJh0R8ooaKWod3EhImQrfJ4YQf6ag206eQcLUagvEEBkq3il7TNd7LvTenA-JhxsROe3l4Xvd2MjWNy7ybii9dxmpZyq0iXTDbU1RRSXRuWsgU7_a1fwKY7ElbUG_9mpN1oVKM1V19YEfYlGjxU-84NGR_u2aR6OdWfJUNKKY41OYeyyDKwqlaoyxuUgXzIfKfFxv5b68wLtC1e6rQnKYS5lX518FBlXVYMexVE_sc6Yyy8TaVu6OR9cxwvWqgCo8gZq4oE"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container via-transparent to-transparent"></div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-emerald-950/90 backdrop-blur-md flex justify-around items-center py-4 px-6 z-50">
+<div class="flex flex-col items-center text-emerald-400">
+<span class="material-symbols-outlined">directions_car</span>
+<span class="text-[10px] mt-1 font-bold">Showroom</span>
+</div>
+<div class="flex flex-col items-center text-emerald-100/60">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] mt-1">Bookings</span>
+</div>
+<div class="flex flex-col items-center text-emerald-100/60">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-[10px] mt-1">Revenue</span>
+</div>
+<div class="flex flex-col items-center text-emerald-100/60">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] mt-1">Profile</span>
+</div>
+</div>
+<!-- Footer Area (Subtle Tonal Shift) -->
+<footer class="bg-surface-container-low pt-16 pb-12 md:pb-24 px-8 border-t border-outline-variant/5">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-4">
+<h3 class="text-xl font-bold text-emerald-50 brand-font">VRBS</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Redefining mobility for the modern professional. Practicality meets luxury in every mile.</p>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-sm uppercase tracking-widest">Fleet</h4>
+<nav class="flex flex-col space-y-2 text-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Executive Sedans</a>
+<a class="hover:text-primary transition-colors" href="#">Family SUVs</a>
+<a class="hover:text-primary transition-colors" href="#">City Hatchbacks</a>
+<a class="hover:text-primary transition-colors" href="#">Electric Selection</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-sm uppercase tracking-widest">Company</h4>
+<nav class="flex flex-col space-y-2 text-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Our Vision</a>
+<a class="hover:text-primary transition-colors" href="#">Partner Program</a>
+<a class="hover:text-primary transition-colors" href="#">Careers</a>
+<a class="hover:text-primary transition-colors" href="#">Press Room</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-sm uppercase tracking-widest">Connect</h4>
+<div class="flex space-x-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">public</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">alternate_email</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">phone_in_talk</span>
+</div>
+<div class="pt-4">
+<p class="text-xs text-on-surface-variant">© 2024 VRBS Operations. <br/>All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#d9e5e3",
+                    "surface-container-high": "#212c2b",
+                    "on-secondary-fixed": "#002116",
+                    "outline": "#89938d",
+                    "on-surface-variant": "#bec9c3",
+                    "on-secondary-fixed-variant": "#1c4f3e",
+                    "on-primary-fixed": "#002117",
+                    "surface-variant": "#2c3736",
+                    "surface-container-lowest": "#06100f",
+                    "surface-dim": "#0a1514",
+                    "outline-variant": "#3f4944",
+                    "secondary-fixed-dim": "#9dd2bb",
+                    "on-primary-fixed-variant": "#00513d",
+                    "on-tertiary-container": "#003122",
+                    "surface-container": "#172220",
+                    "surface-tint": "#8bd5b9",
+                    "surface": "#0a1514",
+                    "tertiary-fixed-dim": "#9ed2ba",
+                    "secondary-container": "#1f5240",
+                    "on-tertiary": "#003828",
+                    "on-secondary-container": "#90c3ad",
+                    "tertiary-container": "#699b86",
+                    "primary": "#8bd5b9",
+                    "inverse-primary": "#1b6a53",
+                    "tertiary-fixed": "#baeed6",
+                    "tertiary": "#9ed2ba",
+                    "primary-fixed-dim": "#8bd5b9",
+                    "on-background": "#d9e5e3",
+                    "on-primary-container": "#003023",
+                    "secondary-fixed": "#b9eed6",
+                    "secondary": "#9dd2bb",
+                    "on-tertiary-fixed": "#002116",
+                    "error": "#ffb4ab",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#303b3a",
+                    "primary-fixed": "#a6f2d4",
+                    "on-primary": "#003829",
+                    "inverse-surface": "#d9e5e3",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed-variant": "#1e4f3e",
+                    "inverse-on-surface": "#273331",
+                    "error-container": "#93000a",
+                    "primary-container": "#559e84",
+                    "surface-container-low": "#131e1c",
+                    "background": "#0a1514",
+                    "surface-container-highest": "#2c3736"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a1514;
+            color: #d9e5e3;
+        }
+        .custom-glass {
+            background: rgba(48, 59, 58, 0.6);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-surface selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-emerald-950/60 backdrop-blur-xl flex justify-between items-center px-8 h-16 w-full shadow-[0_40px_60px_-15px_rgba(0,33,23,0.1)]">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-emerald-50 font-['Poppins'] tracking-tight">VRBS</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-emerald-100/70 hover:bg-emerald-800/40 transition-colors px-3 py-2 rounded-xl text-sm font-medium" href="#">Showroom</a>
+<a class="text-emerald-400 font-bold hover:bg-emerald-800/40 transition-colors px-3 py-2 rounded-xl text-sm font-medium" href="#">Bookings</a>
+<a class="text-emerald-100/70 hover:bg-emerald-800/40 transition-colors px-3 py-2 rounded-xl text-sm font-medium" href="#">Fleet</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-800/40 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-800/40 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">chat</span>
+</button>
+<button class="p-2 text-emerald-100/70 hover:bg-emerald-800/40 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a professional man in high-end office setting with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeE_m84_Ru3NUcl4gIQJwDLqXOOS9JCJp36KPqXA3Fzz7_EVOgNzZatSglgzsVIi8nKyc7MIy4m5Q8GY0LQxbXuxNx77TC4D-WyaSJVAvVbxRq8zA6Ic_XEyLUir2mMeo6Pl0LRN41tVgmd5mamtdIW4TM2x19JxfGzX2VYSYko80wteXl12qTTefMnb5iKaA6sfpjVd75oYWrwDcD4ZcuxcJORGeA2Q5FIrrUVy95tWalc41-hoGEz3WG5dL6vSZkRpkOIDqCC8Y"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="hidden lg:flex flex-col h-screen w-64 fixed left-0 top-0 bg-emerald-950 py-6 pt-24 z-40 transition-all duration-300 ease-in-out border-r border-emerald-900/30">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-bold text-emerald-50 font-['Inter']">VRBS Manager</h2>
+<p class="text-xs text-emerald-100/60">Global Operations</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">directions_car</span>
+<span class="text-sm font-medium">Showroom</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-400 border-r-2 border-emerald-400 bg-emerald-900/20 transition-all" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-medium">Bookings</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">minor_crash</span>
+<span class="text-sm font-medium">Fleet Status</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="text-sm font-medium">Logistics</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Revenue</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+</nav>
+<div class="px-6 mt-auto space-y-4">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold rounded-xl text-sm active:scale-95 transition-all">
+                New Booking
+            </button>
+<div class="pt-4 space-y-1">
+<a class="flex items-center gap-3 py-2 text-emerald-100/60 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-xs">Support</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-emerald-100/60 hover:text-emerald-50 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-xs">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="pt-24 pb-12 px-6 lg:pl-72 lg:pr-8 min-h-screen">
+<div class="max-w-7xl mx-auto">
+<header class="mb-10">
+<h1 class="text-4xl font-extrabold text-on-surface font-headline tracking-tight mb-2">VRBS Booking History</h1>
+<p class="text-on-surface-variant font-body">Review and manage your past VRBS journeys and upcoming reservations.</p>
+</header>
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Filter Panel -->
+<aside class="w-full lg:w-72 shrink-0">
+<div class="bg-inverse-surface p-6 rounded-xl shadow-lg h-fit text-inverse-on-surface">
+<h3 class="text-sm font-bold uppercase tracking-wider mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">filter_list</span> Filters
+                        </h3>
+<div class="space-y-6">
+<div>
+<label class="block text-xs font-bold mb-2 uppercase text-inverse-on-surface/70">Vehicle Type</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-inverse-primary focus:ring-inverse-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium group-hover:text-inverse-primary transition-colors">Executive Sedan</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant text-inverse-primary focus:ring-inverse-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium group-hover:text-inverse-primary transition-colors">Luxury SUV</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant text-inverse-primary focus:ring-inverse-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium group-hover:text-inverse-primary transition-colors">VRBS Electric Fleet</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold mb-2 uppercase text-inverse-on-surface/70">Timeframe</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-xl text-sm py-3 px-4 focus:ring-2 focus:ring-inverse-primary text-on-surface">
+<option>Last 30 Days</option>
+<option>Last 6 Months</option>
+<option>2023 Full Year</option>
+<option>Custom Range</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-bold mb-2 uppercase text-inverse-on-surface/70">Booking Status</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-xs font-semibold">Completed</button>
+<button class="px-3 py-1.5 rounded-full border border-outline-variant text-on-surface-variant text-xs">Cancelled</button>
+<button class="px-3 py-1.5 rounded-full border border-outline-variant text-on-surface-variant text-xs">Pending</button>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 bg-inverse-on-surface text-inverse-surface rounded-xl text-sm font-bold active:scale-95 transition-all">
+                            Apply Selection
+                        </button>
+</div>
+</aside>
+<!-- History Table Area -->
+<div class="flex-1 space-y-4">
+<!-- Bento Row: Stats Header -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="bg-surface-container-high p-5 rounded-xl border-l-4 border-primary">
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-1">Total Rentals</p>
+<p class="text-3xl font-bold text-on-surface">42</p>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl">
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-1">Miles Travelled</p>
+<p class="text-3xl font-bold text-on-surface">1,840</p>
+</div>
+<div class="bg-surface-container-high p-5 rounded-xl">
+<p class="text-on-surface-variant text-xs font-medium uppercase tracking-widest mb-1">VRBS Points</p>
+<p class="text-3xl font-bold text-primary">12.5k</p>
+</div>
+</div>
+<!-- History Rows -->
+<div class="space-y-4">
+<!-- History Item 1 -->
+<div class="group bg-surface-container rounded-xl overflow-hidden transition-all duration-300 hover:bg-surface-container-high border-b border-transparent hover:border-outline-variant/20">
+<div class="flex flex-col md:flex-row items-center gap-6 p-6">
+<div class="w-16 h-16 rounded-xl bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">directions_car</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-lg font-bold text-on-surface">Mercedes-Benz S-Class</h4>
+<span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">Completed</span>
+</div>
+<div class="flex flex-wrap gap-4 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Oct 12, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> London Central</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">payments</span> £245.00</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<!-- Expansion Area (Simulated visible for one item) -->
+<div class="px-6 pb-6 pt-2 border-t border-outline-variant/10 grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 space-y-4">
+<div class="bg-surface-container-low p-4 rounded-xl">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Trip Details</p>
+<div class="flex justify-between text-xs mb-1">
+<span>Pickup: Heathrow T5</span>
+<span class="text-on-surface-variant">10:30 AM</span>
+</div>
+<div class="flex justify-between text-xs">
+<span>Drop-off: Mayfair Hotel</span>
+<span class="text-on-surface-variant">11:45 AM</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container-highest hover:bg-surface-bright text-on-surface text-xs font-semibold rounded-lg transition-colors">Download Receipt</button>
+<button class="px-4 py-2 bg-surface-container-highest hover:bg-surface-bright text-on-surface text-xs font-semibold rounded-lg transition-colors">Rebook Vehicle</button>
+</div>
+</div>
+<div class="md:col-span-2">
+<div class="w-full h-32 rounded-xl bg-surface-container-highest relative overflow-hidden group/map">
+<div class="absolute inset-0 bg-emerald-900/10 z-10"></div>
+<img alt="Route map" class="w-full h-full object-cover grayscale opacity-60" data-alt="simplified stylistic map view of city streets with a highlighted driving route from airport to city center in VRBS brand tone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYbWHHkMVJEeE3uUaU-QEFoOswVEDlMHufb6DDpsaoyJsIzP-5xFuHnRSYPj2fjeV_BfyNjbToGWHPmOkCP-B4Q1TkDuIFRFjJfGmxLOkbho5f2QDsi10h35bku6zWmhWc0gPjXfq5nxchX963eehNjPZXgjfp6K_HsegPac9tHExq_YU2GEkvfgfnrbtAqB9JIf6ZvePLXL-81jehMDsqOAb0skJZGDP5qygjPZ-j3MS_KoDVaEZJWv6O7113rRzKsIlcxUUltQs"/>
+<div class="absolute inset-0 flex items-center justify-center z-20">
+<span class="px-3 py-1 bg-surface-container-highest/80 backdrop-blur text-[10px] font-bold rounded-full">View Route Map</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="group bg-surface-container rounded-xl overflow-hidden transition-all duration-300 hover:bg-surface-container-high">
+<div class="flex flex-col md:flex-row items-center gap-6 p-6">
+<div class="w-16 h-16 rounded-xl bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">electric_car</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-lg font-bold text-on-surface">Tesla Model S Plaid</h4>
+<span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">Completed</span>
+</div>
+<div class="flex flex-wrap gap-4 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Sept 28, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> Paris CDG</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">payments</span> €189.00</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+<!-- History Item 3 -->
+<div class="group bg-surface-container rounded-xl overflow-hidden transition-all duration-300 hover:bg-surface-container-high">
+<div class="flex flex-col md:flex-row items-center gap-6 p-6">
+<div class="w-16 h-16 rounded-xl bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">airport_shuttle</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-lg font-bold text-on-surface">Volvo XC90 Recharge</h4>
+<span class="px-2.5 py-0.5 rounded-full bg-error-container text-error text-[10px] font-bold uppercase tracking-wider">Cancelled</span>
+</div>
+<div class="flex flex-wrap gap-4 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Sept 15, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> Berlin Brandenburg</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">payments</span> €0.00 (Refunded)</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+<!-- History Item 4 -->
+<div class="group bg-surface-container rounded-xl overflow-hidden transition-all duration-300 hover:bg-surface-container-high">
+<div class="flex flex-col md:flex-row items-center gap-6 p-6">
+<div class="w-16 h-16 rounded-xl bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">directions_car</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-lg font-bold text-on-surface">Audi A8 L</h4>
+<span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">Completed</span>
+</div>
+<div class="flex flex-wrap gap-4 text-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">calendar_today</span> Aug 30, 2023</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">location_on</span> London City Airport</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">payments</span> £210.00</span>
+</div>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between pt-8 border-t border-outline-variant/10">
+<p class="text-xs text-on-surface-variant">Showing 1-10 of 42 VRBS trips</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors text-xs">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed shadow-2xl rounded-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>
