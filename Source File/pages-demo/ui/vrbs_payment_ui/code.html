@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VRBS | Secure Payment</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#d9e5e3",
+                      "surface-container-high": "#212c2b",
+                      "on-secondary-fixed": "#002116",
+                      "outline": "#89938d",
+                      "on-surface-variant": "#bec9c3",
+                      "on-secondary-fixed-variant": "#1c4f3e",
+                      "on-primary-fixed": "#002117",
+                      "surface-variant": "#2c3736",
+                      "surface-container-lowest": "#06100f",
+                      "surface-dim": "#0a1514",
+                      "outline-variant": "#3f4944",
+                      "secondary-fixed-dim": "#9dd2bb",
+                      "on-primary-fixed-variant": "#00513d",
+                      "on-tertiary-container": "#003122",
+                      "surface-container": "#172220",
+                      "surface-tint": "#8bd5b9",
+                      "surface": "#0a1514",
+                      "tertiary-fixed-dim": "#9ed2ba",
+                      "secondary-container": "#1f5240",
+                      "on-tertiary": "#003828",
+                      "surface-container-low": "#131e1c",
+                      "background": "#0a1514",
+                      "surface-container-highest": "#2c3736",
+                      "on-secondary": "#003828",
+                      "on-secondary-container": "#90c3ad",
+                      "tertiary-container": "#699b86",
+                      "primary": "#8bd5b9",
+                      "inverse-primary": "#1b6a53",
+                      "tertiary-fixed": "#baeed6",
+                      "tertiary": "#9ed2ba",
+                      "primary-fixed-dim": "#8bd5b9",
+                      "on-background": "#d9e5e3",
+                      "on-primary-container": "#003023",
+                      "secondary-fixed": "#b9eed6",
+                      "secondary": "#9dd2bb",
+                      "on-tertiary-fixed": "#002116",
+                      "error": "#ffb4ab",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#303b3a",
+                      "primary-fixed": "#a6f2d4",
+                      "on-primary": "#003829",
+                      "inverse-surface": "#d9e5e3",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#1e4f3e",
+                      "inverse-on-surface": "#273331",
+                      "error-container": "#93000a",
+                      "primary-container": "#559e84"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0a1514;
+            color: #d9e5e3;
+            font-family: 'Inter', sans-serif;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .glass-nav {
+            background: rgba(48, 59, 58, 0.6);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 glass-nav shadow-[0_40px_60px_-15px_rgba(0,33,23,0.1)]">
+<div class="flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-emerald-50 font-['Poppins'] tracking-tight">VRBS</span>
+<div class="hidden md:flex gap-6">
+<a class="text-emerald-100/70 hover:bg-emerald-800/40 transition-colors px-3 py-1 rounded-xl" href="#">Fleet</a>
+<a class="text-emerald-100/70 hover:bg-emerald-800/40 transition-colors px-3 py-1 rounded-xl" href="#">Experience</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-emerald-100/70 cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-emerald-100/70 cursor-pointer">chat</span>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant/20 overflow-hidden">
+<img alt="User profile avatar" class="h-full w-full object-cover" data-alt="close up professional portrait of a business person with neutral expression and soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf_2OYAz8l_f_e4TfH2Rgj1vsSPdPbptV7zqt8IB9PMppHqJClzTKwj8bbpw_KHlAcs3J7HT6pdHE7VidvuGEft9GBj1KEDndoxnCITHxyRXaUSuYhrZu4dqdHrIQz-b2EbhIMTB-IKIXeVa5PHaeN02q4FVmRy4xt8NHs-EJ2iVVFiI5ASesLKqcTCyffLMGxcrW7UTMRsFN_GBB-EP65ccgkRUW-TxJSBZDZ8H1lFoQgtzBbcME8TqMpByyFAlf_RopCtVmZBM4"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-12 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Breadcrumb / Header -->
+<div class="mb-10">
+<div class="flex items-center gap-2 text-on-surface-variant text-sm mb-2">
+<span>VRBS Showroom</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span>Booking Details</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary">Payment</span>
+</div>
+<h1 class="text-4xl font-bold font-headline text-on-surface tracking-tight">Complete Your Reservation</h1>
+</div>
+<div class="bento-grid">
+<!-- Payment Methods - Large Bento Section (7 Cols) -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
+<!-- Confirmation Context Block -->
+<div class="bg-inverse-surface p-6 rounded-xl flex items-start gap-4">
+<div class="bg-primary/20 p-2 rounded-full">
+<span class="material-symbols-outlined text-inverse-on-surface" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div>
+<p class="text-inverse-on-surface font-semibold text-lg leading-tight">Your vehicle is reserved</p>
+<p class="text-inverse-on-surface/80 text-sm mt-1">VRBS has temporarily held this Tesla Model S for 15:00 minutes while you complete the payment.</p>
+</div>
+</div>
+<div class="bg-surface-container p-8 rounded-xl flex flex-col gap-8">
+<h2 class="text-xl font-bold font-headline">Select Payment Method</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Apple Pay Option -->
+<button class="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-surface-container-high border-2 border-primary transition-all duration-300">
+<span class="material-symbols-outlined text-4xl">ios</span>
+<span class="font-medium">Apple Pay</span>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</button>
+<!-- Card Option -->
+<button class="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-surface-container-low border-2 border-transparent hover:border-outline-variant transition-all duration-300">
+<span class="material-symbols-outlined text-4xl">credit_card</span>
+<span class="font-medium">Credit Card</span>
+</button>
+</div>
+<!-- Credit Card Input Simulation -->
+<div class="flex flex-col gap-4 pt-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Cardholder Name</label>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-on-surface placeholder:text-outline-variant" placeholder="Johnathan Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Card Number</label>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-on-surface placeholder:text-outline-variant" placeholder="**** **** **** 4421" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Expiry Date</label>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-on-surface placeholder:text-outline-variant" placeholder="MM/YY" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">CVV</label>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-on-surface placeholder:text-outline-variant" placeholder="***" type="text"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-1 col-span-2">
+<label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Postal Code</label>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-on-surface placeholder:text-outline-variant" placeholder="SW1A 1AA" type="text"/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low p-4 rounded-xl">
+<span class="material-symbols-outlined text-outline">lock</span>
+<p class="text-xs text-on-surface-variant">Your VRBS transaction is secured with 256-bit AES encryption. No card details are stored on our servers.</p>
+</div>
+</div>
+</div>
+<!-- Booking Summary - Side Bento Section (5 Cols) -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-6">
+<!-- Vehicle Card -->
+<div class="bg-surface-container p-6 rounded-xl overflow-hidden relative group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-bold text-xl font-headline">Tesla Model S</h3>
+<p class="text-on-surface-variant text-sm">Long Range Dual Motor • Midnight Silver</p>
+</div>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+</div>
+<div class="aspect-video w-full rounded-xl bg-surface-container-low overflow-hidden mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="sleek modern silver electric sedan parked in a high-end minimalist concrete driveway with soft architectural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASX6zKguEYf5NRJMoyTe2Hya03fCggaZw8qBl2ItUnhQynB36MrqTuT7N-j5pWBL3WFIKSbiR2mm7PvzWV7U2UJiGZDsFQKBxZ3hWXOi_vlfDq6JgrWLRpX4llKBLspkXErK-6qEpKIVZk5daY-TGaRYaplISb0iDaFCEi-cmELhyrMpwB0yrylnviSys_0Qd-XF5YSp5lWiW1zdj4i-mfQFGjh8prZhXcBpII4BFq3EED_Z0cLE1Jqn35YLleU3NKOK8Z4-V7G-A"/>
+</div>
+<div class="flex justify-between border-t border-outline-variant/10 pt-4">
+<div class="flex flex-col">
+<span class="text-xs text-on-surface-variant">Pick-up</span>
+<span class="font-medium text-sm">Oct 24, 09:00 AM</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-xs text-on-surface-variant">Drop-off</span>
+<span class="font-medium text-sm">Oct 27, 05:00 PM</span>
+</div>
+</div>
+</div>
+<!-- Price Breakdown -->
+<div class="bg-surface-container p-8 rounded-xl flex flex-col gap-6">
+<h2 class="text-lg font-bold font-headline border-b border-outline-variant/10 pb-4">Cost Breakdown</h2>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Daily Rental (3 Days)</span>
+<span class="font-medium">$447.00</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1">
+<span class="text-on-surface-variant">Premium Insurance</span>
+<span class="material-symbols-outlined text-xs text-outline cursor-help">info</span>
+</div>
+<span class="font-medium">$54.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Airport Delivery Fee</span>
+<span class="font-medium">$25.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">VAT (20%)</span>
+<span class="font-medium">$105.20</span>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/20 flex justify-between items-end">
+<div>
+<span class="text-xs text-primary font-bold uppercase tracking-widest">Total Amount</span>
+<p class="text-3xl font-bold font-headline text-on-surface">$631.20</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-on-surface-variant uppercase">Full payment due now</p>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container py-4 rounded-full text-on-primary-fixed font-bold text-lg shadow-[0_10px_30px_-5px_rgba(139,213,185,0.3)] hover:brightness-110 active:scale-[0.98] transition-all">
+                        Pay &amp; Confirm Booking
+                    </button>
+<p class="text-center text-xs text-on-surface-variant px-4">
+                        By clicking pay, you agree to our <a class="underline text-primary" href="#">Rental Agreement</a> and <a class="underline text-primary" href="#">Cancellation Policy</a>.
+                    </p>
+</div>
+<!-- Support Anchor -->
+<div class="bg-surface-container-low p-6 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<div>
+<p class="text-sm font-semibold">Need assistance?</p>
+<p class="text-xs text-on-surface-variant">24/7 VRBS Concierge Support</p>
+</div>
+</div>
+<button class="text-xs font-bold text-primary px-4 py-2 bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">Chat Now</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Supplement for Mobile -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-low/90 backdrop-blur-lg px-6 py-4 flex justify-between items-center z-50">
+<div class="flex flex-col">
+<span class="text-[10px] text-on-surface-variant uppercase">VRBS Total</span>
+<span class="font-bold text-on-surface">$631.20</span>
+</div>
+<button class="bg-primary text-on-primary-fixed px-6 py-2 rounded-full font-bold text-sm">Continue</button>
+</div>
+</body></html>

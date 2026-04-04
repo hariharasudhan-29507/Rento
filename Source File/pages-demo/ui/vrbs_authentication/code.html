@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#d9e5e3",
+                    "surface-container-high": "#212c2b",
+                    "on-secondary-fixed": "#002116",
+                    "outline": "#89938d",
+                    "on-surface-variant": "#bec9c3",
+                    "on-secondary-fixed-variant": "#1c4f3e",
+                    "on-primary-fixed": "#002117",
+                    "surface-variant": "#2c3736",
+                    "surface-container-lowest": "#06100f",
+                    "surface-dim": "#0a1514",
+                    "outline-variant": "#3f4944",
+                    "secondary-fixed-dim": "#9dd2bb",
+                    "on-primary-fixed-variant": "#00513d",
+                    "on-tertiary-container": "#003122",
+                    "surface-container": "#172220",
+                    "surface-tint": "#8bd5b9",
+                    "surface": "#0a1514",
+                    "tertiary-fixed-dim": "#9ed2ba",
+                    "secondary-container": "#1f5240",
+                    "on-tertiary": "#003828",
+                    "surface-container-low": "#131e1c",
+                    "background": "#0a1514",
+                    "surface-container-highest": "#2c3736",
+                    "on-secondary": "#003828",
+                    "on-secondary-container": "#90c3ad",
+                    "tertiary-container": "#699b86",
+                    "primary": "#8bd5b9",
+                    "inverse-primary": "#1b6a53",
+                    "tertiary-fixed": "#baeed6",
+                    "tertiary": "#9ed2ba",
+                    "primary-fixed-dim": "#8bd5b9",
+                    "on-background": "#d9e5e3",
+                    "on-primary-container": "#003023",
+                    "secondary-fixed": "#b9eed6",
+                    "secondary": "#9dd2bb",
+                    "on-tertiary-fixed": "#002116",
+                    "error": "#ffb4ab",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#303b3a",
+                    "primary-fixed": "#a6f2d4",
+                    "on-primary": "#003829",
+                    "inverse-surface": "#d9e5e3",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed-variant": "#1e4f3e",
+                    "inverse-on-surface": "#273331",
+                    "error-container": "#93000a",
+                    "primary-container": "#559e84"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Poppins"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .auth-card {
+        background-color: #285A48;
+      }
+      .bg-base {
+        background-color: #0a1514;
+      }
+    </style>
+</head>
+<body class="bg-base font-body text-on-surface min-h-screen flex flex-col items-center justify-center p-6 selection:bg-primary selection:text-on-primary">
+<div class="w-full max-w-md">
+<header class="text-center mb-10">
+<h1 class="font-headline text-3xl font-bold tracking-tight text-on-surface mb-2">VRBS</h1>
+<p class="text-on-surface-variant font-label text-sm uppercase tracking-[0.2em]">The Architectural Concierge</p>
+</header>
+<main class="auth-card p-10 rounded-xl shadow-[0_40px_100px_-20px_rgba(0,33,23,0.5)] border border-white/5">
+<div class="mb-8">
+<h2 class="font-headline text-2xl font-bold text-white mb-2">Welcome Back</h2>
+<p class="text-emerald-100/70 text-sm">Enter your credentials to access your VRBS fleet dashboard.</p>
+</div>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="block font-label text-xs font-semibold text-emerald-100/80 uppercase tracking-wider" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-emerald-200/40 text-[20px]" data-icon="alternate_email">alternate_email</span>
+<input class="w-full bg-emerald-900/30 border-0 focus:ring-1 focus:ring-primary rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-emerald-100/30 text-sm transition-all duration-300" id="email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block font-label text-xs font-semibold text-emerald-100/80 uppercase tracking-wider" for="password">Password</label>
+<a class="text-[10px] uppercase font-bold text-primary hover:text-white transition-colors tracking-widest" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-emerald-200/40 text-[20px]" data-icon="lock">lock</span>
+<input class="w-full bg-emerald-900/30 border-0 focus:ring-1 focus:ring-primary rounded-xl py-3 pl-12 pr-4 text-white placeholder:text-emerald-100/30 text-sm transition-all duration-300" id="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<div class="flex items-center space-x-3 py-2">
+<input class="w-4 h-4 rounded border-0 bg-emerald-900/50 text-primary focus:ring-offset-emerald-900 focus:ring-primary" id="remember" type="checkbox"/>
+<label class="text-xs text-emerald-100/60 font-medium" for="remember">Keep me signed in for 30 days</label>
+</div>
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-headline font-bold py-4 rounded-xl shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-all duration-200 text-sm tracking-tight" type="submit">
+                Sign In to Dashboard
+            </button>
+</form>
+<div class="mt-8 pt-8 border-t border-white/10 flex flex-col items-center space-y-4">
+<p class="text-xs text-emerald-100/50">Or continue with</p>
+<div class="grid grid-cols-2 gap-4 w-full">
+<button class="flex items-center justify-center space-x-2 bg-emerald-900/40 hover:bg-emerald-900/60 py-3 rounded-xl transition-colors border border-white/5">
+<span class="material-symbols-outlined text-white text-[18px]" data-icon="google">google</span>
+<span class="text-xs font-bold text-white uppercase tracking-tighter">Google</span>
+</button>
+<button class="flex items-center justify-center space-x-2 bg-emerald-900/40 hover:bg-emerald-900/60 py-3 rounded-xl transition-colors border border-white/5">
+<span class="material-symbols-outlined text-white text-[18px]" data-icon="apple">ios</span>
+<span class="text-xs font-bold text-white uppercase tracking-tighter">Apple ID</span>
+</button>
+</div>
+</div>
+</main>
+<footer class="mt-8 text-center">
+<p class="text-on-surface-variant text-sm">
+            Don't have an account? 
+            <a class="text-primary font-bold hover:underline underline-offset-4 decoration-2 transition-all" href="#">Create VRBS Access</a>
+</p>
+</footer>
+</div>
+<!-- Background Decoration (Subtle Gradients, no images) -->
+<div class="fixed top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] rounded-full -z-10"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container/5 blur-[100px] rounded-full -z-10"></div>
+</body></html>

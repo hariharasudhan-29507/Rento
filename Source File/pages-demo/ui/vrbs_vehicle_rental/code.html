@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#d9e5e3",
+                    "surface-container-high": "#212c2b",
+                    "on-secondary-fixed": "#002116",
+                    "outline": "#89938d",
+                    "on-surface-variant": "#bec9c3",
+                    "on-secondary-fixed-variant": "#1c4f3e",
+                    "on-primary-fixed": "#002117",
+                    "surface-variant": "#2c3736",
+                    "surface-container-lowest": "#06100f",
+                    "surface-dim": "#0a1514",
+                    "outline-variant": "#3f4944",
+                    "secondary-fixed-dim": "#9dd2bb",
+                    "on-primary-fixed-variant": "#00513d",
+                    "on-tertiary-container": "#003122",
+                    "surface-container": "#172220",
+                    "surface-tint": "#8bd5b9",
+                    "surface": "#0a1514",
+                    "tertiary-fixed-dim": "#9ed2ba",
+                    "secondary-container": "#1f5240",
+                    "on-tertiary": "#003828",
+                    "surface-container-low": "#131e1c",
+                    "background": "#0a1514",
+                    "surface-container-highest": "#2c3736",
+                    "on-secondary": "#003828",
+                    "on-secondary-container": "#90c3ad",
+                    "tertiary-container": "#699b86",
+                    "primary": "#8bd5b9",
+                    "inverse-primary": "#1b6a53",
+                    "tertiary-fixed": "#baeed6",
+                    "tertiary": "#9ed2ba",
+                    "primary-fixed-dim": "#8bd5b9",
+                    "on-background": "#d9e5e3",
+                    "on-primary-container": "#003023",
+                    "secondary-fixed": "#b9eed6",
+                    "secondary": "#9dd2bb",
+                    "on-tertiary-fixed": "#002116",
+                    "error": "#ffb4ab",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#303b3a",
+                    "primary-fixed": "#a6f2d4",
+                    "on-primary": "#003829",
+                    "inverse-surface": "#d9e5e3",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed-variant": "#1e4f3e",
+                    "inverse-on-surface": "#273331",
+                    "error-container": "#93000a",
+                    "primary-container": "#559e84"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0a1514;
+            color: #d9e5e3;
+            font-family: 'Inter', sans-serif;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar Execution -->
+<header class="fixed top-0 w-full z-50 bg-emerald-950/60 backdrop-blur-xl shadow-[0_40px_60px_-15px_rgba(0,33,23,0.1)] flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-emerald-50 font-['Poppins'] tracking-tight">VRBS</span>
+<div class="hidden md:flex items-center bg-emerald-900/20 px-4 py-1.5 rounded-full outline-variant/20 border border-transparent focus-within:border-primary/30 transition-all">
+<span class="material-symbols-outlined text-emerald-400 text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-on-surface placeholder:text-emerald-100/40 w-64" placeholder="Search showroom..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center gap-6">
+<button class="material-symbols-outlined text-emerald-100/70 hover:bg-emerald-800/40 p-2 rounded-full transition-colors active:scale-95 duration-200">notifications</button>
+<button class="material-symbols-outlined text-emerald-100/70 hover:bg-emerald-800/40 p-2 rounded-full transition-colors active:scale-95 duration-200">chat</button>
+<button class="material-symbols-outlined text-emerald-100/70 hover:bg-emerald-800/40 p-2 rounded-full transition-colors active:scale-95 duration-200">settings</button>
+<div class="h-8 w-8 rounded-full bg-emerald-800 overflow-hidden border border-emerald-400/20">
+<img alt="User profile avatar" data-alt="close-up portrait of a professional man with a neutral expression in high-end studio lighting with soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxTToivxXc0SfrychSCUPTwgcpupuRcIlHiGXkaV4vffRrpCBe7xVBFF-8hg8xMTy8yAZe1VF6UocbICwA6_lEvGcJtTbthORA6McllD4w3bpJGB7TUZBSDDdiZ3aIJQNkyNERp3n1qC3jqof-VXXPQmyH1x5eoVWkE3WjZtAw2u7w5YB8BETAjXWCxSertM_h02dBKIX-W5AaJxGtXMz53u33cObEvJ6STFO3PRC9otIZshPd-ANDv6hRJavE-6qkCpUJ10_u6C8"/>
+</div>
+</nav>
+</header>
+<!-- SideNavBar Execution -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-emerald-950 flex flex-col py-6 z-40 hidden md:flex">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<div>
+<h2 class="text-lg font-bold text-emerald-50 font-['Inter']">VRBS</h2>
+<p class="text-[10px] uppercase tracking-widest text-emerald-400/60 font-bold">Global Operations</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<!-- Active Navigation State Logic: Showroom is active -->
+<a class="flex items-center gap-4 px-6 py-3 text-emerald-400 border-r-2 border-emerald-400 bg-emerald-900/20 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">directions_car</span>
+<span>Showroom</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span>Bookings</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">minor_crash</span>
+<span>Fleet Status</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Logistics</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Revenue</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-3 text-emerald-100/60 hover:bg-emerald-900/40 hover:text-emerald-50 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+</nav>
+<div class="px-6 mb-6">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-fixed font-bold rounded-full text-sm shadow-lg shadow-emerald-900/40 active:scale-95 transition-transform">
+                New Booking
+            </button>
+</div>
+<div class="mt-auto px-6 flex flex-col gap-1 border-t border-emerald-900/30 pt-6">
+<a class="flex items-center gap-4 py-2 text-emerald-100/60 hover:text-emerald-50 text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-4 py-2 text-emerald-100/60 hover:text-emerald-50 text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-24 pb-12 px-8 min-h-screen bg-surface">
+<!-- Top Summary Strip (Bento Style) -->
+<div class="flex flex-col gap-6 mb-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-surface-container p-6 rounded-full flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-wider mb-1">Available Fleet</p>
+<p class="text-2xl font-['Poppins'] font-bold text-on-surface leading-none">142 Units</p>
+</div>
+<div class="w-12 h-12 bg-surface-container-high rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+</div>
+<div class="bg-surface-container p-6 rounded-full flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-wider mb-1">Active Rentals</p>
+<p class="text-2xl font-['Poppins'] font-bold text-on-surface leading-none">89 Units</p>
+</div>
+<div class="w-12 h-12 bg-surface-container-high rounded-full flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">verified</span>
+</div>
+</div>
+<div class="bg-surface-container p-6 rounded-full flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-wider mb-1">In Maintenance</p>
+<p class="text-2xl font-['Poppins'] font-bold text-on-surface leading-none">12 Units</p>
+</div>
+<div class="w-12 h-12 bg-surface-container-high rounded-full flex items-center justify-center text-error">
+<span class="material-symbols-outlined">build</span>
+</div>
+</div>
+<div class="bg-surface-container-highest p-6 rounded-full flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant text-xs uppercase font-bold tracking-wider mb-1">Revenue Today</p>
+<p class="text-2xl font-['Poppins'] font-bold text-on-surface leading-none">$4,280</p>
+</div>
+<div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-8">
+<!-- Left Filter Panel -->
+<div class="w-full md:w-72 shrink-0">
+<div class="bg-surface-container-low p-6 rounded-xl space-y-8 sticky top-28">
+<div>
+<h3 class="text-on-surface font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">filter_list</span>
+                            Filter Results
+                        </h3>
+<div class="space-y-6">
+<!-- Category Filter -->
+<div>
+<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest mb-3">Vehicle Type</p>
+<div class="grid grid-cols-2 gap-2">
+<button class="bg-surface-container-high text-xs py-2 px-3 rounded-xl border border-transparent hover:border-primary/20 text-on-surface-variant hover:text-primary transition-all">Sedan</button>
+<button class="bg-primary/10 text-xs py-2 px-3 rounded-xl border border-primary/30 text-primary transition-all">Hatchback</button>
+<button class="bg-surface-container-high text-xs py-2 px-3 rounded-xl border border-transparent hover:border-primary/20 text-on-surface-variant hover:text-primary transition-all">SUV</button>
+<button class="bg-surface-container-high text-xs py-2 px-3 rounded-xl border border-transparent hover:border-primary/20 text-on-surface-variant hover:text-primary transition-all">Minivan</button>
+</div>
+</div>
+<!-- Transmission -->
+<div>
+<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest mb-3">Transmission</p>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded-lg border-2 border-outline-variant flex items-center justify-center group-hover:border-primary transition-colors">
+<div class="w-2 h-2 bg-primary rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="text-sm text-on-surface-variant group-hover:text-on-surface">Automatic (114)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded-lg border-2 border-primary flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-primary rounded-sm"></div>
+</div>
+<span class="text-sm text-on-surface">Manual (28)</span>
+</label>
+</div>
+</div>
+<!-- Fuel Type -->
+<div>
+<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest mb-3">Energy</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-sm text-on-surface-variant">
+<span>Electric</span>
+<span class="bg-emerald-900/40 text-[10px] px-1.5 py-0.5 rounded text-primary">ECO</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Range Slider Mock -->
+<div>
+<p class="text-on-surface-variant text-[10px] uppercase font-black tracking-widest mb-3">Daily Rate (Max)</p>
+<input class="w-full accent-primary bg-surface-container-highest h-1.5 rounded-full appearance-none cursor-pointer" type="range"/>
+<div class="flex justify-between mt-2 text-[10px] text-on-surface-variant font-bold">
+<span>$45</span>
+<span>$450</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-3 border border-outline-variant/30 text-on-surface hover:bg-surface-container-high transition-colors rounded-xl text-sm font-medium">
+                        Reset Filters
+                    </button>
+</div>
+</div>
+<!-- Vehicle Grid -->
+<div class="flex-1">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h1 class="text-3xl font-['Poppins'] font-bold text-on-surface tracking-tight">VRBS Showroom</h1>
+<p class="text-on-surface-variant text-sm mt-1">Discover premium mobility solutions from VRBS for every journey.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-on-surface-variant font-medium">Sort by:</span>
+<select class="bg-transparent border-none text-sm text-primary font-bold focus:ring-0 cursor-pointer">
+<option>Price: Low to High</option>
+<option>Newest Arrivals</option>
+<option>Most Popular</option>
+</select>
+</div>
+</div>
+<!-- Bento Grid Layout for Vehicles -->
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1: White Sedan -->
+<div class="group flex flex-col bg-inverse-surface rounded-full overflow-hidden transition-all duration-300 hover:-translate-y-2">
+<div class="aspect-[16/10] relative p-6 flex items-center justify-center">
+<img alt="White modern sedan" class="w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500" data-alt="sleek white modern luxury sedan parked in a minimalist studio with soft diffused lighting and sharp reflections on the paint" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdZ-9qkYbAUW9ZJPAlfQ44hFwmcnduQEkxm2Ks_2LLsXvfv0RVHg-0BNRq8fNhoJawmX2mVng_N1MAUEAGHykcyoZBWydcek1KbFwQbGIE1mcGVU7rnjsmhvLISnbwV0ypKUfDKhxYzMRDoLwFJje55lds-v02OpWqbbVY4SEpKsyKaKappGO8-3sWcPzFVnZpAApo6WiQg5wavzCr3gVld1UItBZyS88gqXRGmKEB0LJHZs-w_BTtYag4Ho1vUI5TUqgeTeksyS4"/>
+<div class="absolute top-6 right-6 px-3 py-1 bg-surface rounded-full">
+<span class="text-[10px] font-bold text-primary uppercase">Elite Tier</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-bold text-on-surface">Audi A4 S-Line</h3>
+<div class="flex items-center gap-1 text-primary">
+<span class="text-lg font-bold font-['Poppins']">$89</span>
+<span class="text-[10px] text-on-surface-variant uppercase">/ day</span>
+</div>
+</div>
+<div class="flex gap-4 mb-6">
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">settings_input_component</span>
+                                        Auto
+                                    </div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+                                        5 Seats
+                                    </div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                                        Hybrid
+                                    </div>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-highest group-hover:bg-primary group-hover:text-on-primary text-on-surface font-bold rounded-full text-sm transition-all">
+                                Reserve Sedan
+                            </button>
+</div>
+</div>
+<!-- Card 2: Blue Hatchback -->
+<div class="group flex flex-col bg-inverse-surface rounded-full overflow-hidden transition-all duration-300 hover:-translate-y-2 lg:col-span-1 xl:col-span-1">
+<div class="aspect-[16/10] relative p-6 flex items-center justify-center">
+<img alt="Blue hatchback car" class="w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500" data-alt="deep blue modern hatchback car captured in a bright urban daylight setting with subtle reflections and high contrast shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6o5p34_Nf_dYho3JM6YlSSJ8_IZA7yDSxTRYRFImwDdrbnZAOuzoy6CB6FkA5bW8NiNhoOSXKB-4qi7OuPq8rRHeG61xkgY60vuxm4msrvyoGCGCDRJK8k_epJvgW0TsN9QquDavZTX4ro3GYd6ali8iDe9a-GML-_wbziZxpR0OVhys0ckNTD1hRCun6o3G61O60zI9-A-3IDSAGJqbpnPXlhuNuXQO6IN3865wBDFylCub51kfkmvVKrDE1Iz2gv7hCdKhU51s"/>
+<div class="absolute top-6 right-6 px-3 py-1 bg-surface rounded-full">
+<span class="text-[10px] font-bold text-secondary uppercase">City Smart</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-bold text-on-surface">Volkswagen Golf 8</h3>
+<div class="flex items-center gap-1 text-secondary">
+<span class="text-lg font-bold font-['Poppins']">$55</span>
+<span class="text-[10px] text-on-surface-variant uppercase">/ day</span>
+</div>
+</div>
+<div class="flex gap-4 mb-6">
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">settings_input_component</span>
+                                        Manual
+                                    </div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+                                        5 Seats
+                                    </div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">local_gas_station</span>
+                                        Petrol
+                                    </div>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-highest group-hover:bg-secondary group-hover:text-on-secondary text-on-surface font-bold rounded-full text-sm transition-all">
+                                Reserve Hatchback
+                            </button>
+</div>
+</div>
+<!-- Card 3: Grey SUV -->
+<div class="group flex flex-col bg-inverse-surface rounded-full overflow-hidden transition-all duration-300 hover:-translate-y-2">
+<div class="aspect-[16/10] relative p-6 flex items-center justify-center">
+<img alt="Grey SUV vehicle" class="w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500" data-alt="metallic grey modern family SUV parked on a clean asphalt road during sunset with warm orange lens flare and sharp detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCMxeJIP-pPtvzqUaSHB-4setGg9vsSuZ0q-uaSl4e_7u4vtWVryVWyNqa_9OL3s--DZSu6IgNrWSgEPxGmMDKv2MHKiw8Zof36pff8kZFW1wCrfwlEktZlaVNfVwvLjM7ynkq2Qp4yeeqhxKQP_InyX-d2ZvHzfbXX8EBay9lvFUi12EYTiEmrrO3s9eNW-gMZp6jG0r30fCHCTgtsGxlG4-eowFzeZnsagmo7n-VKgepX3UO-UMzV0CorDEv3gSTWNJpQjBg85I"/>
+<div class="absolute top-6 right-6 px-3 py-1 bg-surface rounded-full">
+<span class="text-[10px] font-bold text-primary uppercase">Adventure</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-bold text-on-surface">Volvo XC60</h3>
+<div class="flex items-center gap-1 text-primary">
+<span class="text-lg font-bold font-['Poppins']">$125</span>
+<span class="text-[10px] text-on-surface-variant uppercase">/ day</span>
+</div>
+</div>
+<div class="flex gap-4 mb-6">
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">settings_input_component</span>
+                                        Auto
+                                    </div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+                                        7 Seats
+                                    </div>
+<div class="flex items-center gap-1.5 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">electric_car</span>
+                                        Pure EV
+                                    </div>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container-highest group-hover:bg-primary group-hover:text-on-primary text-on-surface font-bold rounded-full text-sm transition-all">
+                                Reserve SUV
+                            </button>
+</div>
+</div>
+<!-- Promotional Bento Card -->
+<div class="lg:col-span-2 xl:col-span-3 bg-gradient-to-r from-emerald-950 to-surface-container-low rounded-full overflow-hidden relative min-h-[160px] flex items-center p-8">
+<div class="relative z-10 max-w-lg">
+<h2 class="text-2xl font-bold text-emerald-50 mb-2">VRBS Weekend Explorer Pack</h2>
+<p class="text-emerald-100/60 text-sm mb-4">Book any SUV from the VRBS fleet for 3+ days and get free premium insurance and unlimited mileage.</p>
+<button class="px-6 py-2 bg-primary text-on-primary-fixed font-bold rounded-full text-xs hover:scale-105 transition-transform">Claim Offer</button>
+</div>
+<div class="absolute right-0 top-0 h-full w-1/3 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary to-transparent"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#d9e5e3",
+                      "surface-container-high": "#212c2b",
+                      "on-secondary-fixed": "#002116",
+                      "outline": "#89938d",
+                      "on-surface-variant": "#bec9c3",
+                      "on-secondary-fixed-variant": "#1c4f3e",
+                      "on-primary-fixed": "#002117",
+                      "surface-variant": "#2c3736",
+                      "surface-container-lowest": "#06100f",
+                      "surface-dim": "#0a1514",
+                      "outline-variant": "#3f4944",
+                      "secondary-fixed-dim": "#9dd2bb",
+                      "on-primary-fixed-variant": "#00513d",
+                      "on-tertiary-container": "#003122",
+                      "surface-container": "#172220",
+                      "surface-tint": "#8bd5b9",
+                      "surface": "#0a1514",
+                      "tertiary-fixed-dim": "#9ed2ba",
+                      "secondary-container": "#1f5240",
+                      "on-tertiary": "#003828",
+                      "surface-container-low": "#131e1c",
+                      "background": "#0a1514",
+                      "surface-container-highest": "#2c3736",
+                      "on-secondary": "#003828",
+                      "on-secondary-container": "#90c3ad",
+                      "tertiary-container": "#699b86",
+                      "primary": "#8bd5b9",
+                      "inverse-primary": "#1b6a53",
+                      "tertiary-fixed": "#baeed6",
+                      "tertiary": "#9ed2ba",
+                      "primary-fixed-dim": "#8bd5b9",
+                      "on-background": "#d9e5e3",
+                      "on-primary-container": "#003023",
+                      "secondary-fixed": "#b9eed6",
+                      "secondary": "#9dd2bb",
+                      "on-tertiary-fixed": "#002116",
+                      "error": "#ffb4ab",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#303b3a",
+                      "primary-fixed": "#a6f2d4",
+                      "on-primary": "#003829",
+                      "inverse-surface": "#d9e5e3",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#1e4f3e",
+                      "inverse-on-surface": "#273331",
+                      "error-container": "#93000a",
+                      "primary-container": "#559e84"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-emerald-950 flex flex-col py-6 z-40 hidden md:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-emerald-900/40 flex items-center justify-center border border-emerald-400/20">
+<span class="material-symbols-outlined text-primary" data-icon="minor_crash">minor_crash</span>
+</div>
+<div>
+<h2 class="text-lg font-bold text-emerald-50 font-headline leading-tight">VRBS</h2>
+<p class="text-[10px] uppercase tracking-widest text-emerald-100/60 font-bold">Global Fleet Operations</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1 px-4">
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out hover:bg-emerald-900/40 hover:text-emerald-50 text-emerald-100/60" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="directions_car">directions_car</span>
+<span>Showroom</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out hover:bg-emerald-900/40 hover:text-emerald-50 text-emerald-100/60" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Bookings</span>
+</a>
+<!-- Active State Logic: Fleet Status -->
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out text-emerald-400 border-r-2 border-emerald-400 bg-emerald-900/20" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="minor_crash">minor_crash</span>
+<span>Fleet Status</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out hover:bg-emerald-900/40 hover:text-emerald-50 text-emerald-100/60" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="local_shipping">local_shipping</span>
+<span>Logistics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out hover:bg-emerald-900/40 hover:text-emerald-50 text-emerald-100/60" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="payments">payments</span>
+<span>Revenue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out hover:bg-emerald-900/40 hover:text-emerald-50 text-emerald-100/60" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-emerald-900/30 pt-6">
+<button class="w-full bg-primary text-on-primary-fixed py-3 rounded-xl font-bold flex items-center justify-center gap-2 mb-4 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                New Booking
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out text-emerald-100/60 hover:text-emerald-50" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 font-['Inter'] font-medium text-sm transition-all duration-300 ease-in-out text-emerald-100/60 hover:text-emerald-50" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Anchor -->
+<header class="fixed top-0 w-full z-50 bg-emerald-950/60 backdrop-blur-xl shadow-[0_40px_60px_-15px_rgba(0,33,23,0.1)] md:pl-64">
+<div class="flex justify-between items-center px-8 h-16 w-full">
+<div class="flex items-center gap-8 flex-1">
+<span class="font-['Poppins'] font-bold tracking-tight text-xl text-emerald-50">VRBS Velocity</span>
+<div class="relative max-w-md w-full hidden lg:block">
+<input class="w-full bg-emerald-900/20 border-none rounded-full px-10 py-2 text-sm text-emerald-50 placeholder:text-emerald-100/40 focus:ring-1 focus:ring-primary" placeholder="Search fleet assets..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-emerald-100/40 text-lg" data-icon="search">search</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-emerald-100/70 hover:bg-emerald-800/40 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-emerald-100/70 hover:bg-emerald-800/40 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-emerald-100/70 hover:bg-emerald-800/40 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-emerald-900/20 mx-2"></div>
+<img alt="User profile avatar" class="w-10 h-10 rounded-full border-2 border-primary-container/20 object-cover" data-alt="portrait of a professional male fleet manager with short hair and a confident expression in a clean studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhw-SkhYQNnqvGczm3cfBttvoPgt590771rmN7nb3DMtlautleCJ8hDFwyvGiFKgp5AypsMRUdS60Tq2G2_lJcGeTP0mBYchMUKhRswnNRpSZA7klJ4RJUhsUAO6NB9vy5ap3DFZ491BalHS4Ioe3HQF-IdEQEYmd-Mhek3vZewmuHQiRzVtXJ2ctPAijjc3JMe2KrXDMgc4i8cFdWaoZqUfalrlbNDMo5qypcuev47zTRTpsyZATLb4C07nq9RK7ah6BS2er3zs8"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="md:pl-64 pt-16 min-h-screen bg-surface">
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Dashboard Header -->
+<div class="mb-10">
+<h1 class="text-3xl font-headline font-bold text-on-surface tracking-tight mb-2">Operational Overview</h1>
+<p class="text-on-surface-variant font-medium">Real-time performance metrics for your VRBS logistics network.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Fleet Status Hero Card (Large Bento Block) -->
+<div class="md:col-span-8 bg-surface-container-high rounded-full overflow-hidden flex flex-col md:flex-row relative group">
+<div class="p-8 flex-1 flex flex-col justify-between z-10">
+<div>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4 inline-block">Active Assets</span>
+<h2 class="text-4xl font-headline font-extrabold text-on-surface leading-tight mb-4">98.4% Fleet <br/>Availability</h2>
+<p class="text-on-surface-variant max-w-xs mb-6">Our standard white sedan and SUV fleet is operating at peak efficiency across all sectors today.</p>
+</div>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary-fixed px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-base" data-icon="visibility">visibility</span>
+                                Live Map
+                            </button>
+<button class="bg-surface-container-highest text-on-surface px-6 py-3 rounded-xl font-bold text-sm hover:bg-surface-bright transition-colors">
+                                View Reports
+                            </button>
+</div>
+</div>
+<div class="md:w-1/2 min-h-[300px] relative">
+<img alt="Fleet of white sedans" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-700" data-alt="a symmetrical line of high-end modern white sedans parked in a pristine professional warehouse with cool industrial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2dpHC31nPVRLuD1hHU2BwmqV_IgTMjloTANWyU3qMLo5U-D43WqKQwg_hPOqBmaGqxoSqRrCPFXGuwOdAidA8OIVE_0XTMP2MXixq4rzE2MQVQ3_ZbyWwqGpJyFoK8TQ6AukFgMReS2bu-V8q1R3laqd8okFx5yPOp6lzwN-C0J1CZM-dNv1y9r6DKPIMLJ1pTCFUqK4ib8ylnEzmVui7v4oaqNJ6g1gQYJZZwqW9g-8hBYlBys_FuHR0vdRb3oytEKAQwMLCtZY"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-high via-transparent to-transparent"></div>
+</div>
+</div>
+<!-- Monthly Revenue Card (Small High Contrast) -->
+<div class="md:col-span-4 bg-[#D9E5E3] rounded-full p-8 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-primary-container shadow-sm">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="text-primary-container font-bold text-xs bg-white/50 px-2 py-1 rounded-lg">+12.5%</span>
+</div>
+<div>
+<p class="text-on-primary-fixed-variant font-medium text-sm mb-1">Monthly Revenue</p>
+<h3 class="text-3xl font-headline font-extrabold text-on-primary-fixed">$42,850.00</h3>
+</div>
+<div class="mt-4 h-12 w-full flex items-end gap-1">
+<div class="flex-1 bg-primary-container/20 h-1/2 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-container/20 h-2/3 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-container/20 h-1/2 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-container/20 h-4/5 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-container/20 h-3/4 rounded-t-sm"></div>
+<div class="flex-1 bg-primary-container/60 h-full rounded-t-sm"></div>
+</div>
+</div>
+<!-- Fleet Health Card (Small Tonal) -->
+<div class="md:col-span-4 bg-surface-container-high rounded-full p-8 flex flex-col justify-center border border-white/5">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-full border-4 border-emerald-400 border-t-emerald-950 flex items-center justify-center">
+<span class="text-lg font-bold text-emerald-400">92</span>
+</div>
+<div>
+<h4 class="text-on-surface font-bold">Health Score</h4>
+<p class="text-on-surface-variant text-xs">Overall fleet wellness</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Maintenance Due</span>
+<span class="text-on-surface font-bold">3 Vehicles</span>
+</div>
+<div class="w-full bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[15%]"></div>
+</div>
+</div>
+</div>
+<!-- Vehicle Table (Wide Bento Block) -->
+<div class="md:col-span-8 bg-surface-container-high rounded-full overflow-hidden flex flex-col">
+<div class="px-8 py-6 flex justify-between items-center border-b border-white/5">
+<h3 class="font-headline font-bold text-on-surface">Vehicle Performance</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                            Export CSV <span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-on-surface-variant text-[10px] uppercase tracking-widest font-bold">
+<th class="px-8 py-4">ID</th>
+<th class="px-4 py-4">Model</th>
+<th class="px-4 py-4">Status</th>
+<th class="px-4 py-4">Efficiency</th>
+<th class="px-8 py-4 text-right">Earnings</th>
+</tr>
+</thead>
+<tbody class="text-sm font-medium divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-4 text-primary">#VR-9021</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="directions_car">directions_car</span>
+</div>
+<span class="text-on-surface">Volvo S90 Hybrid</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="flex items-center gap-1.5 text-emerald-400">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="px-4 py-4 text-on-surface-variant">96.8%</td>
+<td class="px-8 py-4 text-right text-on-surface font-bold group-hover:text-primary transition-colors">$1,240.00</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-4 text-primary">#VR-4421</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="airport_shuttle">airport_shuttle</span>
+</div>
+<span class="text-on-surface">Tesla Model Y</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="flex items-center gap-1.5 text-emerald-400">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="px-4 py-4 text-on-surface-variant">98.2%</td>
+<td class="px-8 py-4 text-right text-on-surface font-bold group-hover:text-primary transition-colors">$1,892.50</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-4 text-primary">#VR-1120</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="directions_car">directions_car</span>
+</div>
+<span class="text-on-surface">Audi A6 Sedan</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="flex items-center gap-1.5 text-amber-400">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                            Maintenance
+                                        </span>
+</td>
+<td class="px-4 py-4 text-on-surface-variant">42.1%</td>
+<td class="px-8 py-4 text-right text-on-surface font-bold group-hover:text-primary transition-colors">$450.20</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="px-8 py-4 text-primary">#VR-8832</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-on-surface">BMW X5 SUV</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<span class="flex items-center gap-1.5 text-emerald-400">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="px-4 py-4 text-on-surface-variant">94.5%</td>
+<td class="px-8 py-4 text-right text-on-surface font-bold group-hover:text-primary transition-colors">$2,110.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto p-6 bg-surface-variant/30 flex justify-center">
+<button class="text-on-surface-variant text-xs hover:text-primary font-bold tracking-widest uppercase transition-colors">Load Full VRBS Fleet Inventory</button>
+</div>
+</div>
+<!-- Logistics & Logistics Mini Bento -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-high rounded-full p-8 flex items-center gap-6 border border-white/5">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<div>
+<h5 class="text-on-surface font-bold">On-Time Rate</h5>
+<p class="text-on-surface-variant text-sm">99.2% Dispatch Accuracy</p>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-full p-8 flex items-center gap-6 border border-white/5">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="local_gas_station">local_gas_station</span>
+</div>
+<div>
+<h5 class="text-on-surface font-bold">Fuel Efficiency</h5>
+<p class="text-on-surface-variant text-sm">-14% Consumption (Hybrid)</p>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-full p-8 flex items-center gap-6 border border-white/5">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<h5 class="text-on-surface font-bold">Safety Score</h5>
+<p class="text-on-surface-variant text-sm">0 Incidents (30 days)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation -->
+<div class="md:hidden fixed bottom-0 left-0 w-full h-16 bg-emerald-950 flex items-center justify-around border-t border-emerald-900/30 z-50">
+<button class="text-primary">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+</button>
+<button class="text-emerald-100/60">
+<span class="material-symbols-outlined" data-icon="directions_car">directions_car</span>
+</button>
+<button class="text-emerald-100/60">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+</button>
+<button class="text-emerald-100/60">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</body></html>
