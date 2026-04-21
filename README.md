@@ -58,7 +58,7 @@ Rento/
 
 ### 1) Prerequisites
 
-- JDK **21** (recommended)
+- JDK **21** (required)
 - MongoDB Community Server (running locally on default port `27017`)
 - IDE recommended: IntelliJ IDEA / Eclipse with JavaFX support
 
