@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.AboutController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <!-- NAV -->
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="Home" styleClass="nav-link" onAction="#onNavHome"/>
+                <Button text="About" styleClass="nav-link,active"/>
+                <Button text="Book" styleClass="nav-link" onAction="#onNavBook"/>
+                <Button text="Rent" styleClass="nav-link" onAction="#onNavRent"/>
+                <Button text="Contact" styleClass="nav-link" onAction="#onNavContact"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="⬤ Profile" styleClass="nav-profile-btn" onAction="#onNavProfile"/>
+        </HBox>
+
+        <!-- Hero -->
+        <VBox style="-fx-padding: 80 60; -fx-background-color: linear-gradient(to bottom, #0d0d1a, #1a1040);" spacing="16" alignment="CENTER">
+            <Label text="About Rento" style="-fx-font-size: 48px; -fx-font-weight: 800; -fx-text-fill: white;"/>
+            <Label text="The modern way to rent and book vehicles" style="-fx-font-size: 18px; -fx-text-fill: #6b6b8a;" wrapText="true" textAlignment="CENTER" maxWidth="600"/>
+        </VBox>
+
+        <!-- Mission -->
+        <VBox styleClass="about-section" alignment="CENTER">
+            <VBox styleClass="card-glass" spacing="20" maxWidth="900" style="-fx-padding: 48;">
+                <Label text="Our Mission" styleClass="heading-2"/>
+                <Label text="Rento was created to revolutionize the vehicle rental industry by providing a seamless, secure, and transparent platform for both vehicle owners and renters. We believe that mobility should be accessible, affordable, and powered by technology."
+                       styleClass="text-body" wrapText="true" style="-fx-line-spacing: 6; -fx-font-size: 16px;"/>
+            </VBox>
+        </VBox>
+
+        <!-- Features Deep Dive -->
+        <VBox style="-fx-padding: 40 60 60 60; -fx-background-color: #141428;" spacing="40">
+            <Label text="Platform Features" style="-fx-font-size: 32px; -fx-font-weight: 800; -fx-text-fill: white;" alignment="CENTER" maxWidth="1.7976931348623157E308"/>
+
+            <HBox spacing="24" alignment="CENTER">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS" alignment="CENTER" minHeight="200">
+                    <Label text="🔐" style="-fx-font-size: 40px;"/>
+                    <Label text="Bank-Grade Security" styleClass="card-title" textAlignment="CENTER"/>
+                    <Label text="BCrypt password hashing, input validation, CAPTCHA, and OTP verification" styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS" alignment="CENTER" minHeight="200">
+                    <Label text="💰" style="-fx-font-size: 40px;"/>
+                    <Label text="Dynamic Pricing" styleClass="card-title" textAlignment="CENTER"/>
+                    <Label text="Weekend surcharges, duration discounts, and transparent GST breakdown" styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS" alignment="CENTER" minHeight="200">
+                    <Label text="📱" style="-fx-font-size: 40px;"/>
+                    <Label text="Role-Based Access" styleClass="card-title" textAlignment="CENTER"/>
+                    <Label text="Separate dashboards for Users, Drivers, and Suppliers" styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24" alignment="CENTER">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS" alignment="CENTER" minHeight="200">
+                    <Label text="🗄" style="-fx-font-size: 40px;"/>
+                    <Label text="MongoDB Backend" styleClass="card-title" textAlignment="CENTER"/>
+                    <Label text="Scalable NoSQL database for flexible data management" styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS" alignment="CENTER" minHeight="200">
+                    <Label text="📄" style="-fx-font-size: 40px;"/>
+                    <Label text="PDF Receipts" styleClass="card-title" textAlignment="CENTER"/>
+                    <Label text="Generate professional payment receipts with iTextPDF" styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS" alignment="CENTER" minHeight="200">
+                    <Label text="🎨" style="-fx-font-size: 40px;"/>
+                    <Label text="Premium UI" styleClass="card-title" textAlignment="CENTER"/>
+                    <Label text="Dark mode, glassmorphism, smooth animations, and modern design system" styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Tech Stack -->
+        <VBox style="-fx-padding: 60;" spacing="24" alignment="CENTER">
+            <Label text="Technology Stack" style="-fx-font-size: 28px; -fx-font-weight: 800; -fx-text-fill: white;"/>
+            <HBox spacing="24" alignment="CENTER">
+                <VBox styleClass="card" spacing="4" alignment="CENTER" style="-fx-min-width: 140;">
+                    <Label text="☕" style="-fx-font-size: 32px;"/>
+                    <Label text="Java" styleClass="card-title"/>
+                </VBox>
+                <VBox styleClass="card" spacing="4" alignment="CENTER" style="-fx-min-width: 140;">
+                    <Label text="🎯" style="-fx-font-size: 32px;"/>
+                    <Label text="JavaFX" styleClass="card-title"/>
+                </VBox>
+                <VBox styleClass="card" spacing="4" alignment="CENTER" style="-fx-min-width: 140;">
+                    <Label text="🍃" style="-fx-font-size: 32px;"/>
+                    <Label text="MongoDB" styleClass="card-title"/>
+                </VBox>
+                <VBox styleClass="card" spacing="4" alignment="CENTER" style="-fx-min-width: 140;">
+                    <Label text="🔒" style="-fx-font-size: 32px;"/>
+                    <Label text="BCrypt" styleClass="card-title"/>
+                </VBox>
+                <VBox styleClass="card" spacing="4" alignment="CENTER" style="-fx-min-width: 140;">
+                    <Label text="📄" style="-fx-font-size: 32px;"/>
+                    <Label text="iTextPDF" styleClass="card-title"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Footer -->
+        <HBox styleClass="footer" alignment="CENTER" spacing="8">
+            <Label text="© 2026 Rento — Built by A Hariharasudhan" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

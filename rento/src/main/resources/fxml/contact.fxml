@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.ContactController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <!-- NAV -->
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="Home" styleClass="nav-link" onAction="#onNavHome"/>
+                <Button text="About" styleClass="nav-link" onAction="#onNavAbout"/>
+                <Button text="Book" styleClass="nav-link" onAction="#onNavBook"/>
+                <Button text="Rent" styleClass="nav-link" onAction="#onNavRent"/>
+                <Button text="Contact" styleClass="nav-link,active"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="⬤ Profile" styleClass="nav-profile-btn" onAction="#onNavProfile"/>
+        </HBox>
+
+        <StackPane style="-fx-padding: 100 60; -fx-background-color: linear-gradient(to bottom, #0d0d1a, #1a1040);">
+            <VBox styleClass="contact-card" spacing="18" alignment="CENTER" maxWidth="560">
+                <Label text="A Hariharasudhan"
+                       style="-fx-font-size: 34px; -fx-font-weight: 800; -fx-text-fill: #7c3aed;"/>
+                <Label text="Thanks for your visit"
+                       style="-fx-font-size: 20px; -fx-font-weight: 600; -fx-text-fill: white;"/>
+                <Label text="Reach me: sudanayyappan_bcs28@mepcoeng.ac.in"
+                       style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #06d6a0;"/>
+            </VBox>
+        </StackPane>
+
+        <!-- Footer -->
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Vehicle Rental &amp; Booking System" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

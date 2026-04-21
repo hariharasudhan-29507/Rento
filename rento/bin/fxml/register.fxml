@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.RegisterController"
+            fitToWidth="true" styleClass="scroll-pane"
+            style="-fx-background-color: linear-gradient(to bottom right, #0d0d1a, #1a1040);">
+
+    <StackPane styleClass="auth-container" style="-fx-padding: 40 0;">
+
+        <VBox styleClass="auth-card" spacing="20" alignment="CENTER" style="-fx-max-width: 520;">
+            <!-- Back -->
+            <HBox alignment="CENTER_LEFT">
+                <Button text="← Back" styleClass="btn-icon" onAction="#onBack"/>
+            </HBox>
+
+            <!-- Header -->
+            <VBox spacing="6" alignment="CENTER">
+                <Label text="RENTO" style="-fx-font-size: 28px; -fx-font-weight: 800; -fx-text-fill: #7c3aed;"/>
+                <Label text="Create Account" styleClass="auth-title"/>
+                <Label text="Join the Rento community today" styleClass="auth-subtitle"/>
+            </VBox>
+
+            <!-- Error -->
+            <Label fx:id="errorLabel" text="" styleClass="form-error" style="-fx-font-size: 13px;" visible="false"/>
+
+            <!-- Full Name -->
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Full Name" styleClass="form-label"/>
+                <TextField fx:id="nameField" promptText="John Doe"/>
+            </VBox>
+
+            <!-- Email -->
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Email Address" styleClass="form-label"/>
+                <TextField fx:id="emailField" promptText="you@example.com"/>
+            </VBox>
+
+            <!-- Phone -->
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Phone Number" styleClass="form-label"/>
+                <TextField fx:id="phoneField" promptText="+91 9876543210"/>
+            </VBox>
+
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Age" styleClass="form-label"/>
+                <TextField fx:id="ageField" promptText="18+" />
+            </VBox>
+
+            <!-- Role -->
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Account Type" styleClass="form-label"/>
+                <ComboBox fx:id="roleCombo" promptText="Select your role" maxWidth="1.7976931348623157E308"/>
+            </VBox>
+
+            <!-- Password -->
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Password" styleClass="form-label"/>
+                <PasswordField fx:id="passwordField" promptText="Min 8 chars, A-z, 0-9, @#$"/>
+                <Label fx:id="passwordStrength" text="" styleClass="text-muted" style="-fx-font-size: 11px;"/>
+            </VBox>
+
+            <!-- Confirm Password -->
+            <VBox styleClass="form-group" spacing="4">
+                <Label text="Confirm Password" styleClass="form-label"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Re-enter your password"/>
+            </VBox>
+
+            <!-- CAPTCHA -->
+            <VBox spacing="8">
+                <Label text="Security Check" styleClass="form-label"/>
+                <HBox styleClass="captcha-box" spacing="16" alignment="CENTER">
+                    <Label fx:id="captchaQuestion" text="" styleClass="captcha-text"/>
+                    <Button text="↻" styleClass="btn-icon" onAction="#onRefreshCaptcha"/>
+                </HBox>
+                <TextField fx:id="captchaAnswer" promptText="Enter the answer"/>
+            </VBox>
+
+            <!-- Register Button -->
+            <Button text="Create Account" styleClass="btn-primary" maxWidth="1.7976931348623157E308" onAction="#onRegister"/>
+
+            <!-- Login Link -->
+            <HBox alignment="CENTER" spacing="6">
+                <Label text="Already have an account?" styleClass="text-muted"/>
+                <Button text="Sign In" styleClass="btn-icon" style="-fx-font-weight: 700;" onAction="#onGoToLogin"/>
+            </HBox>
+        </VBox>
+    </StackPane>
+</ScrollPane>

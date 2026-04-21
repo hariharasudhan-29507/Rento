@@ -1,0 +1,817 @@
+/* ═══════════════════════════════════════════════════════
+   RENTO — Global Design System
+   Vehicle Rental & Booking System
+   Color Palette: Deep Purple + Teal + Dark Mode
+   ═══════════════════════════════════════════════════════ */
+
+/* --- CSS Variables / Root Tokens --- */
+.root {
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+    -rento-bg-primary: #0d0d1a;
+    -rento-bg-secondary: #141428;
+    -rento-bg-card: #1a1a36;
+    -rento-bg-elevated: #222244;
+    -rento-bg-input: #1e1e3a;
+    -rento-accent-primary: #7c3aed;
+    -rento-accent-secondary: #06d6a0;
+    -rento-accent-tertiary: #f72585;
+    -rento-accent-warm: #ff9f43;
+    -rento-text-primary: #f0f0f5;
+    -rento-text-secondary: #a0a0c0;
+    -rento-text-muted: #6b6b8a;
+    -rento-border: #2a2a50;
+    -rento-border-focus: #7c3aed;
+    -rento-success: #06d6a0;
+    -rento-error: #f72585;
+    -rento-warning: #ff9f43;
+    -rento-shadow: rgba(0, 0, 0, 0.4);
+    -rento-glass: rgba(26, 26, 54, 0.85);
+    -rento-radius-sm: 8px;
+    -rento-radius-md: 12px;
+    -rento-radius-lg: 20px;
+    -rento-radius-xl: 28px;
+}
+
+/* --- Global Resets --- */
+* {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+#app-root {
+    -fx-background-color: -rento-bg-primary;
+}
+
+/* ═══════ SCROLL PANE ═══════ */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+    -fx-pref-height: 8px;
+}
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: #3a3a6a;
+    -fx-background-radius: 4px;
+}
+.scroll-pane .scroll-bar .thumb:hover {
+    -fx-background-color: #5a5a9a;
+}
+.scroll-pane .scroll-bar .increment-button,
+.scroll-pane .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+/* ═══════ NAVIGATION BAR ═══════ */
+.nav-bar {
+    -fx-background-color: rgba(13, 13, 26, 0.92);
+    -fx-padding: 12 40 12 40;
+    -fx-spacing: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 16, 0, 0, 4);
+}
+
+.nav-brand {
+    -fx-font-size: 26px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #7c3aed;
+    -fx-padding: 0 30 0 0;
+    -fx-cursor: hand;
+}
+
+.nav-link {
+    -fx-background-color: transparent;
+    -fx-text-fill: #a0a0c0;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+}
+.nav-link:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.15);
+    -fx-text-fill: #c4b5fd;
+}
+.nav-link.active {
+    -fx-background-color: rgba(124, 58, 237, 0.25);
+    -fx-text-fill: #f0f0f5;
+}
+
+.nav-profile-btn {
+    -fx-background-color: linear-gradient(to right, #7c3aed, #a855f7);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-padding: 10 24;
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.4), 10, 0, 0, 3);
+}
+.nav-profile-btn:hover {
+    -fx-background-color: linear-gradient(to right, #6d28d9, #9333ea);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.6), 14, 0, 0, 4);
+}
+
+/* ═══════ HERO SECTION ═══════ */
+.hero-section {
+    -fx-background-color: linear-gradient(to bottom right, #0d0d1a, #1a1040, #0d0d1a);
+    -fx-padding: 80 60;
+}
+
+.hero-title {
+    -fx-font-size: 52px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+}
+
+.hero-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #a0a0c0;
+    -fx-wrap-text: true;
+    -fx-line-spacing: 4;
+}
+
+.hero-accent {
+    -fx-text-fill: #7c3aed;
+}
+
+/* ═══════ BUTTONS ═══════ */
+.btn-primary {
+    -fx-background-color: linear-gradient(to right, #7c3aed, #a855f7);
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-padding: 14 36;
+    -fx-background-radius: 12px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.35), 12, 0, 0, 4);
+}
+.btn-primary:hover {
+    -fx-background-color: linear-gradient(to right, #6d28d9, #9333ea);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.55), 16, 0, 0, 5);
+}
+
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7c3aed;
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-padding: 14 36;
+    -fx-background-radius: 12px;
+    -fx-border-color: #7c3aed;
+    -fx-border-width: 2px;
+    -fx-border-radius: 12px;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.12);
+    -fx-text-fill: #a855f7;
+    -fx-border-color: #a855f7;
+}
+
+.btn-accent {
+    -fx-background-color: linear-gradient(to right, #06d6a0, #00b894);
+    -fx-text-fill: #0d0d1a;
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-padding: 14 36;
+    -fx-background-radius: 12px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(6,214,160,0.35), 12, 0, 0, 4);
+}
+.btn-accent:hover {
+    -fx-background-color: linear-gradient(to right, #00b894, #06d6a0);
+    -fx-effect: dropshadow(gaussian, rgba(6,214,160,0.55), 16, 0, 0, 5);
+}
+
+.btn-danger {
+    -fx-background-color: linear-gradient(to right, #f72585, #e91e77);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 12 28;
+    -fx-background-radius: 12px;
+    -fx-cursor: hand;
+}
+.btn-danger:hover {
+    -fx-background-color: linear-gradient(to right, #e91e77, #d41670);
+}
+
+.btn-small {
+    -fx-padding: 8 18;
+    -fx-font-size: 12px;
+}
+
+.btn-icon {
+    -fx-background-color: rgba(124, 58, 237, 0.1);
+    -fx-text-fill: #7c3aed;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.btn-icon:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.25);
+}
+
+/* ═══════ CARDS ═══════ */
+.card {
+    -fx-background-color: -rento-bg-card;
+    -fx-background-radius: 16px;
+    -fx-padding: 28;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 16, 0, 0, 4);
+    -fx-border-color: rgba(124, 58, 237, 0.08);
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+}
+.card:hover {
+    -fx-border-color: rgba(124, 58, 237, 0.2);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.15), 20, 0, 0, 6);
+}
+
+.card-glass {
+    -fx-background-color: -rento-glass;
+    -fx-background-radius: 16px;
+    -fx-padding: 28;
+    -fx-border-color: rgba(255,255,255,0.06);
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 20, 0, 0, 5);
+}
+
+.card-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.card-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: -rento-text-muted;
+}
+
+/* ═══════ TEXT FIELDS & INPUTS ═══════ */
+.text-field, .password-field {
+    -fx-background-color: -rento-bg-input;
+    -fx-text-fill: -rento-text-primary;
+    -fx-prompt-text-fill: #5a5a80;
+    -fx-font-size: 14px;
+    -fx-padding: 14 18;
+    -fx-background-radius: 10px;
+    -fx-border-color: -rento-border;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 10px;
+}
+.text-field:focused, .password-field:focused {
+    -fx-border-color: -rento-border-focus;
+    -fx-background-color: #1a1a3c;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.2), 8, 0, 0, 0);
+}
+
+.text-area {
+    -fx-background-color: -rento-bg-input;
+    -fx-text-fill: -rento-text-primary;
+    -fx-font-size: 14px;
+    -fx-background-radius: 10px;
+    -fx-border-color: -rento-border;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 10px;
+}
+.text-area .content {
+    -fx-background-color: -rento-bg-input;
+}
+
+/* ═══════ COMBO BOX ═══════ */
+.combo-box {
+    -fx-background-color: -rento-bg-input;
+    -fx-border-color: -rento-border;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 4;
+}
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -rento-text-primary;
+    -fx-font-size: 14px;
+}
+.combo-box-popup .list-view {
+    -fx-background-color: -rento-bg-card;
+    -fx-border-color: -rento-border;
+}
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: -rento-bg-card;
+    -fx-text-fill: -rento-text-primary;
+    -fx-padding: 10 14;
+}
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.15);
+}
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: rgba(124, 58, 237, 0.3);
+}
+
+/* ═══════ DATE PICKER ═══════ */
+.date-picker {
+    -fx-background-color: -rento-bg-input;
+    -fx-border-color: -rento-border;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+.date-picker .text-field {
+    -fx-border-width: 0;
+}
+
+/* ═══════ TABLE VIEW ═══════ */
+.table-view {
+    -fx-background-color: -rento-bg-card;
+    -fx-border-color: -rento-border;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+}
+.table-view .column-header-background {
+    -fx-background-color: -rento-bg-elevated;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: -rento-border;
+}
+.table-view .column-header .label {
+    -fx-text-fill: -rento-text-secondary;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+}
+.table-view .table-row-cell {
+    -fx-background-color: -rento-bg-card;
+    -fx-border-color: rgba(42, 42, 80, 0.5);
+    -fx-table-cell-border-color: rgba(42, 42, 80, 0.5);
+}
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.06);
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(124, 58, 237, 0.15);
+}
+.table-view .table-cell {
+    -fx-text-fill: -rento-text-primary;
+    -fx-font-size: 13px;
+    -fx-padding: 10 8;
+}
+
+/* ═══════ LABELS ═══════ */
+.label {
+    -fx-text-fill: -rento-text-primary;
+}
+
+.heading-1 {
+    -fx-font-size: 36px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.heading-2 {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.heading-3 {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.text-body {
+    -fx-font-size: 14px;
+    -fx-text-fill: -rento-text-secondary;
+    -fx-wrap-text: true;
+}
+
+.text-muted {
+    -fx-font-size: 12px;
+    -fx-text-fill: -rento-text-muted;
+}
+
+.text-accent {
+    -fx-text-fill: -rento-accent-primary;
+}
+
+.text-success {
+    -fx-text-fill: -rento-success;
+}
+
+.text-error {
+    -fx-text-fill: -rento-error;
+}
+
+.text-warning {
+    -fx-text-fill: -rento-warning;
+}
+
+/* ═══════ FORM COMPONENTS ═══════ */
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -rento-text-secondary;
+    -fx-padding: 0 0 4 2;
+}
+
+.form-error {
+    -fx-font-size: 12px;
+    -fx-text-fill: -rento-error;
+    -fx-padding: 4 0 0 2;
+}
+
+.form-group {
+    -fx-spacing: 4;
+}
+
+/* ═══════ SEPARATOR ═══════ */
+.separator .line {
+    -fx-border-color: -rento-border;
+    -fx-border-width: 0.5;
+}
+
+/* ═══════ CHECK BOX ═══════ */
+.check-box {
+    -fx-text-fill: -rento-text-primary;
+}
+.check-box .box {
+    -fx-background-color: -rento-bg-input;
+    -fx-border-color: -rento-border;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+.check-box:selected .box {
+    -fx-background-color: -rento-accent-primary;
+    -fx-border-color: -rento-accent-primary;
+}
+
+/* ═══════ RADIO BUTTON ═══════ */
+.radio-button {
+    -fx-text-fill: -rento-text-primary;
+}
+.radio-button .radio {
+    -fx-background-color: -rento-bg-input;
+    -fx-border-color: -rento-border;
+}
+.radio-button:selected .radio {
+    -fx-border-color: -rento-accent-primary;
+}
+.radio-button:selected .dot {
+    -fx-background-color: -rento-accent-primary;
+}
+
+/* ═══════ PROGRESS INDICATORS ═══════ */
+.progress-bar {
+    -fx-background-color: -rento-bg-elevated;
+    -fx-background-radius: 6px;
+}
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #7c3aed, #06d6a0);
+    -fx-background-radius: 6px;
+    -fx-padding: 4;
+}
+.progress-bar .track {
+    -fx-background-color: -rento-bg-elevated;
+    -fx-background-radius: 6px;
+}
+
+.progress-indicator {
+    -fx-progress-color: -rento-accent-primary;
+}
+
+/* ═══════ SLIDER ═══════ */
+.slider .track {
+    -fx-background-color: -rento-bg-elevated;
+    -fx-background-radius: 4px;
+    -fx-pref-height: 6px;
+}
+.slider .thumb {
+    -fx-background-color: -rento-accent-primary;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.4), 6, 0, 0, 2);
+}
+.slider .colored-track {
+    -fx-background-color: linear-gradient(to right, #7c3aed, #06d6a0);
+}
+
+/* ═══════ TOOLTIP ═══════ */
+.tooltip {
+    -fx-background-color: -rento-bg-elevated;
+    -fx-text-fill: -rento-text-primary;
+    -fx-font-size: 12px;
+    -fx-background-radius: 8px;
+    -fx-padding: 8 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);
+}
+
+/* ═══════ SKELETON LOADING ═══════ */
+.skeleton {
+    -fx-background-color: linear-gradient(to right, #1a1a36, #222244, #1a1a36);
+    -fx-background-radius: 8px;
+}
+
+.skeleton-text {
+    -fx-background-color: #222244;
+    -fx-background-radius: 4px;
+    -fx-min-height: 14px;
+    -fx-pref-height: 14px;
+}
+
+.skeleton-circle {
+    -fx-background-color: #222244;
+    -fx-background-radius: 50%;
+}
+
+/* ═══════ BADGE ═══════ */
+.badge {
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-padding: 4 12;
+    -fx-background-radius: 20px;
+}
+
+.badge-primary {
+    -fx-background-color: rgba(124, 58, 237, 0.2);
+    -fx-text-fill: #a78bfa;
+}
+
+.badge-success {
+    -fx-background-color: rgba(6, 214, 160, 0.2);
+    -fx-text-fill: #06d6a0;
+}
+
+.badge-danger {
+    -fx-background-color: rgba(247, 37, 133, 0.2);
+    -fx-text-fill: #f72585;
+}
+
+.badge-warning {
+    -fx-background-color: rgba(255, 159, 67, 0.2);
+    -fx-text-fill: #ff9f43;
+}
+
+/* ═══════ AUTH PAGE ═══════ */
+.auth-container {
+    -fx-background-color: -rento-bg-primary;
+    -fx-alignment: center;
+}
+
+.auth-card {
+    -fx-background-color: -rento-bg-card;
+    -fx-background-radius: 24px;
+    -fx-padding: 48;
+    -fx-min-width: 440;
+    -fx-max-width: 480;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 30, 0, 0, 8);
+    -fx-border-color: rgba(124, 58, 237, 0.1);
+    -fx-border-width: 1px;
+    -fx-border-radius: 24px;
+}
+
+.auth-title {
+    -fx-font-size: 30px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.auth-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: -rento-text-muted;
+}
+
+/* ═══════ VEHICLE CARD ═══════ */
+.vehicle-card {
+    -fx-background-color: -rento-bg-card;
+    -fx-background-radius: 16px;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 0, 3);
+    -fx-border-color: rgba(124, 58, 237, 0.06);
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-cursor: hand;
+}
+.vehicle-card:hover {
+    -fx-border-color: rgba(124, 58, 237, 0.25);
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.15), 18, 0, 0, 5);
+}
+
+.vehicle-card-image {
+    -fx-background-color: #222244;
+    -fx-background-radius: 16 16 0 0;
+    -fx-min-height: 180;
+    -fx-pref-height: 180;
+}
+
+.vehicle-card-body {
+    -fx-padding: 20 24;
+    -fx-spacing: 8;
+}
+
+.vehicle-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.vehicle-price {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -rento-accent-secondary;
+}
+
+.vehicle-tag {
+    -fx-background-color: rgba(124, 58, 237, 0.15);
+    -fx-text-fill: #a78bfa;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+    -fx-padding: 4 10;
+    -fx-background-radius: 6px;
+}
+
+/* ═══════ PAYMENT PAGE ═══════ */
+.payment-card {
+    -fx-background-color: linear-gradient(to bottom right, #1a1040, #0d0d2a);
+    -fx-background-radius: 20px;
+    -fx-padding: 40;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.2), 24, 0, 0, 6);
+    -fx-border-color: rgba(124, 58, 237, 0.15);
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+}
+
+/* ═══════ FOOTER ═══════ */
+.footer {
+    -fx-background-color: #0a0a18;
+    -fx-padding: 40 60;
+    -fx-spacing: 8;
+}
+
+.footer-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b6b8a;
+}
+
+.footer-link {
+    -fx-text-fill: #7c3aed;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+/* ═══════ DASHBOARD ═══════ */
+.dashboard-header {
+    -fx-background-color: -rento-bg-secondary;
+    -fx-padding: 20 40;
+    -fx-spacing: 16;
+}
+
+.stat-card {
+    -fx-background-color: -rento-bg-card;
+    -fx-background-radius: 16px;
+    -fx-padding: 24;
+    -fx-min-width: 200;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3);
+}
+
+.stat-value {
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -rento-accent-primary;
+}
+
+.stat-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -rento-text-muted;
+    -fx-font-weight: 600;
+}
+
+/* ═══════ PAGE CONTAINER ═══════ */
+.page-container {
+    -fx-background-color: -rento-bg-primary;
+}
+
+.page-content {
+    -fx-padding: 40 60;
+    -fx-spacing: 32;
+}
+
+.section-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -rento-text-primary;
+}
+
+.section-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: -rento-text-muted;
+}
+
+/* ═══════ TAB PANE ═══════ */
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: -rento-bg-secondary;
+}
+.tab-pane .tab {
+    -fx-background-color: transparent;
+    -fx-padding: 10 24;
+}
+.tab-pane .tab .tab-label {
+    -fx-text-fill: -rento-text-muted;
+    -fx-font-weight: 600;
+}
+.tab-pane .tab:selected {
+    -fx-background-color: rgba(124, 58, 237, 0.15);
+}
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: -rento-accent-primary;
+}
+.tab-pane .tab:hover {
+    -fx-background-color: rgba(124, 58, 237, 0.08);
+}
+
+/* ═══════ CAPTCHA ═══════ */
+.captcha-box {
+    -fx-background-color: #222244;
+    -fx-background-radius: 10px;
+    -fx-padding: 16 24;
+    -fx-border-color: -rento-border;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1;
+    -fx-alignment: center;
+}
+
+.captcha-text {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #06d6a0;
+    -fx-font-style: italic;
+}
+
+/* ═══════ OTP ═══════ */
+.otp-display {
+    -fx-background-color: rgba(6, 214, 160, 0.08);
+    -fx-background-radius: 12px;
+    -fx-padding: 16 28;
+    -fx-border-color: rgba(6, 214, 160, 0.2);
+    -fx-border-radius: 12px;
+    -fx-border-width: 1;
+    -fx-alignment: center;
+}
+
+.otp-text {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #06d6a0;
+    -fx-font-family: 'Consolas', monospace;
+}
+
+/* ═══════ ABOUT & CONTACT ═══════ */
+.about-section {
+    -fx-padding: 60;
+    -fx-spacing: 24;
+}
+
+.feature-icon {
+    -fx-font-size: 36px;
+    -fx-text-fill: -rento-accent-primary;
+}
+
+.contact-card {
+    -fx-background-color: -rento-bg-card;
+    -fx-background-radius: 20px;
+    -fx-padding: 48;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 6);
+    -fx-alignment: center;
+    -fx-border-color: rgba(124, 58, 237, 0.1);
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+}
+
+/* ═══════ ANIMATED ELEMENTS ═══════ */
+.pulse-dot {
+    -fx-background-color: -rento-success;
+    -fx-background-radius: 50%;
+    -fx-min-width: 10;
+    -fx-min-height: 10;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+}
+
+.glow-border {
+    -fx-border-color: rgba(124, 58, 237, 0.4);
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.3), 10, 0, 0, 0);
+}

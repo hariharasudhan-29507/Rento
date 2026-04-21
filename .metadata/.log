@@ -1,0 +1,970 @@
+!SESSION 2026-04-20 22:22:11.782 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-20 22:22:27.203
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-20 22:23:01.124
+!MESSAGE Logback config file: E:\mini prjctt\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-20 22:23:32.598
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\HARI'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-20 22:23:32.716
+!MESSAGE Claude Code for Eclipse starting...
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-20 22:23:33.163
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-20 22:23:33.169
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-20 22:23:33.213
+!MESSAGE HTTP+SSE server (Rust) listening on 127.0.0.1:10000
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-20 22:23:33.224
+!MESSAGE [Info] Binary agent started successfully.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-20 22:23:33.397
+!MESSAGE Lock file written (Rust) for port 10000 workspace=E:\mini prjctt projects=1
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-20 22:23:33.414
+!MESSAGE Claude Code server started on port 10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-20 22:23:35.118
+!MESSAGE Selection tracking started
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:40.155
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.457.0 initialized
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-20 22:23:40.432
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:40.436
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 14 expired certificates
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:40.512
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Policy watcher started for GitHub Copilot Plugin
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:42.859
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[GithubAvailableEmbeddingTypes] Got embeddings. Primary: metis-1024-I16-Binary. Deprecated: 
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:44.274
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[AutoModelService] Auto model cache cleared due to token update
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:44.275
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[Semantic Search] Semantic search is disabled { reason: 'watchedFiles capability is not available' }
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-20 22:23:44.279
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[CopilotMCP] MCP state changed from false to true
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-20 22:23:48.070
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.jface 2 0 2026-04-20 22:26:26.967
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2026-04-20 22:26:26.967
+!MESSAGE A conflict occurred for CTRL+SHIFT+S:
+Binding(CTRL+SHIFT+S,
+	ParameterizedCommand(Command(org.eclipse.ui.file.saveAll,Save All,
+		Save all current contents,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.ui.file.saveAll"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+S,
+	ParameterizedCommand(Command(com.anthropic.claudecode.eclipse.commands.sendSelection,Send Selection to Claude,
+		Send the current editor selection to Claude Code,
+		Category(com.anthropic.claudecode.eclipse.commands.category,Claude Code,null,true),
+		WorkbenchHandlerServiceHandler("com.anthropic.claudecode.eclipse.commands.sendSelection"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.739
+!MESSAGE [Info] Document is null for editor: DriverDashboardController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.743
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/controllers/DriverDashboardController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.808
+!MESSAGE [Info] Document is null for editor: ValidationUtil.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.811
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/utils/ValidationUtil.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.863
+!MESSAGE [Info] Document is null for editor: RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.864
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/app/RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.911
+!MESSAGE [Info] Document is null for editor: LoginController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:20.912
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/controllers/LoginController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:21.034
+!MESSAGE [Info] Document is null for editor: AboutController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 00:19:21.036
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/controllers/AboutController.java
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 00:19:22.704
+!MESSAGE Claude Code for Eclipse stopping...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 00:19:22.712
+!MESSAGE Lock file removed (Rust)
+!SESSION 2026-04-21 07:46:27.769 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 07:46:42.251
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 07:48:06.973
+!MESSAGE Logback config file: E:\mini prjctt\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-21 07:48:41.881
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\HARI'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 07:48:41.908
+!MESSAGE Claude Code for Eclipse starting...
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 07:48:42.053
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 07:48:42.061
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 07:48:42.115
+!MESSAGE [Info] Binary agent started successfully.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 07:48:42.182
+!MESSAGE HTTP+SSE server (Rust) listening on 127.0.0.1:10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 07:48:42.278
+!MESSAGE Lock file written (Rust) for port 10000 workspace=E:\mini prjctt projects=2
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 07:48:42.291
+!MESSAGE Claude Code server started on port 10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 07:48:44.853
+!MESSAGE Selection tracking started
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:46.856
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.457.0 initialized
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 07:48:47.211
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:47.215
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 14 expired certificates
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:47.278
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Policy watcher started for GitHub Copilot Plugin
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:49.398
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[GithubAvailableEmbeddingTypes] Got embeddings. Primary: metis-1024-I16-Binary. Deprecated: 
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:50.061
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[AutoModelService] Auto model cache cleared due to token update
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:50.065
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[Semantic Search] Semantic search is disabled { reason: 'watchedFiles capability is not available' }
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 07:48:50.067
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[CopilotMCP] MCP state changed from false to true
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 07:48:50.548
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.e4.ui.workbench 4 2 2026-04-21 08:27:43.108
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.e4.ui.workbench".
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.expressions.IEvaluationContext.getDefaultVariable()" because "this.evalContext" is null
+	at org.eclipse.ui.internal.handlers.LegacyHandlerService.getCurrentState(LegacyHandlerService.java:565)
+	at org.eclipse.egit.ui.internal.selection.SelectionUtils.getEvaluationContext(SelectionUtils.java:534)
+	at org.eclipse.egit.ui.internal.selection.SelectionUtils.getStructuredSelection(SelectionUtils.java:237)
+	at org.eclipse.egit.ui.internal.selection.RepositorySourceProvider.selectionChanged(RepositorySourceProvider.java:90)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.notifyListeners(SelectionService.java:264)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.handleSelectionChanged(SelectionService.java:98)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.lambda$0(SelectionService.java:72)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$1.run(SelectionAggregator.java:122)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.notifyListeners(SelectionAggregator.java:119)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$5.lambda$0(SelectionAggregator.java:219)
+	at org.eclipse.e4.core.contexts.RunAndTrack.runExternalCode(RunAndTrack.java:59)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$5.changed(SelectionAggregator.java:219)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:109)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.runAndTrack(EclipseContext.java:352)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.track(SelectionAggregator.java:204)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.setPart(SelectionAggregator.java:113)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:58)
+	at org.eclipse.e4.core.internal.contexts.ContextObjectSupplier$ContextInjectionListener.update(ContextObjectSupplier.java:100)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:107)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:371)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.dispose(EclipseContext.java:189)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.clearContext(PartRenderingEngine.java:991)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:964)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.workbench.renderers.swt.ElementReferenceRenderer.disposeWidget(ElementReferenceRenderer.java:113)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:944)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:903)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:903)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.ui.internal.WorkbenchWindow.hardClose(WorkbenchWindow.java:2082)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1720)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1744)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1744)
+	at org.eclipse.ui.internal.Workbench$11.run(Workbench.java:1180)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.ui.internal.Workbench.busyClose(Workbench.java:1163)
+	at org.eclipse.ui.internal.Workbench.lambda$6(Workbench.java:1469)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1469)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1440)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1717)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1744)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1744)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1753)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$2(WorkbenchWindow.java:505)
+	at org.eclipse.e4.ui.workbench.renderers.swt.WBWRenderer.lambda$4(WBWRenderer.java:566)
+	at org.eclipse.swt.events.ShellListener$2.shellClosed(ShellListener.java:101)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:140)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4349)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:268)
+	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1571)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4976)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:336)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1499)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2432)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5117)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:509)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:5076)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:336)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1499)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2432)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5117)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:509)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:5076)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:336)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1499)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2432)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5117)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3733)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:684)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:185)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2026-04-21 08:27:43.113
+!MESSAGE Cannot invoke "org.eclipse.core.expressions.IEvaluationContext.getDefaultVariable()" because "this.evalContext" is null
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.core.expressions.IEvaluationContext.getDefaultVariable()" because "this.evalContext" is null
+	at org.eclipse.ui.internal.handlers.LegacyHandlerService.getCurrentState(LegacyHandlerService.java:565)
+	at org.eclipse.egit.ui.internal.selection.SelectionUtils.getEvaluationContext(SelectionUtils.java:534)
+	at org.eclipse.egit.ui.internal.selection.SelectionUtils.getStructuredSelection(SelectionUtils.java:237)
+	at org.eclipse.egit.ui.internal.selection.RepositorySourceProvider.selectionChanged(RepositorySourceProvider.java:90)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.notifyListeners(SelectionService.java:264)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.handleSelectionChanged(SelectionService.java:98)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.lambda$0(SelectionService.java:72)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$1.run(SelectionAggregator.java:122)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.notifyListeners(SelectionAggregator.java:119)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$5.lambda$0(SelectionAggregator.java:219)
+	at org.eclipse.e4.core.contexts.RunAndTrack.runExternalCode(RunAndTrack.java:59)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$5.changed(SelectionAggregator.java:219)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:109)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.runAndTrack(EclipseContext.java:352)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.track(SelectionAggregator.java:204)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.setPart(SelectionAggregator.java:113)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:58)
+	at org.eclipse.e4.core.internal.contexts.ContextObjectSupplier$ContextInjectionListener.update(ContextObjectSupplier.java:100)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:107)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:371)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.dispose(EclipseContext.java:189)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.clearContext(PartRenderingEngine.java:991)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:964)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.workbench.renderers.swt.ElementReferenceRenderer.disposeWidget(ElementReferenceRenderer.java:113)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:944)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:903)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:903)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeRemoveGui(PartRenderingEngine.java:910)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:870)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.removeGui(PartRenderingEngine.java:854)
+	at org.eclipse.ui.internal.WorkbenchWindow.hardClose(WorkbenchWindow.java:2082)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1720)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1744)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1744)
+	at org.eclipse.ui.internal.Workbench$11.run(Workbench.java:1180)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.ui.internal.Workbench.busyClose(Workbench.java:1163)
+	at org.eclipse.ui.internal.Workbench.lambda$6(Workbench.java:1469)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1469)
+	at org.eclipse.ui.internal.Workbench.close(Workbench.java:1440)
+	at org.eclipse.ui.internal.WorkbenchWindow.busyClose(WorkbenchWindow.java:1717)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$5(WorkbenchWindow.java:1744)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:67)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1744)
+	at org.eclipse.ui.internal.WorkbenchWindow.close(WorkbenchWindow.java:1753)
+	at org.eclipse.ui.internal.WorkbenchWindow.lambda$2(WorkbenchWindow.java:505)
+	at org.eclipse.e4.ui.workbench.renderers.swt.WBWRenderer.lambda$4(WBWRenderer.java:566)
+	at org.eclipse.swt.events.ShellListener$2.shellClosed(ShellListener.java:101)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:140)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:91)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4349)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1217)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1241)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1226)
+	at org.eclipse.swt.widgets.Decorations.closeWidget(Decorations.java:268)
+	at org.eclipse.swt.widgets.Decorations.WM_CLOSE(Decorations.java:1571)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4976)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:336)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1499)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2432)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5117)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:509)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:5076)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:336)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1499)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2432)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5117)
+	at org.eclipse.swt.internal.win32.OS.DefWindowProc(Native Method)
+	at org.eclipse.swt.widgets.Shell.callWindowProc(Shell.java:509)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:5076)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:336)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1499)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2432)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5117)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(Native Method)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3733)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1160)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1051)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:153)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:684)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:339)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:583)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:185)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:219)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:149)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:115)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:467)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:298)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:615)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:563)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1415)
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 08:27:43.308
+!MESSAGE [Info] Document is null for editor: AboutController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 08:27:43.311
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/controllers/AboutController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 08:27:43.382
+!MESSAGE [Info] Document is null for editor: AdminDashboardController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 08:27:43.385
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/controllers/AdminDashboardController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 08:27:43.508
+!MESSAGE [Info] Document is null for editor: RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 08:27:43.513
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/app/RentoApplication.java
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 08:27:45.053
+!MESSAGE Claude Code for Eclipse stopping...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 08:27:45.068
+!MESSAGE Lock file removed (Rust)
+!SESSION 2026-04-21 09:47:11.499 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 09:47:35.646
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 09:47:49.423
+!MESSAGE Logback config file: E:\mini prjctt\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-21 09:48:33.280
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\HARI'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:48:33.848
+!MESSAGE Claude Code for Eclipse starting...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:48:34.667
+!MESSAGE HTTP+SSE server (Rust) listening on 127.0.0.1:10000
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 09:48:34.772
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 09:48:34.795
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 09:48:34.911
+!MESSAGE [Info] Binary agent started successfully.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:48:35.248
+!MESSAGE Lock file written (Rust) for port 10000 workspace=E:\mini prjctt projects=2
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:48:35.310
+!MESSAGE Claude Code server started on port 10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:48:37.524
+!MESSAGE Selection tracking started
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:45.819
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.457.0 initialized
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 09:48:46.145
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:46.146
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 14 expired certificates
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:46.229
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Policy watcher started for GitHub Copilot Plugin
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:47.910
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[GithubAvailableEmbeddingTypes] Got embeddings. Primary: metis-1024-I16-Binary. Deprecated: 
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:48.692
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[AutoModelService] Auto model cache cleared due to token update
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:48.694
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[Semantic Search] Semantic search is disabled { reason: 'watchedFiles capability is not available' }
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 09:48:48.695
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[CopilotMCP] MCP state changed from false to true
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 09:48:50.281
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 09:54:16.291
+!MESSAGE [Info] Document is null for editor: RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 09:54:16.297
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/app/RentoApplication.java
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:54:18.949
+!MESSAGE Claude Code for Eclipse stopping...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 09:54:18.957
+!MESSAGE Lock file removed (Rust)
+!SESSION 2026-04-21 12:36:28.219 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 12:36:47.460
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 12:37:09.497
+!MESSAGE Logback config file: E:\mini prjctt\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:37:40.475
+!MESSAGE Claude Code for Eclipse starting...
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-21 12:37:40.482
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\HARI'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 12:37:40.606
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 12:37:40.618
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 12:37:40.683
+!MESSAGE [Info] Binary agent started successfully.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:37:40.782
+!MESSAGE HTTP+SSE server (Rust) listening on 127.0.0.1:10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:37:40.938
+!MESSAGE Lock file written (Rust) for port 10000 workspace=E:\mini prjctt projects=2
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:37:40.964
+!MESSAGE Claude Code server started on port 10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:37:44.802
+!MESSAGE Selection tracking started
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:47.184
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.457.0 initialized
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 12:37:47.466
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:47.468
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 14 expired certificates
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:47.543
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Policy watcher started for GitHub Copilot Plugin
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:50.594
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[GithubAvailableEmbeddingTypes] Got embeddings. Primary: metis-1024-I16-Binary. Deprecated: 
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:51.746
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[AutoModelService] Auto model cache cleared due to token update
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:51.750
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[Semantic Search] Semantic search is disabled { reason: 'watchedFiles capability is not available' }
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 12:37:51.751
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[CopilotMCP] MCP state changed from false to true
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 12:37:58.107
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 12:42:25.003
+!MESSAGE [Info] Document is null for editor: RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 12:42:25.007
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/app/RentoApplication.java
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:42:26.914
+!MESSAGE Claude Code for Eclipse stopping...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 12:42:26.923
+!MESSAGE Lock file removed (Rust)
+!SESSION 2026-04-21 15:21:19.943 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 15:21:31.996
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 15:21:42.171
+!MESSAGE Logback config file: E:\mini prjctt\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-21 15:22:05.236
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\HARI'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:22:05.516
+!MESSAGE Claude Code for Eclipse starting...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:22:06.176
+!MESSAGE HTTP+SSE server (Rust) listening on 127.0.0.1:10000
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:22:06.197
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:22:06.216
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:22:06.316
+!MESSAGE [Info] Binary agent started successfully.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:22:06.549
+!MESSAGE Lock file written (Rust) for port 10000 workspace=E:\mini prjctt projects=2
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:22:06.591
+!MESSAGE Claude Code server started on port 10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:22:07.893
+!MESSAGE Selection tracking started
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:22:10.023
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.457.0 initialized
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 15:22:10.278
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:22:10.281
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 14 expired certificates
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:22:10.343
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Policy watcher started for GitHub Copilot Plugin
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-04-21 15:22:13.150
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[GithubAvailableEmbeddingTypes] Error fetching available embedding types FetchError: getaddrinfo ENOTFOUND api.github.com
+    at fetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at cachingFetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:288:16)
+    at Vce.fetch (C:\snapshot\copilot-intellij\lib\src\network\helix.ts:160:22)
+    at apiFetch (C:\snapshot\copilot-intellij\lib\src\network\github.ts:32:22)
+    at K6e.doGetAvailableTypes (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:79:24)
+    at K6e.getAllAvailableTypes (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:50:38)
+    at K6e.getPreferredType (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:129:24)
+    at hx.tryInit (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\workspaceChunkSearchService.ts:130:22) {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  erroredSysCall: 'getaddrinfo'
+}
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-04-21 15:22:13.202
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[lsp] Request checkStatus: FetchError: getaddrinfo ENOTFOUND api.github.com
+    at fetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at cachingFetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:288:16)
+    at Vce.fetch (C:\snapshot\copilot-intellij\lib\src\network\helix.ts:160:22)
+    at apiFetch (C:\snapshot\copilot-intellij\lib\src\network\github.ts:32:22)
+    at authFromGitHubSession (C:\snapshot\copilot-intellij\lib\src\auth\copilotToken.ts:196:22)
+    at uRe.fetchTokenResult (C:\snapshot\copilot-intellij\lib\src\auth\copilotToken.ts:273:16)
+    at kt.fetchTokenResult (C:\snapshot\copilot-intellij\lib\src\auth\copilotTokenManager.ts:78:16)
+    at C:\snapshot\copilot-intellij\lib\src\auth\copilotTokenManager.ts:101:24
+    at kt.getTokenResult (C:\snapshot\copilot-intellij\lib\src\auth\copilotTokenManager.ts:120:16) {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  erroredSysCall: 'getaddrinfo'
+}
+
+!ENTRY com.microsoft.copilot.eclipse 4 0 2026-04-21 15:22:13.209
+!MESSAGE [Error] org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Request checkStatus failed with message: getaddrinfo ENOTFOUND api.github.com
+!STACK 0
+java.util.concurrent.CompletionException: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Request checkStatus failed with message: getaddrinfo ENOTFOUND api.github.com
+	at java.base/java.util.concurrent.CompletableFuture.encodeRelay(CompletableFuture.java:368)
+	at java.base/java.util.concurrent.CompletableFuture.completeRelay(CompletableFuture.java:377)
+	at java.base/java.util.concurrent.CompletableFuture$UniRelay.tryFire(CompletableFuture.java:1097)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:2194)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleResponse(RemoteEndpoint.java:214)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:198)
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$3(LanguageServerWrapper.java:449)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:189)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:97)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:97)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Request checkStatus failed with message: getaddrinfo ENOTFOUND api.github.com
+	... 11 more
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-04-21 15:22:13.235
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[GithubAvailableEmbeddingTypes] Error fetching available embedding types FetchError: getaddrinfo ENOTFOUND api.github.com
+    at fetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at cachingFetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:288:16)
+    at Vce.fetch (C:\snapshot\copilot-intellij\lib\src\network\helix.ts:160:22)
+    at apiFetch (C:\snapshot\copilot-intellij\lib\src\network\github.ts:32:22)
+    at K6e.doGetAvailableTypes (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:79:24)
+    at C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:69:20
+    at K6e.getPreferredType (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:129:24)
+    at hx.tryInit (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\workspaceChunkSearchService.ts:130:22) {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  erroredSysCall: 'getaddrinfo'
+}
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:22:13.236
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[GithubAvailableEmbeddingTypes] Could not find any available embedding types. Error: requestFailed
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 15:22:13.841
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:33:53.920
+!MESSAGE [Info] Document is null for editor: RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:33:53.924
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/app/RentoApplication.java
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:33:55.321
+!MESSAGE Claude Code for Eclipse stopping...
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:33:55.327
+!MESSAGE Lock file removed (Rust)
+!SESSION 2026-04-21 15:37:36.003 -----------------------------------------------
+eclipse.buildId=4.39.0.20260305-0817
+java.version=21.0.10
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 15:37:51.805
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-04-21 15:39:12.847
+!MESSAGE Logback config file: E:\mini prjctt\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.101.20251017-1242.xml
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:39:35.264
+!MESSAGE Claude Code for Eclipse starting...
+
+!ENTRY org.eclipse.egit.ui 2 0 2026-04-21 15:39:35.317
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\HARI'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:39:35.419
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:39:35.430
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 15:39:35.490
+!MESSAGE [Info] Binary agent started successfully.
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:39:35.559
+!MESSAGE HTTP+SSE server (Rust) listening on 127.0.0.1:10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:39:35.694
+!MESSAGE Lock file written (Rust) for port 10000 workspace=E:\mini prjctt projects=2
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:39:35.727
+!MESSAGE Claude Code server started on port 10000
+
+!ENTRY com.anthropic.claudecode.eclipse 1 0 2026-04-21 15:39:38.565
+!MESSAGE Selection tracking started
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:39:39.291
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[lsp] GitHub Copilot Language Server 1.457.0 initialized
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 15:39:39.515
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:39:39.518
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[certificates] Removed 14 expired certificates
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:39:39.575
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[default] Policy watcher started for GitHub Copilot Plugin
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-04-21 15:39:42.469
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[GithubAvailableEmbeddingTypes] Error fetching available embedding types FetchError: getaddrinfo ENOTFOUND api.github.com
+    at fetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at cachingFetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:288:16)
+    at Vce.fetch (C:\snapshot\copilot-intellij\lib\src\network\helix.ts:160:22)
+    at apiFetch (C:\snapshot\copilot-intellij\lib\src\network\github.ts:32:22)
+    at K6e.doGetAvailableTypes (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:79:24)
+    at K6e.getAllAvailableTypes (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:50:38)
+    at K6e.getPreferredType (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:129:24)
+    at hx.tryInit (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\workspaceChunkSearchService.ts:130:22) {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  erroredSysCall: 'getaddrinfo'
+}
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-04-21 15:39:42.507
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[lsp] Request checkStatus: FetchError: getaddrinfo ENOTFOUND api.github.com
+    at fetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at cachingFetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:288:16)
+    at Vce.fetch (C:\snapshot\copilot-intellij\lib\src\network\helix.ts:160:22)
+    at apiFetch (C:\snapshot\copilot-intellij\lib\src\network\github.ts:32:22)
+    at authFromGitHubSession (C:\snapshot\copilot-intellij\lib\src\auth\copilotToken.ts:196:22)
+    at uRe.fetchTokenResult (C:\snapshot\copilot-intellij\lib\src\auth\copilotToken.ts:273:16)
+    at kt.fetchTokenResult (C:\snapshot\copilot-intellij\lib\src\auth\copilotTokenManager.ts:78:16)
+    at C:\snapshot\copilot-intellij\lib\src\auth\copilotTokenManager.ts:101:24 {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  erroredSysCall: 'getaddrinfo'
+}
+
+!ENTRY com.microsoft.copilot.eclipse 4 0 2026-04-21 15:39:42.529
+!MESSAGE [Error] org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Request checkStatus failed with message: getaddrinfo ENOTFOUND api.github.com
+!STACK 0
+java.util.concurrent.CompletionException: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Request checkStatus failed with message: getaddrinfo ENOTFOUND api.github.com
+	at java.base/java.util.concurrent.CompletableFuture.encodeRelay(CompletableFuture.java:368)
+	at java.base/java.util.concurrent.CompletableFuture.completeRelay(CompletableFuture.java:377)
+	at java.base/java.util.concurrent.CompletableFuture$UniRelay.tryFire(CompletableFuture.java:1097)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture.completeExceptionally(CompletableFuture.java:2194)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleResponse(RemoteEndpoint.java:214)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:198)
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$3(LanguageServerWrapper.java:449)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:189)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:97)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:97)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Request checkStatus failed with message: getaddrinfo ENOTFOUND api.github.com
+	... 11 more
+
+!ENTRY org.eclipse.lsp4e 4 0 2026-04-21 15:39:42.622
+!MESSAGE [LS:GitHub Copilot Language Server][Error]	[GithubAvailableEmbeddingTypes] Error fetching available embedding types FetchError: getaddrinfo ENOTFOUND api.github.com
+    at fetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:99:11)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at cachingFetch (C:\snapshot\copilot-intellij\node_modules\@adobe\helix-fetch\src\fetch\index.js:288:16)
+    at Vce.fetch (C:\snapshot\copilot-intellij\lib\src\network\helix.ts:160:22)
+    at apiFetch (C:\snapshot\copilot-intellij\lib\src\network\github.ts:32:22)
+    at K6e.doGetAvailableTypes (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:79:24)
+    at C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:69:20
+    at K6e.getPreferredType (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\embeddings\githubAvailableEmbeddingTypes.ts:129:24)
+    at hx.tryInit (C:\snapshot\copilot-intellij\lib\src\workspaceChunkSearch\workspaceChunkSearchService.ts:130:22) {
+  type: 'system',
+  _name: 'FetchError',
+  code: 'ENOTFOUND',
+  errno: -3008,
+  erroredSysCall: 'getaddrinfo'
+}
+
+!ENTRY org.eclipse.lsp4e 1 0 2026-04-21 15:39:42.623
+!MESSAGE [LS:GitHub Copilot Language Server][Info]	[GithubAvailableEmbeddingTypes] Could not find any available embedding types. Error: requestFailed
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-04-21 15:39:43.224
+!MESSAGE [LS:GitHub Copilot Language Server][Warning]	[McpAutoApproveService] Invalid McpAutoApproveService config, resetting to empty undefined
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 16:28:37.374
+!MESSAGE [Info] Document is null for editor: DriverDashboardController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 16:28:37.378
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/controllers/DriverDashboardController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 16:28:37.431
+!MESSAGE [Info] Document is null for editor: RentoApplication.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-04-21 16:28:37.432
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///E:/mini%20prjctt/rento/src/main/java/com/rento/app/RentoApplication.java

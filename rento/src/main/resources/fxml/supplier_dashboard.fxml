@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.SupplierDashboardController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" text="Supplier Dashboard" style="-fx-font-size: 14px; -fx-text-fill: #a0a0c0; -fx-font-weight: 600;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Profile" styleClass="nav-link" onAction="#onNavProfile"/>
+            <Button text="Logout" styleClass="btn-danger,btn-small" onAction="#onLogout"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="32">
+            <VBox spacing="8">
+                <Label text="📦 Supplier Dashboard" styleClass="section-title"/>
+                <Label text="Approve customer rental requests and monitor supplier fleet performance." styleClass="section-subtitle"/>
+            </VBox>
+
+            <HBox spacing="20">
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalVehicles" text="0" styleClass="stat-value"/>
+                    <Label text="Listed Vehicles" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="activeRentals" text="0" styleClass="stat-value" style="-fx-text-fill: #06d6a0;"/>
+                    <Label text="Active Rentals" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="pendingApprovals" text="0" styleClass="stat-value" style="-fx-text-fill: #ff9f43;"/>
+                    <Label text="Pending Requests" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalRevenue" text="₹0" styleClass="stat-value" style="-fx-text-fill: #7c3aed;"/>
+                    <Label text="Gross Revenue" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="walletBalance" text="₹0" styleClass="stat-value"/>
+                    <Label text="Wallet Balance" styleClass="stat-label"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Fleet Status Graph" styleClass="heading-3"/>
+                    <PieChart fx:id="fleetStatusChart" prefHeight="280"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Rental Request Graph" styleClass="heading-3"/>
+                    <BarChart fx:id="supplierTrendChart" categoryGap="18" legendVisible="false" prefHeight="280">
+                        <xAxis>
+                            <CategoryAxis label="Stage"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card" spacing="16">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="Pending Rental Requests" styleClass="heading-3"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="↻ Refresh" styleClass="btn-icon" onAction="#onRefresh"/>
+                </HBox>
+
+                <VBox fx:id="approvalList" spacing="12"/>
+
+                <Label fx:id="noApprovalsLabel" text="No supplier approvals are waiting right now."
+                       styleClass="text-muted" style="-fx-padding: 24 0;" visible="true"/>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="My Vehicle Fleet" styleClass="heading-3"/>
+                <FlowPane fx:id="vehicleFleet" hgap="20" vgap="20"/>
+                <Label fx:id="noVehiclesLabel" text="No vehicles in your fleet yet. Add vehicles from the Rent page!"
+                       styleClass="text-muted"/>
+            </VBox>
+
+            <HBox spacing="16">
+                <Button text="➕ Add Vehicle" styleClass="btn-primary" onAction="#onAddVehicle"/>
+                <Button text="🏠 Back to Home" styleClass="btn-secondary" onAction="#onNavHome"/>
+            </HBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Supplier Portal" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

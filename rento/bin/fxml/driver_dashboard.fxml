@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.DriverDashboardController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" text="Driver Dashboard" style="-fx-font-size: 14px; -fx-text-fill: #a0a0c0; -fx-font-weight: 600;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Profile" styleClass="nav-link" onAction="#onNavProfile"/>
+            <Button text="Logout" styleClass="btn-danger,btn-small" onAction="#onLogout"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="32">
+            <VBox spacing="8">
+                <Label text="🚗 Driver Dashboard" styleClass="section-title"/>
+                <Label text="Manage ride assignments, verify OTPs, and track driver performance." styleClass="section-subtitle"/>
+            </VBox>
+
+            <HBox spacing="20">
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="activeRides" text="0" styleClass="stat-value"/>
+                    <Label text="Active Rides" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="completedRides" text="0" styleClass="stat-value"/>
+                    <Label text="Completed" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="pendingRequests" text="0" styleClass="stat-value" style="-fx-text-fill: #ff9f43;"/>
+                    <Label text="Pending Requests" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="earnings" text="₹0" styleClass="stat-value" style="-fx-text-fill: #06d6a0;"/>
+                    <Label text="Estimated Earnings" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="walletBalance" text="₹0" styleClass="stat-value"/>
+                    <Label text="Wallet Balance" styleClass="stat-label"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Ride Mix Graph" styleClass="heading-3"/>
+                    <PieChart fx:id="rideMixChart" prefHeight="260"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Ride Volume Graph" styleClass="heading-3"/>
+                    <BarChart fx:id="rideVolumeChart" categoryGap="18" legendVisible="false" prefHeight="260">
+                        <xAxis>
+                            <CategoryAxis label="Ride Stage"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card" spacing="16">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="Pending Ride Requests" styleClass="heading-3"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="↻ Refresh" styleClass="btn-icon" onAction="#onRefresh"/>
+                </HBox>
+
+                <VBox fx:id="requestList" spacing="12"/>
+
+                <Label fx:id="noRequestsLabel" text="No pending ride requests at the moment. Check back later!"
+                       styleClass="text-muted" style="-fx-padding: 24 0;" visible="true"/>
+            </VBox>
+
+            <VBox styleClass="card" spacing="16">
+                <Label text="Verify Ride OTP" styleClass="heading-3"/>
+                <Label text="Enter the OTP provided by the customer to start the ride" styleClass="text-muted"/>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <TextField fx:id="otpInput" promptText="Enter 6-digit OTP" prefWidth="200"/>
+                    <Button text="Verify &amp; Start Ride" styleClass="btn-accent" onAction="#onVerifyOTP"/>
+                </HBox>
+                <Label fx:id="otpResult" text="" visible="false"/>
+            </VBox>
+
+            <HBox spacing="16">
+                <Button text="🏠 Back to Home" styleClass="btn-secondary" onAction="#onNavHome"/>
+            </HBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Driver Portal" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

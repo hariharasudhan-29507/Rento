@@ -1,0 +1,57 @@
+0:31:19 Tab3 FinishNav5 ERR_ABORTED
+0:31:19 Tab3 RenderProcessGone
+0:31:19 Microsoft.UnloadController.ClearUnloadState
+0:31:19 Microsoft.Shutdown.TabStripModel.RunUnloadListenerBeforeClosing_false
+0:31:19 Microsoft.Shutdown.TabStripModel.InternalCloseTabsImpl_ClosedAll
+0:31:19 Microsoft.Shutdown.TabStripModel.SendDetachWebContentsNotifications
+0:31:19 Microsoft.UnloadController.ClearUnloadState
+0:31:19 Browser3 Close Tab3 at 0
+0:31:19 Tab3 WebContentsDestroyed
+0:31:19 Microsoft.UnloadController.TabStripEmpty
+0:31:19 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:31:19 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
+0:31:19 Microsoft.Shutdown.OnWindowClosing
+0:31:19 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:31:19 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
+0:31:19 Microsoft.Shutdown.OnWindowClosing_MaybeClearBrowsingDataOnExit
+0:31:19 Microsoft.Shutdown.OnWindowClosing_ClearBrowsingDataOnExitNotInProgress
+0:31:19 Microsoft.Shutdown.OnWindowClosingPostClearBrowsingData_NoBrowsingDataCleared
+0:31:19 Widget Closed: BrowserWidget
+0:31:19 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
+0:31:19 Microsoft.Shutdown.OnWindowClosing
+0:31:19 Microsoft.Shutdown.OnWindowClosing_DeleteScheduled
+0:31:19 Microsoft.Browser_Removed
+0:31:19 Tab4 StartNav7 #typed
+0:31:19 Tab4 FinishNav6
+0:31:19 Tab4 PageLoad
+0:31:19 Tab4 FinishNav7 ERR_ABORTED
+0:31:19 Tab4 StartNav8 #typed
+0:31:19 Tab4 FinishNav8
+0:31:19 Tab4 PageLoad
+0:31:21 Tab4 StartNav9 #typed
+0:31:21 Tab4 FinishNav9
+0:31:21 Tab4 PageLoad
+0:31:28 Memory Pressure: Moderate
+0:31:38 Memory Pressure: Moderate
+0:31:48 Memory Pressure: Moderate
+0:31:58 Memory Pressure: Moderate
+0:32:08 Memory Pressure: Moderate
+0:32:18 Memory Pressure: Moderate
+0:32:28 Memory Pressure: Moderate
+0:32:38 Memory Pressure: None
+0:35:43 Memory Pressure: Moderate
+0:35:53 Memory Pressure: Moderate
+0:36:03 Memory Pressure: Moderate
+0:36:13 Memory Pressure: None
+0:38:19 Microsoft.NewBrowser_Popup
+0:38:19 Microsoft.BrowserList.AddBrowser
+0:38:19 Browser5 Insert active Tab5 at 0
+0:38:19 Tab5 StartNav10 #auto_toplevel
+0:38:19 Tab5 StartNav11 #typed
+0:38:19 Tab5 FinishNav10
+0:38:19 Tab5 PageLoad
+0:38:19 Tab5 FinishNav11
+0:38:19 Tab5 PageLoad
+0:38:20 Tab5 StartNav12 #typed
+0:38:20 Tab5 FinishNav12
+0:38:20 Tab5 PageLoad

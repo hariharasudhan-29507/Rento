@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.PaymentController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <!-- NAV -->
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="← Back" styleClass="btn-icon" onAction="#onBack"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="32" alignment="CENTER">
+            <Label text="Payment" styleClass="section-title"/>
+            <Label text="Complete your booking securely" styleClass="section-subtitle"/>
+
+            <HBox spacing="40" alignment="CENTER">
+                <!-- Card Form -->
+                <VBox styleClass="payment-card" spacing="20" minWidth="420" maxWidth="480">
+                    <Label text="Card Details" styleClass="heading-3"/>
+
+                    <Label fx:id="errorLabel" text="" styleClass="form-error" visible="false"/>
+
+                    <VBox styleClass="form-group" spacing="4">
+                        <Label text="Payment Method" styleClass="form-label"/>
+                        <ComboBox fx:id="methodCombo" promptText="Select method" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+
+                    <VBox styleClass="form-group" spacing="4">
+                        <Label fx:id="accountNumberLabel" text="Card Number" styleClass="form-label"/>
+                        <TextField fx:id="cardNumberField" promptText="1234 5678 9012 3456"/>
+                    </VBox>
+
+                    <VBox styleClass="form-group" spacing="4">
+                        <Label fx:id="accountNameLabel" text="Cardholder Name" styleClass="form-label"/>
+                        <TextField fx:id="cardNameField" promptText="Name on card"/>
+                    </VBox>
+
+                    <HBox spacing="16">
+                        <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Expiry Date" styleClass="form-label"/>
+                            <TextField fx:id="expiryField" promptText="MM/YY"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="CVV" styleClass="form-label"/>
+                            <PasswordField fx:id="cvvField" promptText="•••"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Processing indicator -->
+                    <StackPane fx:id="processingPane" visible="false" minHeight="60">
+                        <ProgressIndicator prefWidth="40" prefHeight="40"/>
+                    </StackPane>
+
+                    <Button fx:id="payBtn" text="Pay Now" styleClass="btn-accent" maxWidth="1.7976931348623157E308" onAction="#onPay"/>
+                </VBox>
+
+                <!-- Order Summary -->
+                <VBox styleClass="card" spacing="16" minWidth="320">
+                    <Label text="Order Summary" styleClass="heading-3"/>
+                    <Separator/>
+
+                    <HBox spacing="8"><Label text="Vehicle:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summaryVehicle" text="" style="-fx-text-fill: white; -fx-font-weight: 700;"/></HBox>
+                    <HBox spacing="8"><Label text="Pickup:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summaryPickup" text="" styleClass="text-body"/></HBox>
+                    <HBox spacing="8"><Label text="Drop-off:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summaryDropoff" text="" styleClass="text-body"/></HBox>
+                    <HBox spacing="8"><Label text="Duration:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summaryDays" text="" styleClass="text-body"/></HBox>
+
+                    <Separator/>
+                    <HBox spacing="8"><Label text="Subtotal:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summarySubtotal" text="" style="-fx-text-fill: white;"/></HBox>
+                    <HBox spacing="8"><Label text="Tax:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summaryTax" text="" styleClass="text-body"/></HBox>
+                    <Separator/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Total:" style="-fx-font-size: 20px; -fx-font-weight: 800; -fx-text-fill: white;" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="summaryTotal" text="₹0" styleClass="vehicle-price"/>
+                    </HBox>
+
+                    <!-- OTP Display -->
+                    <VBox fx:id="otpSection" spacing="8" visible="false">
+                        <Separator/>
+                        <Label text="Booking OTP" styleClass="heading-3"/>
+                        <HBox styleClass="otp-display" alignment="CENTER">
+                            <Label fx:id="otpLabel" text="" styleClass="otp-text"/>
+                        </HBox>
+                        <Label text="Share this OTP with your driver" styleClass="text-muted" style="-fx-text-alignment: center;"/>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

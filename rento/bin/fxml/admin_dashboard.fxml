@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.AdminDashboardController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" text="Administrator Dashboard" style="-fx-font-size: 14px; -fx-text-fill: #a0a0c0; -fx-font-weight: 600;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Profile" styleClass="nav-link" onAction="#onNavProfile"/>
+            <Button text="Logout" styleClass="btn-danger,btn-small" onAction="#onLogout"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="32">
+            <VBox spacing="8">
+                <Label text="🛡 Admin Dashboard" styleClass="section-title"/>
+                <Label text="Monitor all actors, platform activity, and overdue rental risks." styleClass="section-subtitle"/>
+            </VBox>
+
+            <HBox spacing="20">
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalUsers" text="0" styleClass="stat-value"/>
+                    <Label text="Total Actors" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalVehicles" text="0" styleClass="stat-value"/>
+                    <Label text="Vehicles" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalBookings" text="0" styleClass="stat-value"/>
+                    <Label text="Bookings" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalRentals" text="0" styleClass="stat-value"/>
+                    <Label text="Rentals" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="overduePenaltyTotal" text="₹0" styleClass="stat-value" style="-fx-text-fill: #f72585;"/>
+                    <Label text="Penalty Exposure" styleClass="stat-label"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Actor Graph" styleClass="heading-3"/>
+                    <PieChart fx:id="actorMixChart" prefHeight="280"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Operations Graph" styleClass="heading-3"/>
+                    <BarChart fx:id="operationsChart" categoryGap="18" legendVisible="false" prefHeight="280">
+                        <xAxis>
+                            <CategoryAxis label="Platform Metric"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Actor Monitor" styleClass="heading-3"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="↻ Refresh" styleClass="btn-icon" onAction="#onRefresh"/>
+                    </HBox>
+                    <VBox fx:id="actorList" spacing="8"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Incidents & Risks" styleClass="heading-3"/>
+                    <VBox fx:id="incidentList" spacing="8"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Supplier Change Approvals" styleClass="heading-3"/>
+                    <VBox fx:id="supplierChangeList" spacing="12"/>
+                    <Label fx:id="noSupplierChangesLabel" text="No supplier approvals pending." styleClass="text-muted"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Admin Mail Console" styleClass="heading-3"/>
+                    <ComboBox fx:id="mailRecipientCombo" promptText="Select recipient" maxWidth="1.7976931348623157E308"/>
+                    <TextField fx:id="mailSubjectField" promptText="Mail subject"/>
+                    <TextArea fx:id="mailBodyArea" promptText="Write the admin update mail..." prefRowCount="8"/>
+                    <Button text="Send Mail (Console)" styleClass="btn-primary" onAction="#onSendMail"/>
+                    <Button text="Download Full System Export" styleClass="btn-secondary" onAction="#onDownloadSystemExport"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Admin Portal" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

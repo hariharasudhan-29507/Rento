@@ -1,0 +1,1 @@
+Place image assets here for the application.

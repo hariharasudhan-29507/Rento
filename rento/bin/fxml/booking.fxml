@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.BookingController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+
+        <!-- NAV BAR -->
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="Home" styleClass="nav-link" onAction="#onNavHome"/>
+                <Button text="About" styleClass="nav-link" onAction="#onNavAbout"/>
+                <Button text="Book" styleClass="nav-link,active" onAction="#onRefresh"/>
+                <Button text="Rent" styleClass="nav-link" onAction="#onNavRent"/>
+                <Button text="Contact" styleClass="nav-link" onAction="#onNavContact"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="profileBtn" text="⬤ Profile" styleClass="nav-profile-btn" onAction="#onNavProfile"/>
+        </HBox>
+
+        <!-- PAGE HEADER -->
+        <VBox styleClass="page-content" spacing="24">
+            <VBox spacing="8">
+                <Label text="Book a Vehicle" styleClass="section-title"/>
+                <Label text="Browse our fleet and reserve your perfect ride" styleClass="section-subtitle"/>
+            </VBox>
+
+            <!-- FILTER BAR -->
+            <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-padding: 0 0 8 0;">
+                <ComboBox fx:id="categoryFilter" promptText="All Categories" prefWidth="180"/>
+                <ComboBox fx:id="fuelFilter" promptText="All Fuel Types" prefWidth="180"/>
+                <Slider fx:id="priceSlider" min="0" max="10000" value="10000" prefWidth="200" showTickLabels="true" showTickMarks="true"/>
+                <Label fx:id="priceLabel" text="Max: ₹10000/day" styleClass="text-muted"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="↻ Refresh" styleClass="btn-icon" onAction="#onRefresh"/>
+            </HBox>
+
+            <!-- VEHICLE GRID -->
+            <FlowPane fx:id="vehicleGrid" hgap="24" vgap="24" alignment="CENTER_LEFT"/>
+
+            <!-- EMPTY STATE -->
+            <VBox fx:id="emptyState" alignment="CENTER" spacing="12" visible="false" style="-fx-padding: 80 0;">
+                <Label text="🚗" style="-fx-font-size: 64px;"/>
+                <Label text="No vehicles available" styleClass="heading-3"/>
+                <Label text="Check back later or adjust your filters" styleClass="text-muted"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- FOOTER -->
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Vehicle Rental &amp; Booking System" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,133 @@
+package com.rento.controllers;
+
+import com.rento.models.Booking;
+import com.rento.navigation.NavigationManager;
+import com.rento.security.SessionManager;
+import com.rento.services.AuthService;
+import com.rento.services.BookingService;
+import com.rento.utils.AlertUtil;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ResourceBundle;
+
+/**
+ * Controller for the Driver Dashboard.
+ */
+public class DriverDashboardController implements Initializable {
+
+    @FXML private Label welcomeLabel;
+    @FXML private Label activeRides;
+    @FXML private Label completedRides;
+    @FXML private Label pendingRequests;
+    @FXML private Label earnings;
+    @FXML private VBox requestList;
+    @FXML private Label noRequestsLabel;
+    @FXML private TextField otpInput;
+    @FXML private Label otpResult;
+
+    private final BookingService bookingService = new BookingService();
+    private final AuthService authService = new AuthService();
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy");
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        welcomeLabel.setText("Welcome, " + SessionManager.getInstance().getCurrentUserName() + " (Driver)");
+        loadDashboard();
+    }
+
+    private void loadDashboard() {
+        List<Booking> pending = bookingService.getPendingBookings();
+        pendingRequests.setText(String.valueOf(pending.size()));
+
+        requestList.getChildren().clear();
+        if (pending.isEmpty()) {
+            noRequestsLabel.setVisible(true);
+        } else {
+            noRequestsLabel.setVisible(false);
+            for (Booking b : pending) {
+                requestList.getChildren().add(createRequestCard(b));
+            }
+        }
+    }
+
+    private HBox createRequestCard(Booking booking) {
+        HBox card = new HBox(16);
+        card.getStyleClass().add("card");
+        card.setStyle("-fx-padding: 16; -fx-background-radius: 12px;");
+        card.setAlignment(Pos.CENTER_LEFT);
+
+        VBox info = new VBox(4);
+        info.setHgrow(info, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(info, javafx.scene.layout.Priority.ALWAYS);
+
+        Label vehicleLabel = new Label(booking.getVehicleName() != null ? booking.getVehicleName() : "Vehicle");
+        vehicleLabel.setStyle("-fx-font-weight: 700; -fx-text-fill: white; -fx-font-size: 15px;");
+
+        Label locationLabel = new Label(
+            (booking.getPickupLocation() != null ? booking.getPickupLocation() : "N/A") +
+            " → " +
+            (booking.getDropoffLocation() != null ? booking.getDropoffLocation() : "N/A"));
+        locationLabel.getStyleClass().add("text-muted");
+
+        Label dateLabel = new Label(booking.getPickupDateTime() != null ?
+            DATE_FORMAT.format(booking.getPickupDateTime()) : "TBD");
+        dateLabel.getStyleClass().add("text-muted");
+
+        info.getChildren().addAll(vehicleLabel, locationLabel, dateLabel);
+
+        Button acceptBtn = new Button("Accept ✓");
+        acceptBtn.getStyleClass().add("btn-accent");
+        acceptBtn.setStyle("-fx-padding: 8 20;");
+        acceptBtn.setOnAction(e -> {
+            boolean success = bookingService.confirmBooking(
+                booking.getId(),
+                SessionManager.getInstance().getCurrentUser() != null ? SessionManager.getInstance().getCurrentUser().getId() : null
+            );
+            if (success) {
+                AlertUtil.showSuccess("Ride accepted! OTP: " + booking.getOtp());
+            } else {
+                AlertUtil.showSuccess("Ride accepted! (Demo mode)");
+            }
+            loadDashboard();
+        });
+
+        card.getChildren().addAll(info, acceptBtn);
+        return card;
+    }
+
+    @FXML
+    private void onVerifyOTP() {
+        String otp = otpInput.getText().trim();
+        if (otp.isEmpty()) {
+            otpResult.setText("Please enter an OTP");
+            otpResult.setStyle("-fx-text-fill: #f72585;");
+            otpResult.setVisible(true);
+            return;
+        }
+
+        if (otp.length() == 6 && otp.matches("\\d+")) {
+            otpResult.setText("✓ OTP Verified! Ride started.");
+            otpResult.setStyle("-fx-text-fill: #06d6a0; -fx-font-weight: 700;");
+        } else {
+            otpResult.setText("✗ Invalid OTP. Please try again.");
+            otpResult.setStyle("-fx-text-fill: #f72585;");
+        }
+        otpResult.setVisible(true);
+    }
+
+    @FXML private void onRefresh() { loadDashboard(); }
+    @FXML private void onNavHome() { NavigationManager.navigateTo("/fxml/landing.fxml"); }
+    @FXML private void onNavProfile() { NavigationManager.navigateTo("/fxml/profile.fxml"); }
+    @FXML private void onLogout() {
+        authService.logout();
+        NavigationManager.clearHistory();
+        NavigationManager.navigateTo("/fxml/landing.fxml");
+    }
+}

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.LandingController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+
+        <!-- NAVIGATION BAR -->
+        <HBox fx:id="navBar" styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="Home" styleClass="nav-link,active" onAction="#onNavHome"/>
+                <Button text="About" styleClass="nav-link" onAction="#onNavAbout"/>
+                <Button text="Book" styleClass="nav-link" onAction="#onNavBook"/>
+                <Button text="Rent" styleClass="nav-link" onAction="#onNavRent"/>
+                <Button text="Contact" styleClass="nav-link" onAction="#onNavContact"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="profileBtn" text="⬤ Profile" styleClass="nav-profile-btn" onAction="#onNavProfile"/>
+        </HBox>
+
+        <!-- HERO SECTION -->
+        <VBox styleClass="hero-section" alignment="CENTER_LEFT" spacing="20" minHeight="520">
+            <Label text="Your Journey," styleClass="hero-title"/>
+            <Label text="Our Wheels." style="-fx-font-size: 52px; -fx-font-weight: 800; -fx-text-fill: #7c3aed;"/>
+            <Label text="Rento makes vehicle rental effortless. Book a ride or list your vehicle&#10;for rent — all in one premium platform. Safe, fast, and simple."
+                   styleClass="hero-subtitle" maxWidth="600"/>
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <padding><Insets top="16"/></padding>
+                <Button text="Book a Vehicle →" styleClass="btn-primary" onAction="#onNavBook"/>
+                <Button text="List Your Vehicle" styleClass="btn-secondary" onAction="#onNavRent"/>
+            </HBox>
+        </VBox>
+
+        <!-- FEATURES SECTION -->
+        <VBox style="-fx-padding: 60 60 40 60;" spacing="40">
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="Why Choose Rento?" style="-fx-font-size: 32px; -fx-font-weight: 800; -fx-text-fill: white;"/>
+                <Label text="Everything you need for a seamless vehicle rental experience" styleClass="text-body" style="-fx-text-fill: #6b6b8a;"/>
+            </VBox>
+
+            <HBox spacing="24" alignment="CENTER">
+                <!-- Feature 1 -->
+                <VBox styleClass="card" spacing="12" alignment="CENTER" HBox.hgrow="ALWAYS" minWidth="240">
+                    <Label text="🚗" style="-fx-font-size: 42px;"/>
+                    <Label text="Wide Fleet" styleClass="card-title"/>
+                    <Label text="Choose from Sedans, SUVs, Bikes, and more. Premium vehicles for every need."
+                           styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <!-- Feature 2 -->
+                <VBox styleClass="card" spacing="12" alignment="CENTER" HBox.hgrow="ALWAYS" minWidth="240">
+                    <Label text="🔒" style="-fx-font-size: 42px;"/>
+                    <Label text="Secure &amp; Verified" styleClass="card-title"/>
+                    <Label text="BCrypt encryption, OTP verification, and CAPTCHA protection for every transaction."
+                           styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <!-- Feature 3 -->
+                <VBox styleClass="card" spacing="12" alignment="CENTER" HBox.hgrow="ALWAYS" minWidth="240">
+                    <Label text="💳" style="-fx-font-size: 42px;"/>
+                    <Label text="Smart Pricing" styleClass="card-title"/>
+                    <Label text="Dynamic pricing with weekend surcharges, duration discounts, and transparent tax breakdown."
+                           styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+                <!-- Feature 4 -->
+                <VBox styleClass="card" spacing="12" alignment="CENTER" HBox.hgrow="ALWAYS" minWidth="240">
+                    <Label text="📄" style="-fx-font-size: 42px;"/>
+                    <Label text="PDF Receipts" styleClass="card-title"/>
+                    <Label text="Download professional PDF receipts instantly after every payment."
+                           styleClass="text-body" wrapText="true" textAlignment="CENTER"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- HOW IT WORKS -->
+        <VBox style="-fx-padding: 40 60 60 60; -fx-background-color: #141428;" spacing="40">
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="How It Works" style="-fx-font-size: 32px; -fx-font-weight: 800; -fx-text-fill: white;"/>
+                <Label text="Get on the road in just 4 simple steps" styleClass="text-body" style="-fx-text-fill: #6b6b8a;"/>
+            </VBox>
+
+            <HBox spacing="32" alignment="CENTER">
+                <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <Label text="01" style="-fx-font-size: 48px; -fx-font-weight: 800; -fx-text-fill: rgba(124,58,237,0.3);"/>
+                    <Label text="Sign Up" styleClass="heading-3"/>
+                    <Label text="Create your account in seconds" styleClass="text-muted" textAlignment="CENTER"/>
+                </VBox>
+                <Label text="→" style="-fx-font-size: 32px; -fx-text-fill: #3a3a6a;"/>
+                <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <Label text="02" style="-fx-font-size: 48px; -fx-font-weight: 800; -fx-text-fill: rgba(124,58,237,0.4);"/>
+                    <Label text="Browse" styleClass="heading-3"/>
+                    <Label text="Explore our premium vehicle fleet" styleClass="text-muted" textAlignment="CENTER"/>
+                </VBox>
+                <Label text="→" style="-fx-font-size: 32px; -fx-text-fill: #3a3a6a;"/>
+                <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <Label text="03" style="-fx-font-size: 48px; -fx-font-weight: 800; -fx-text-fill: rgba(124,58,237,0.5);"/>
+                    <Label text="Book" styleClass="heading-3"/>
+                    <Label text="Select dates and confirm" styleClass="text-muted" textAlignment="CENTER"/>
+                </VBox>
+                <Label text="→" style="-fx-font-size: 32px; -fx-text-fill: #3a3a6a;"/>
+                <VBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS">
+                    <Label text="04" style="-fx-font-size: 48px; -fx-font-weight: 800; -fx-text-fill: rgba(124,58,237,0.7);"/>
+                    <Label text="Drive" styleClass="heading-3"/>
+                    <Label text="Pick up and enjoy the ride!" styleClass="text-muted" textAlignment="CENTER"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- FOOTER -->
+        <HBox styleClass="footer" alignment="CENTER" spacing="8">
+            <Label text="© 2026 Rento — Vehicle Rental &amp; Booking System" styleClass="footer-text"/>
+            <Label text="  |  " styleClass="footer-text"/>
+            <Label text="Built by A Hariharasudhan" styleClass="footer-link"/>
+        </HBox>
+
+    </VBox>
+</ScrollPane>
