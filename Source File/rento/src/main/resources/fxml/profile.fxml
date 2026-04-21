@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.ProfileController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <!-- NAV -->
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="Home" styleClass="nav-link" onAction="#onNavHome"/>
+                <Button text="Book" styleClass="nav-link" onAction="#onNavBook"/>
+                <Button text="Rent" styleClass="nav-link" onAction="#onNavRent"/>
+                <Button text="Contact" styleClass="nav-link" onAction="#onNavContact"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🔔" styleClass="btn-icon" onAction="#onShowNotifications"/>
+            <Button fx:id="logoutBtn" text="Logout" styleClass="btn-danger,btn-small" onAction="#onLogout"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="32">
+            <!-- Profile Header -->
+            <HBox spacing="24" alignment="CENTER_LEFT">
+                <StackPane style="-fx-background-color: linear-gradient(to bottom right, #7c3aed, #06d6a0); -fx-background-radius: 50%; -fx-min-width: 80; -fx-min-height: 80; -fx-max-width: 80; -fx-max-height: 80;" alignment="CENTER">
+                    <Label fx:id="avatarLabel" text="G" style="-fx-font-size: 32px; -fx-font-weight: 800; -fx-text-fill: white;"/>
+                </StackPane>
+                <VBox spacing="4">
+                    <Label fx:id="nameLabel" text="Guest" styleClass="heading-2"/>
+                    <Label fx:id="emailLabel" text="" styleClass="text-muted" style="-fx-font-size: 14px;"/>
+                    <Label fx:id="roleLabel" text="" styleClass="badge,badge-primary"/>
+                </VBox>
+            </HBox>
+
+            <!-- Guest Mode Notice -->
+            <VBox fx:id="guestNotice" styleClass="card" spacing="16" visible="false" alignment="CENTER" style="-fx-padding: 40;">
+                <Label text="👋" style="-fx-font-size: 48px;"/>
+                <Label text="Guest Mode" styleClass="heading-2"/>
+                <Label text="You're browsing as a guest. Sign in or create an account to access all features."
+                       styleClass="text-body" wrapText="true" textAlignment="CENTER" maxWidth="400"/>
+                <HBox spacing="16" alignment="CENTER">
+                    <Button text="Sign In" styleClass="btn-primary" onAction="#onLogin"/>
+                    <Button text="Create Account" styleClass="btn-secondary" onAction="#onRegister"/>
+                </HBox>
+            </VBox>
+
+            <!-- User Info -->
+            <VBox fx:id="userInfoSection" spacing="24" visible="false">
+                <!-- Stats -->
+                <HBox spacing="20">
+                    <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                        <Label fx:id="bookingCount" text="0" styleClass="stat-value"/>
+                        <Label text="Bookings" styleClass="stat-label"/>
+                    </VBox>
+                    <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                        <Label fx:id="rentalCount" text="0" styleClass="stat-value"/>
+                        <Label text="Rentals" styleClass="stat-label"/>
+                    </VBox>
+                    <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                        <Label fx:id="accountAge" text="New" styleClass="stat-value"/>
+                        <Label text="Member Since" styleClass="stat-label"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Account Details -->
+                <VBox styleClass="card" spacing="16">
+                    <Label text="Account Details" styleClass="heading-3"/>
+                    <Separator/>
+                    <HBox spacing="8">
+                        <Label text="Full Name:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailName" text="" styleClass="text-body"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Email:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailEmail" text="" styleClass="text-body"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Phone:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailPhone" text="" styleClass="text-body"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Age:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailAge" text="" styleClass="text-body"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Role:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailRole" text="" styleClass="text-body"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Status:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailStatus" text="" styleClass="badge,badge-success"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Wallet:" styleClass="text-body" style="-fx-font-weight: 700; -fx-min-width: 120;"/>
+                        <Label fx:id="detailWallet" text="" styleClass="text-body"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Quick Actions -->
+                <VBox styleClass="card" spacing="16">
+                    <Label text="Quick Actions" styleClass="heading-3"/>
+                    <HBox spacing="16">
+                        <Button text="📋 My Bookings" styleClass="btn-secondary" onAction="#onNavBook"/>
+                        <Button text="🚗 My Rentals" styleClass="btn-secondary" onAction="#onNavRent"/>
+                        <Button fx:id="roleDashboardBtn" text="Role Dashboard" styleClass="btn-primary" onAction="#onOpenRoleDashboard"/>
+                        <Button text="📞 Contact Support" styleClass="btn-secondary" onAction="#onNavContact"/>
+                    </HBox>
+                </VBox>
+
+                <VBox styleClass="card" spacing="12">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Notifications" styleClass="heading-3"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="Download" styleClass="btn-secondary" onAction="#onDownloadNotifications"/>
+                    </HBox>
+                    <Label fx:id="notificationsSummaryLabel" text="No notifications yet." styleClass="text-muted" wrapText="true"/>
+                </VBox>
+            </VBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Vehicle Rental &amp; Booking System" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.RentController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="Home" styleClass="nav-link" onAction="#onNavHome"/>
+                <Button text="Book" styleClass="nav-link" onAction="#onNavBook"/>
+                <Button text="Rent" styleClass="nav-link,active"/>
+                <Button text="Contact" styleClass="nav-link" onAction="#onNavContact"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="profileBtn" text="⬤ Profile" styleClass="nav-profile-btn" onAction="#onNavProfile"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="28">
+            <VBox spacing="8">
+                <Label text="Rental Marketplace" styleClass="section-title"/>
+                <Label fx:id="pageSubtitle" text="Supplier-owned vehicles and customer rental requests." styleClass="section-subtitle"/>
+            </VBox>
+
+            <VBox fx:id="supplierListingSection" spacing="22">
+                <HBox spacing="28">
+                    <VBox styleClass="card" spacing="18" HBox.hgrow="ALWAYS">
+                        <Label text="Supplier Vehicle Listing" styleClass="heading-3"/>
+                        <Label fx:id="supplierActionLabel" text="Publish a brand new supplier vehicle" styleClass="text-muted"/>
+                        <Label fx:id="errorLabel" text="" styleClass="form-error" visible="false"/>
+
+                        <HBox spacing="16">
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Make" styleClass="form-label"/>
+                                <TextField fx:id="makeField" promptText="e.g. Toyota"/>
+                            </VBox>
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Model" styleClass="form-label"/>
+                                <TextField fx:id="modelField" promptText="e.g. Camry"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="16">
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Year" styleClass="form-label"/>
+                                <TextField fx:id="yearField" promptText="2024"/>
+                            </VBox>
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="License Plate" styleClass="form-label"/>
+                                <TextField fx:id="plateField" promptText="TN 01 AB 1234"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="16">
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Category" styleClass="form-label"/>
+                                <ComboBox fx:id="categoryCombo" maxWidth="1.7976931348623157E308"/>
+                            </VBox>
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Fuel Type" styleClass="form-label"/>
+                                <ComboBox fx:id="fuelCombo" maxWidth="1.7976931348623157E308"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="16">
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Seats" styleClass="form-label"/>
+                                <TextField fx:id="seatsField" promptText="5"/>
+                            </VBox>
+                            <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Price per Day (₹)" styleClass="form-label"/>
+                                <TextField fx:id="priceField" promptText="2500"/>
+                            </VBox>
+                        </HBox>
+
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="Description" styleClass="form-label"/>
+                            <TextArea fx:id="descField" promptText="Describe your vehicle..." prefRowCount="3"/>
+                        </VBox>
+
+                        <Button text="Publish Vehicle" styleClass="btn-primary" maxWidth="1.7976931348623157E308" onAction="#onSubmitVehicle"/>
+                    </VBox>
+
+                    <VBox styleClass="card" spacing="14" minWidth="360">
+                        <Label text="Supplier Flow" styleClass="heading-3"/>
+                        <Label text="1. Publish your vehicle." styleClass="text-body"/>
+                        <Label text="2. Customers request a rental period from the marketplace." styleClass="text-body"/>
+                        <Label text="3. Approve or reject requests in the supplier dashboard." styleClass="text-body"/>
+                        <Label text="4. Approved rentals move to active status and can become overdue with penalties." styleClass="text-body"/>
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="12">
+                    <Label text="My Listed Vehicles" styleClass="heading-3"/>
+                    <FlowPane fx:id="listingGrid" hgap="18" vgap="18"/>
+                    <Label fx:id="noListingsLabel" text="No supplier vehicles listed yet." styleClass="text-muted"/>
+                </VBox>
+            </VBox>
+
+            <VBox fx:id="marketplaceSection" spacing="22">
+                <HBox spacing="28">
+                    <VBox spacing="12" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label text="Available Supplier Vehicles" styleClass="heading-3"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="↻ Refresh" styleClass="btn-icon" onAction="#onRefreshMarketplace"/>
+                        </HBox>
+                        <FlowPane fx:id="marketplaceGrid" hgap="18" vgap="18"/>
+                        <Label fx:id="noMarketplaceLabel" text="No supplier vehicles are available right now." styleClass="text-muted"/>
+                    </VBox>
+
+                    <VBox styleClass="payment-card" spacing="14" minWidth="340" maxWidth="360">
+                        <Label text="Request Rental" styleClass="heading-3"/>
+                        <Separator/>
+                        <Label text="Selected Vehicle" styleClass="form-label"/>
+                        <Label fx:id="selectedVehicleLabel" text="Choose a vehicle card first" styleClass="text-body"/>
+                        <Label text="Supplier Listing" styleClass="form-label"/>
+                        <Label fx:id="selectedSupplierLabel" text="-" styleClass="text-muted"/>
+                        <Label text="Daily Price" styleClass="form-label"/>
+                        <Label fx:id="selectedRateLabel" text="-" styleClass="vehicle-price"/>
+
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="Rental Unit" styleClass="form-label"/>
+                            <ComboBox fx:id="requestUnitCombo" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="Hours (if hourly)" styleClass="form-label"/>
+                            <TextField fx:id="requestHoursField" promptText="e.g. 6"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="Rental Start" styleClass="form-label"/>
+                            <DatePicker fx:id="requestStartDate" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="Start Time" styleClass="form-label"/>
+                            <ComboBox fx:id="requestStartTimeCombo" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="Rental End" styleClass="form-label"/>
+                            <DatePicker fx:id="requestEndDate" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4">
+                            <Label text="End Time" styleClass="form-label"/>
+                            <ComboBox fx:id="requestEndTimeCombo" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+
+                        <Label fx:id="requestInfoLabel" text="Choose a vehicle and request your dates." styleClass="text-muted" wrapText="true"/>
+                        <Button fx:id="requestRentalBtn" text="Submit Rental Request" styleClass="btn-accent" maxWidth="1.7976931348623157E308" onAction="#onRequestRental"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="myRentalsSection" spacing="12">
+                <Label text="My Rental Requests &amp; Active Rentals" styleClass="heading-3"/>
+                <FlowPane fx:id="myRentalsGrid" hgap="18" vgap="18"/>
+                <Label fx:id="noUserRentalsLabel" text="No rental requests yet." styleClass="text-muted"/>
+            </VBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+        <HBox styleClass="footer" alignment="CENTER">
+            <Label text="© 2026 Rento — Vehicle Rental &amp; Booking System" styleClass="footer-text"/>
+        </HBox>
+    </VBox>
+</ScrollPane>

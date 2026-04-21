@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.BookingDetailController"
+            fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: #0d0d1a;">
+
+    <VBox styleClass="page-container" spacing="0">
+
+        <!-- NAV BAR -->
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT">
+            <Label text="RENTO" styleClass="nav-brand" onMouseClicked="#onNavHome"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="← Back to Fleet" styleClass="btn-icon" onAction="#onBack"/>
+        </HBox>
+
+        <VBox styleClass="page-content" spacing="32">
+            <Label text="Confirm Your Booking" styleClass="section-title"/>
+
+            <HBox spacing="32">
+                <!-- LEFT: Vehicle Info -->
+                <VBox styleClass="card" spacing="16" HBox.hgrow="ALWAYS">
+                    <Label fx:id="vehicleName" text="Vehicle" styleClass="heading-2"/>
+                    <HBox spacing="12">
+                        <Label fx:id="vehicleCategory" text="" styleClass="vehicle-tag"/>
+                        <Label fx:id="vehicleFuel" text="" styleClass="vehicle-tag"/>
+                        <Label fx:id="vehicleSeats" text="" styleClass="vehicle-tag"/>
+                    </HBox>
+                    <Separator/>
+                    <Label text="Booking Details" styleClass="heading-3"/>
+
+                    <VBox styleClass="form-group" spacing="4">
+                        <Label text="Pickup Location" styleClass="form-label"/>
+                        <TextField fx:id="pickupField" promptText="Enter pickup location"/>
+                    </VBox>
+                    <VBox styleClass="form-group" spacing="4">
+                        <Label text="Drop-off Location" styleClass="form-label"/>
+                        <TextField fx:id="dropoffField" promptText="Enter drop-off location"/>
+                    </VBox>
+                    <VBox styleClass="form-group" spacing="4">
+                        <Label text="Choose Driver" styleClass="form-label"/>
+                        <ComboBox fx:id="driverCombo" maxWidth="1.7976931348623157E308"/>
+                    </VBox>
+                    <HBox spacing="16">
+                        <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Pickup Date" styleClass="form-label"/>
+                            <DatePicker fx:id="pickupDate" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Pickup Time" styleClass="form-label"/>
+                            <ComboBox fx:id="pickupTimeCombo" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="16">
+                        <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Drop Date" styleClass="form-label"/>
+                            <DatePicker fx:id="returnDate" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                        <VBox styleClass="form-group" spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Drop Time" styleClass="form-label"/>
+                            <ComboBox fx:id="returnTimeCombo" maxWidth="1.7976931348623157E308"/>
+                        </VBox>
+                    </HBox>
+
+                    <Button text="Calculate Price" styleClass="btn-secondary" onAction="#onCalculatePrice"/>
+                </VBox>
+
+                <!-- RIGHT: Pricing Summary -->
+                <VBox styleClass="payment-card" spacing="16" minWidth="340">
+                    <Label text="Price Breakdown" styleClass="heading-3"/>
+                    <Separator style="-fx-border-color: rgba(124,58,237,0.2);"/>
+
+                    <HBox spacing="8">
+                        <Label text="Daily Rate:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="dailyRateLabel" text="₹0" styleClass="text-body" style="-fx-font-weight: 700;"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Duration:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="daysLabel" text="0 days" styleClass="text-body" style="-fx-font-weight: 700;"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Subtotal:" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="subtotalLabel" text="₹0" styleClass="text-body" style="-fx-font-weight: 700;"/>
+                    </HBox>
+                    <HBox fx:id="surchargeRow" spacing="8" visible="false" managed="false">
+                        <Label text="Weekend Surcharge:" styleClass="text-body" style="-fx-text-fill: #ff9f43;" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="surchargeLabel" text="+₹0" style="-fx-text-fill: #ff9f43; -fx-font-weight: 700;"/>
+                    </HBox>
+                    <HBox fx:id="discountRow" spacing="8" visible="false" managed="false">
+                        <Label text="Duration Discount:" styleClass="text-body" style="-fx-text-fill: #06d6a0;" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="discountLabel" text="-₹0" style="-fx-text-fill: #06d6a0; -fx-font-weight: 700;"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Tax (18% GST):" styleClass="text-body" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="taxLabel" text="₹0" styleClass="text-body" style="-fx-font-weight: 700;"/>
+                    </HBox>
+                    <Separator style="-fx-border-color: rgba(124,58,237,0.2);"/>
+                    <HBox spacing="8">
+                        <Label text="Total:" style="-fx-font-size: 18px; -fx-font-weight: 800; -fx-text-fill: white;" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="totalLabel" text="₹0" styleClass="vehicle-price"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <Label text="Deposit Required:" styleClass="text-muted" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="depositLabel" text="₹0" styleClass="text-muted" style="-fx-font-weight: 700;"/>
+                    </HBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Label fx:id="errorLabel" text="" styleClass="form-error" visible="false"/>
+                    <Button text="Proceed to Payment →" styleClass="btn-accent" maxWidth="1.7976931348623157E308" onAction="#onProceedToPayment"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

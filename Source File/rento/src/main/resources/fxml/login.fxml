@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.rento.controllers.LoginController"
+           styleClass="auth-container" style="-fx-background-color: linear-gradient(to bottom right, #0d0d1a, #1a1040);">
+
+    <VBox styleClass="auth-card" spacing="24" alignment="CENTER">
+        <!-- Back button -->
+        <HBox alignment="CENTER_LEFT">
+            <Button text="← Back" styleClass="btn-icon" onAction="#onBack"/>
+        </HBox>
+
+        <!-- Header -->
+        <VBox spacing="6" alignment="CENTER">
+            <Label text="RENTO" style="-fx-font-size: 32px; -fx-font-weight: 800; -fx-text-fill: #7c3aed;"/>
+            <Label text="Welcome Back" styleClass="auth-title"/>
+            <Label text="Sign in to continue your journey" styleClass="auth-subtitle"/>
+        </VBox>
+
+        <!-- Error label -->
+        <Label fx:id="errorLabel" text="" styleClass="form-error" style="-fx-font-size: 13px;" visible="false"/>
+
+        <!-- Email -->
+        <VBox styleClass="form-group" spacing="4">
+            <Label text="Email Address" styleClass="form-label"/>
+            <TextField fx:id="emailField" promptText="you@example.com"/>
+        </VBox>
+
+        <!-- Password -->
+        <VBox styleClass="form-group" spacing="4">
+            <Label text="Password" styleClass="form-label"/>
+            <PasswordField fx:id="passwordField" promptText="Enter your password"/>
+        </VBox>
+
+        <!-- CAPTCHA -->
+        <VBox spacing="8">
+            <Label text="Security Check" styleClass="form-label"/>
+            <HBox styleClass="captcha-box" spacing="16" alignment="CENTER">
+                <Label fx:id="captchaQuestion" text="" styleClass="captcha-text"/>
+                <Button text="↻" styleClass="btn-icon" onAction="#onRefreshCaptcha"/>
+            </HBox>
+            <TextField fx:id="captchaAnswer" promptText="Enter the answer"/>
+        </VBox>
+
+        <!-- Login Button -->
+        <Button text="Sign In" styleClass="btn-primary" maxWidth="1.7976931348623157E308" onAction="#onLogin"/>
+
+        <!-- Separator -->
+        <HBox alignment="CENTER" spacing="12">
+            <Separator HBox.hgrow="ALWAYS"/>
+            <Label text="or" styleClass="text-muted"/>
+            <Separator HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <!-- Register Link -->
+        <HBox alignment="CENTER" spacing="6">
+            <Label text="Don't have an account?" styleClass="text-muted"/>
+            <Button text="Create Account" styleClass="btn-icon" style="-fx-font-weight: 700;" onAction="#onGoToRegister"/>
+        </HBox>
+    </VBox>
+</StackPane>
