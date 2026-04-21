@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx.web.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-sdk-21.0.10/lib/javafx-swt.jar"/>
+	<classpathentry kind="lib" path="jars/mongodb-driver-sync-5.2.1.jar"/>
+	<classpathentry kind="lib" path="jars/mongodb-driver-core-5.2.1.jar"/>
+	<classpathentry kind="lib" path="jars/bson-5.2.1.jar"/>
+	<classpathentry kind="lib" path="jars/jbcrypt-0.4.jar"/>
+	<classpathentry kind="lib" path="jars/gson-2.10.1.jar"/>
+	<classpathentry kind="lib" path="jars/itextpdf-5.5.13.3.jar"/>
+	<classpathentry kind="lib" path="jars/controlsfx-11.1.2.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.base.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.media.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="jars/javafx.web.jar"/>
+	<classpathentry kind="lib" path="jars/javafx-swt.jar"/>
+	<classpathentry kind="lib" path="jars/slf4j-api-2.0.13.jar"/>
+	<classpathentry kind="lib" path="jars/slf4j-simple-2.0.13.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
