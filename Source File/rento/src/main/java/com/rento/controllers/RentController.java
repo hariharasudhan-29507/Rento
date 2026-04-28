@@ -1,11 +1,13 @@
 package com.rento.controllers;
 
 import com.rento.dao.VehicleDAO;
+import com.rento.models.Payment;
 import com.rento.models.Rental;
 import com.rento.models.User;
 import com.rento.models.Vehicle;
 import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
+import com.rento.services.PaymentService;
 import com.rento.services.RentalService;
 import com.rento.utils.AlertUtil;
 import com.rento.utils.DateTimeUtil;
@@ -63,6 +65,9 @@ public class RentController implements Initializable {
     @FXML private ComboBox<String> requestEndTimeCombo;
     @FXML private ComboBox<String> requestUnitCombo;
     @FXML private TextField requestHoursField;
+    @FXML private ComboBox<String> rentalPaymentMethodCombo;
+    @FXML private TextField rentalPaymentReferenceField;
+    @FXML private TextField rentalPaymentHolderField;
     @FXML private Label requestInfoLabel;
     @FXML private Button requestRentalBtn;
 
@@ -72,6 +77,7 @@ public class RentController implements Initializable {
 
     private final VehicleDAO vehicleDAO = new VehicleDAO();
     private final RentalService rentalService = new RentalService();
+    private final PaymentService paymentService = new PaymentService();
     private Vehicle selectedVehicle;
     private Vehicle editingVehicle;
 
@@ -96,6 +102,10 @@ public class RentController implements Initializable {
         requestUnitCombo.setItems(FXCollections.observableArrayList("DAYS", "HOURS"));
         requestUnitCombo.setValue("DAYS");
         requestUnitCombo.valueProperty().addListener((obs, oldValue, newValue) -> updateRentalUnitState());
+        rentalPaymentMethodCombo.setItems(FXCollections.observableArrayList("Credit Card", "UPI", "Cash on Delivery"));
+        rentalPaymentMethodCombo.setValue("Credit Card");
+        rentalPaymentMethodCombo.valueProperty().addListener((obs, oldValue, newValue) -> updateRentalPaymentFields());
+        updateRentalPaymentFields();
         updateRentalUnitState();
 
         configureSectionsByRole();
@@ -141,11 +151,17 @@ public class RentController implements Initializable {
         if (!ValidationUtil.isNotEmpty(modelField.getText())) { showError("Model is required"); return; }
         if (!ValidationUtil.isNotEmpty(yearField.getText())) { showError("Year is required"); return; }
         if (!ValidationUtil.isNotEmpty(priceField.getText())) { showError("Price is required"); return; }
+        if (makeField.getText().trim().length() < 2 || modelField.getText().trim().length() < 2) { showError("Make and model should each be at least 2 characters"); return; }
+        if (!plateField.getText().trim().isEmpty() && plateField.getText().trim().length() < 6) { showError("License plate must be at least 6 characters"); return; }
 
         try {
             int year = Integer.parseInt(yearField.getText().trim());
             double price = Double.parseDouble(priceField.getText().trim());
             int seats = seatsField.getText().isEmpty() ? 5 : Integer.parseInt(seatsField.getText().trim());
+            if (year < 2000 || year > 2035) { showError("Year must be between 2000 and 2035"); return; }
+            if (price <= 0) { showError("Price per day must be greater than zero"); return; }
+            if (seats <= 0 || seats > 60) { showError("Seats must be between 1 and 60"); return; }
+            if (descField.getText() != null && descField.getText().trim().length() < 10) { showError("Description should be at least 10 characters"); return; }
 
             Vehicle vehicle = new Vehicle();
             vehicle.setMake(makeField.getText().trim());
@@ -362,6 +378,9 @@ public class RentController implements Initializable {
             requestInfoLabel.setText("Please choose a valid rental period.");
             return;
         }
+        if (!validateRentalPaymentInputs()) {
+            return;
+        }
 
         try {
             Date startDate = DateTimeUtil.toDate(start, requestStartTimeCombo.getValue());
@@ -388,6 +407,21 @@ public class RentController implements Initializable {
                 startDate,
                 endDate
             );
+            Payment payment = paymentService.createRentalPayment(
+                rental.getId(),
+                SessionManager.getInstance().getCurrentUser().getId(),
+                rental.getTotalAmount(),
+                rentalMethodFromSelection(),
+                rentalPaymentReferenceField.getText(),
+                rentalPaymentHolderField.getText().isBlank()
+                    ? SessionManager.getInstance().getCurrentUserName()
+                    : rentalPaymentHolderField.getText().trim()
+            );
+            if (payment == null) {
+                requestInfoLabel.setText("Rental request created, but payment validation failed. Please retry with a valid payment method.");
+                return;
+            }
+            rentalService.attachPaymentToRental(rental.getId(), payment);
             AlertUtil.showSuccess("Rental request sent to supplier for approval.");
             requestInfoLabel.setText("Request submitted for " + rental.getVehicleName() + ".");
             loadMyRentals();
@@ -451,5 +485,62 @@ public class RentController implements Initializable {
         if (!hourly) {
             requestHoursField.clear();
         }
+    }
+
+    private boolean validateRentalPaymentInputs() {
+        String method = rentalPaymentMethodCombo.getValue();
+        String reference = rentalPaymentReferenceField.getText() != null ? rentalPaymentReferenceField.getText().trim() : "";
+        String holder = rentalPaymentHolderField.getText() != null ? rentalPaymentHolderField.getText().trim() : "";
+        if ("Credit Card".equals(method)) {
+            if (!ValidationUtil.isValidCardNumber(reference)) {
+                requestInfoLabel.setText("Enter a valid credit card number for the rental payment.");
+                return false;
+            }
+            if (!ValidationUtil.isNotEmpty(holder)) {
+                requestInfoLabel.setText("Enter the credit card holder name.");
+                return false;
+            }
+        } else if ("UPI".equals(method)) {
+            if (!ValidationUtil.isValidUpiId(reference)) {
+                requestInfoLabel.setText("Enter a valid UPI ID for the rental payment.");
+                return false;
+            }
+            if (!ValidationUtil.isNotEmpty(holder)) {
+                requestInfoLabel.setText("Enter the UPI account holder name.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void updateRentalPaymentFields() {
+        String method = rentalPaymentMethodCombo.getValue();
+        boolean cash = "Cash on Delivery".equals(method);
+        rentalPaymentReferenceField.setDisable(cash);
+        rentalPaymentHolderField.setDisable(cash);
+        if (cash) {
+            rentalPaymentReferenceField.setText("Cash on delivery");
+            rentalPaymentHolderField.clear();
+            rentalPaymentReferenceField.setPromptText("Cash will be collected by supplier");
+            rentalPaymentHolderField.setPromptText("Verified during handover");
+        } else if ("UPI".equals(method)) {
+            rentalPaymentReferenceField.clear();
+            rentalPaymentHolderField.clear();
+            rentalPaymentReferenceField.setPromptText("name@bank");
+            rentalPaymentHolderField.setPromptText("UPI holder name");
+        } else {
+            rentalPaymentReferenceField.clear();
+            rentalPaymentHolderField.clear();
+            rentalPaymentReferenceField.setPromptText("1234 5678 9012 3456");
+            rentalPaymentHolderField.setPromptText("Card holder name");
+        }
+    }
+
+    private Payment.PaymentMethod rentalMethodFromSelection() {
+        return switch (rentalPaymentMethodCombo.getValue()) {
+            case "UPI" -> Payment.PaymentMethod.UPI;
+            case "Cash on Delivery" -> Payment.PaymentMethod.CASH_ON_DELIVERY;
+            default -> Payment.PaymentMethod.CREDIT_CARD;
+        };
     }
 }
