@@ -160,6 +160,14 @@ public class BookingDAO {
         doc.append("depositAmount", b.getDepositAmount());
         doc.append("taxAmount", b.getTaxAmount());
         doc.append("discountApplied", b.getDiscountApplied());
+        doc.append("paymentId", b.getPaymentId());
+        doc.append("paymentMethod", b.getPaymentMethod());
+        doc.append("paymentStatus", b.getPaymentStatus());
+        doc.append("cashPaymentPending", b.isCashPaymentPending());
+        doc.append("paidVerified", b.isPaidVerified());
+        doc.append("paidVerifiedBy", b.getPaidVerifiedBy());
+        doc.append("paidVerifiedAt", b.getPaidVerifiedAt());
+        doc.append("receiptPath", b.getReceiptPath());
         doc.append("status", b.getStatus() != null ? b.getStatus().name() : null);
         doc.append("otp", b.getOtp());
         doc.append("otpVerified", b.isOtpVerified());
@@ -187,6 +195,14 @@ public class BookingDAO {
         b.setDepositAmount(doc.getDouble("depositAmount") != null ? doc.getDouble("depositAmount") : 0);
         b.setTaxAmount(doc.getDouble("taxAmount") != null ? doc.getDouble("taxAmount") : 0);
         b.setDiscountApplied(doc.getDouble("discountApplied") != null ? doc.getDouble("discountApplied") : 0);
+        b.setPaymentId(doc.getObjectId("paymentId"));
+        b.setPaymentMethod(doc.getString("paymentMethod"));
+        b.setPaymentStatus(doc.getString("paymentStatus"));
+        b.setCashPaymentPending(doc.getBoolean("cashPaymentPending", false));
+        b.setPaidVerified(doc.getBoolean("paidVerified", false));
+        b.setPaidVerifiedBy(doc.getString("paidVerifiedBy"));
+        b.setPaidVerifiedAt(doc.getDate("paidVerifiedAt"));
+        b.setReceiptPath(doc.getString("receiptPath"));
         try { b.setStatus(Booking.BookingStatus.valueOf(doc.getString("status"))); } catch (Exception ignored) {}
         b.setOtp(doc.getString("otp"));
         b.setOtpVerified(doc.getBoolean("otpVerified", false));
