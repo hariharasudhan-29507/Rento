@@ -27,6 +27,14 @@ public class Rental {
     private String approvalOtp;
     private boolean otpVerified;
     private String notes;
+    private ObjectId paymentId;
+    private String paymentMethod;
+    private String paymentStatus;
+    private boolean cashPaymentPending;
+    private boolean paidVerified;
+    private String paidVerifiedBy;
+    private Date paidVerifiedAt;
+    private String receiptPath;
     private double totalAmount;
     private double penaltyAmount;
     private Date requestedAt;
@@ -85,6 +93,30 @@ public class Rental {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public ObjectId getPaymentId() { return paymentId; }
+    public void setPaymentId(ObjectId paymentId) { this.paymentId = paymentId; }
+
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+
+    public String getPaymentStatus() { return paymentStatus; }
+    public void setPaymentStatus(String paymentStatus) { this.paymentStatus = paymentStatus; }
+
+    public boolean isCashPaymentPending() { return cashPaymentPending; }
+    public void setCashPaymentPending(boolean cashPaymentPending) { this.cashPaymentPending = cashPaymentPending; }
+
+    public boolean isPaidVerified() { return paidVerified; }
+    public void setPaidVerified(boolean paidVerified) { this.paidVerified = paidVerified; }
+
+    public String getPaidVerifiedBy() { return paidVerifiedBy; }
+    public void setPaidVerifiedBy(String paidVerifiedBy) { this.paidVerifiedBy = paidVerifiedBy; }
+
+    public Date getPaidVerifiedAt() { return paidVerifiedAt; }
+    public void setPaidVerifiedAt(Date paidVerifiedAt) { this.paidVerifiedAt = paidVerifiedAt; }
+
+    public String getReceiptPath() { return receiptPath; }
+    public void setReceiptPath(String receiptPath) { this.receiptPath = receiptPath; }
 
     public double getTotalAmount() { return totalAmount; }
     public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
