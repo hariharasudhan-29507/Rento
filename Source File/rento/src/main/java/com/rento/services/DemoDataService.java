@@ -19,31 +19,31 @@ public class DemoDataService {
 
     private final UserDAO userDAO = new UserDAO();
     private final VehicleDAO vehicleDAO = new VehicleDAO();
+    private final SystemCollectionBootstrapService collectionBootstrapService = new SystemCollectionBootstrapService();
 
     public void seedIfRequired() {
         if (!MongoDBConnection.getInstance().isConnected()) {
             return;
         }
 
+        collectionBootstrapService.ensureCollections();
         seedUsers();
         seedVehicles();
     }
 
     private void seedUsers() {
-        if (!userDAO.findAll().isEmpty()) {
-            return;
-        }
+        if (userDAO.findAll().isEmpty()) {
+            List<User> demoUsers = Arrays.asList(
+                createUser("Rento Customer", "user@rento.local", "+919876543210", User.Role.USER),
+                createUser("Rento Driver", "driver@rento.local", "+919876543211", User.Role.DRIVER),
+                createUser("Rento Supplier", "supplier@rento.local", "+919876543212", User.Role.SUPPLIER)
+            );
 
-        List<User> demoUsers = Arrays.asList(
-            createUser("Rento Customer", "user@rento.local", "+919876543210", User.Role.USER),
-            createUser("Rento Driver", "driver@rento.local", "+919876543211", User.Role.DRIVER),
-            createUser("Rento Supplier", "supplier@rento.local", "+919876543212", User.Role.SUPPLIER),
-            createUser("Rento Admin", "admin@rento.local", "+919876543213", User.Role.ADMIN)
-        );
-
-        for (User user : demoUsers) {
-            userDAO.insertUser(user);
+            for (User user : demoUsers) {
+                userDAO.insertUser(user);
+            }
         }
+        ensureAdminAccount();
     }
 
     private void seedVehicles() {
@@ -154,5 +154,27 @@ public class DemoDataService {
         vehicle.setStatus(Vehicle.Status.AVAILABLE);
         vehicle.setDescription("Curated demo fleet vehicle for the Rento booking and rental workflow.");
         return vehicle;
+    }
+
+    private void ensureAdminAccount() {
+        User existingAdmin = userDAO.findByEmail("admin@rento.live");
+        if (existingAdmin == null) {
+            User admin = createUser("Rento Admin", "admin@rento.live", "+919876543213", User.Role.ADMIN);
+            admin.setPassword(PasswordHasher.hashPassword("Admin@123"));
+            admin.setVerified(true);
+            admin.setLocked(false);
+            admin.setLockReason(null);
+            userDAO.insertUser(admin);
+            return;
+        }
+
+        existingAdmin.setFullName("Rento Admin");
+        existingAdmin.setPhone("+919876543213");
+        existingAdmin.setPassword(PasswordHasher.hashPassword("Admin@123"));
+        existingAdmin.setRole(User.Role.ADMIN);
+        existingAdmin.setVerified(true);
+        existingAdmin.setLocked(false);
+        existingAdmin.setLockReason(null);
+        userDAO.updateUser(existingAdmin);
     }
 }
