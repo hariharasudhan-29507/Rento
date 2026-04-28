@@ -13,6 +13,7 @@ import javafx.stage.Stage;
  * Rento - Vehicle Rental & Booking System
  * Main Application Entry Point
  */
+
 public class RentoApplication extends Application {
 
     private static Stage primaryStage;
