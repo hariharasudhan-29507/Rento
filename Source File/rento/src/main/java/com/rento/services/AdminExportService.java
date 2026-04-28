@@ -1,10 +1,14 @@
 package com.rento.services;
 
 import com.rento.dao.BookingDAO;
+import com.rento.dao.PaymentDAO;
+import com.rento.dao.PaymentMethodDAO;
 import com.rento.dao.RentalDAO;
 import com.rento.dao.UserDAO;
 import com.rento.dao.VehicleDAO;
 import com.rento.models.Booking;
+import com.rento.models.Payment;
+import com.rento.models.PaymentMethodProfile;
 import com.rento.models.Rental;
 import com.rento.models.User;
 import com.rento.models.Vehicle;
@@ -18,6 +22,9 @@ public class AdminExportService {
     private final VehicleDAO vehicleDAO = new VehicleDAO();
     private final BookingDAO bookingDAO = new BookingDAO();
     private final RentalDAO rentalDAO = new RentalDAO();
+    private final PaymentDAO paymentDAO = new PaymentDAO();
+    private final PaymentMethodDAO paymentMethodDAO = new PaymentMethodDAO();
+    private final SystemCollectionBootstrapService collectionBootstrapService = new SystemCollectionBootstrapService();
 
     public String exportAllData(String outputDir) throws Exception {
         new File(outputDir).mkdirs();
@@ -26,12 +33,22 @@ public class AdminExportService {
         List<Vehicle> vehicles = vehicleDAO.findAll();
         List<Booking> bookings = bookingDAO.findAll();
         List<Rental> rentals = rentalDAO.findAll();
+        List<Payment> payments = paymentDAO.findAll();
+        List<PaymentMethodProfile> paymentMethods = paymentMethodDAO.findAll();
 
         try (FileWriter writer = new FileWriter(path)) {
             writer.write("RENTO FULL SYSTEM EXPORT\n\n");
+            writer.write("COLLECTION COUNTS\n");
+            collectionBootstrapService.getCollectionCounts().forEach((name, count) -> {
+                try {
+                    writer.write(name + " : " + count + "\n");
+                } catch (Exception ignored) {
+                }
+            });
+            writer.write("\n");
             writer.write("USERS (" + users.size() + ")\n");
             for (User u : users) {
-                writer.write(u.getFullName() + " | " + u.getEmail() + " | " + u.getRole() + "\n");
+                writer.write(u.getFullName() + " | " + u.getEmail() + " | " + u.getRole() + " | " + (u.isLocked() ? "LOCKED" : "ACTIVE") + "\n");
             }
             writer.write("\nVEHICLES (" + vehicles.size() + ")\n");
             for (Vehicle v : vehicles) {
@@ -50,6 +67,14 @@ public class AdminExportService {
                     + " | " + r.getStatus()
                     + " | " + r.getRenterName()
                     + " | " + r.getSupplierName() + "\n");
+            }
+            writer.write("\nPAYMENTS (" + payments.size() + ")\n");
+            for (Payment payment : payments) {
+                writer.write(payment.getTransactionRef() + " | " + payment.getPaymentMethod() + " | " + payment.getStatus() + "\n");
+            }
+            writer.write("\nPAYMENT METHODS (" + paymentMethods.size() + ")\n");
+            for (PaymentMethodProfile profile : paymentMethods) {
+                writer.write(profile.getProfileName() + " | " + profile.getMethodType() + " | " + profile.getMaskedReference() + "\n");
             }
         }
         return path;
