@@ -21,6 +21,10 @@ public class User {
     private String driverLicenseNumber;
     private Role role;
     private boolean verified;
+    private boolean locked;
+    private String lockReason;
+    private Date lockedAt;
+    private Date lastLoginAt;
     private Date createdAt;
     private Date updatedAt;
     private int age;
@@ -29,6 +33,7 @@ public class User {
     public User() {
         this.role = Role.GUEST;
         this.verified = false;
+        this.locked = false;
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }
@@ -69,6 +74,18 @@ public class User {
 
     public boolean isVerified() { return verified; }
     public void setVerified(boolean verified) { this.verified = verified; }
+
+    public boolean isLocked() { return locked; }
+    public void setLocked(boolean locked) { this.locked = locked; }
+
+    public String getLockReason() { return lockReason; }
+    public void setLockReason(String lockReason) { this.lockReason = lockReason; }
+
+    public Date getLockedAt() { return lockedAt; }
+    public void setLockedAt(Date lockedAt) { this.lockedAt = lockedAt; }
+
+    public Date getLastLoginAt() { return lastLoginAt; }
+    public void setLastLoginAt(Date lastLoginAt) { this.lastLoginAt = lastLoginAt; }
 
     public Date getCreatedAt() { return createdAt; }
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
