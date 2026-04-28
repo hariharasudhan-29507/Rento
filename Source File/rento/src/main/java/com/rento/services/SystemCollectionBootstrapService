@@ -1,0 +1,207 @@
+package com.rento.services;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.rento.utils.MongoDBConnection;
+import org.bson.Document;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Ensures the system has the minimum set of MongoDB collections required by Rento.
+ */
+public class SystemCollectionBootstrapService {
+
+    public static final List<String> REQUIRED_COLLECTIONS = Arrays.asList(
+        "users",
+        "vehicles",
+        "bookings",
+        "rentals",
+        "payments",
+        "notifications",
+        "payment_methods",
+        "receipts",
+        "audit_logs",
+        "support_tickets",
+        "maintenance_records",
+        "vehicle_inspections",
+        "discount_campaigns",
+        "branches",
+        "pricing_rules",
+        "payout_records",
+        "system_settings"
+    );
+
+    public void ensureCollections() {
+        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
+        if (db == null) {
+            return;
+        }
+
+        for (String collectionName : REQUIRED_COLLECTIONS) {
+            boolean exists = false;
+            for (String existing : db.listCollectionNames()) {
+                if (collectionName.equals(existing)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                db.createCollection(collectionName);
+            }
+        }
+
+        seedIfEmpty(db, "receipts", new Document("receiptCode", "RCPT-BOOT-001")
+            .append("receiptType", "SYSTEM_TEMPLATE")
+            .append("documentTitle", "Booking or rental receipt")
+            .append("fileFormat", "PDF/TXT")
+            .append("status", "READY")
+            .append("issuedBy", "Rento System")
+            .append("currency", "INR")
+            .append("deliveryChannel", "DOWNLOAD")
+            .append("printable", true)
+            .append("notes", "Bootstrap receipt template")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "audit_logs", new Document("eventCode", "AUD-BOOT-001")
+            .append("module", "SYSTEM")
+            .append("actorType", "BOOTSTRAP")
+            .append("actorName", "Rento Initializer")
+            .append("action", "COLLECTION_AUDIT")
+            .append("severity", "INFO")
+            .append("summary", "Required collections ensured")
+            .append("result", "SUCCESS")
+            .append("channel", "APPLICATION")
+            .append("environment", "LOCAL")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "support_tickets", new Document("ticketNumber", "SUP-BOOT-001")
+            .append("subject", "Sample support workflow")
+            .append("description", "System-generated support ticket template")
+            .append("status", "OPEN")
+            .append("priority", "MEDIUM")
+            .append("channel", "APP")
+            .append("openedByName", "Rento Demo")
+            .append("openedByEmail", "support@rento.live")
+            .append("assignedTeam", "Customer Care")
+            .append("slaHours", 24)
+            .append("resolutionNotes", "")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "maintenance_records", new Document("maintenanceCode", "MNT-BOOT-001")
+            .append("vehicleLabel", "Fleet Template")
+            .append("serviceType", "Inspection")
+            .append("serviceStage", "SCHEDULED")
+            .append("vendorName", "Rento Service Bay")
+            .append("technicianName", "Demo Engineer")
+            .append("scheduledDate", new Date())
+            .append("costEstimate", 2500.0)
+            .append("odometerReading", 12000.0)
+            .append("checklistStatus", "PENDING")
+            .append("warrantyCovered", false)
+            .append("notes", "Bootstrap maintenance record")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "vehicle_inspections", new Document("inspectionCode", "INSP-BOOT-001")
+            .append("vehicleLabel", "Fleet Template")
+            .append("inspectionStage", "PRE_DELIVERY")
+            .append("inspectorName", "Quality Lead")
+            .append("overallRating", "PASS")
+            .append("exteriorStatus", "OK")
+            .append("interiorStatus", "OK")
+            .append("tyreStatus", "OK")
+            .append("fuelLevel", "FULL")
+            .append("documentStatus", "VERIFIED")
+            .append("remarks", "Bootstrap inspection record")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "discount_campaigns", new Document("campaignCode", "DISC-BOOT-001")
+            .append("campaignName", "Weekend Saver")
+            .append("description", "Discount template for weekend rentals")
+            .append("discountType", "PERCENTAGE")
+            .append("discountValue", 10.0)
+            .append("eligibilityRule", "7+ hours")
+            .append("status", "ACTIVE")
+            .append("promoCode", "RENTO10")
+            .append("startDate", new Date())
+            .append("endDate", new Date(System.currentTimeMillis() + 604800000L))
+            .append("usageLimit", 500)
+            .append("notes", "Bootstrap campaign")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "branches", new Document("branchCode", "BR-BOOT-001")
+            .append("branchName", "Rento Central Hub")
+            .append("city", "Chennai")
+            .append("state", "Tamil Nadu")
+            .append("country", "India")
+            .append("postalCode", "600001")
+            .append("contactNumber", "+919876543200")
+            .append("managerName", "Operations Lead")
+            .append("openingHours", "08:00-22:00")
+            .append("parkingCapacity", 120)
+            .append("status", "ACTIVE")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "pricing_rules", new Document("ruleCode", "PRICE-BOOT-001")
+            .append("ruleName", "Standard GST")
+            .append("ruleType", "TAX")
+            .append("baseCategory", "ALL")
+            .append("multiplier", 1.18)
+            .append("priority", 1)
+            .append("effectiveRegion", "India")
+            .append("startWindow", "00:00")
+            .append("endWindow", "23:59")
+            .append("status", "ACTIVE")
+            .append("humanSummary", "Apply standard GST to bookings")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "payout_records", new Document("payoutCode", "PAY-OUT-001")
+            .append("recipientType", "SUPPLIER")
+            .append("recipientName", "Rento Supplier")
+            .append("payoutMode", "BANK_TRANSFER")
+            .append("grossAmount", 12500.0)
+            .append("deductionAmount", 500.0)
+            .append("netAmount", 12000.0)
+            .append("settlementWindow", "T+1")
+            .append("status", "QUEUED")
+            .append("referenceNumber", "SETTLE001")
+            .append("notes", "Bootstrap payout record")
+            .append("createdAt", new Date()));
+
+        seedIfEmpty(db, "system_settings", new Document("settingKey", "platform_config")
+            .append("settingGroup", "GENERAL")
+            .append("settingLabel", "Platform Configuration")
+            .append("settingValue", "Rento Local")
+            .append("dataType", "STRING")
+            .append("editable", true)
+            .append("description", "Bootstrap configuration")
+            .append("environment", "LOCAL")
+            .append("status", "ACTIVE")
+            .append("versionTag", "2026.04")
+            .append("updatedBy", "Rento Bootstrap")
+            .append("createdAt", new Date()));
+    }
+
+    public Map<String, Long> getCollectionCounts() {
+        Map<String, Long> counts = new LinkedHashMap<>();
+        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
+        if (db == null) {
+            return counts;
+        }
+        for (String collectionName : REQUIRED_COLLECTIONS) {
+            counts.put(collectionName, db.getCollection(collectionName).countDocuments());
+        }
+        return counts;
+    }
+
+    private void seedIfEmpty(MongoDatabase db, String collectionName, Document sample) {
+        MongoCollection<Document> collection = db.getCollection(collectionName);
+        if (collection.countDocuments() == 0) {
+            collection.insertOne(sample);
+        }
+    }
+}
