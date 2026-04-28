@@ -54,15 +54,21 @@ public class NotificationService {
         new File(outputDir).mkdirs();
         String path = outputDir + File.separator + "notifications_" + System.currentTimeMillis() + ".txt";
         try (FileWriter writer = new FileWriter(path)) {
-            writer.write("RENTO Notifications\n\n");
+            writer.write("============================================================\n");
+            writer.write("                    RENTO NOTIFICATION CENTER               \n");
+            writer.write("============================================================\n");
+            writer.write("Exported At : " + new Date() + "\n");
+            writer.write("Total Items : " + notifications.size() + "\n");
+            writer.write("------------------------------------------------------------\n\n");
             for (Document d : notifications) {
-                writer.write("- " + d.getString("title") + "\n");
-                writer.write("  " + d.getString("message") + "\n");
+                writer.write("[ " + (d.getDate("createdAt") != null ? d.getDate("createdAt") : new Date()) + " ]\n");
+                writer.write("Title      : " + d.getString("title") + "\n");
+                writer.write("Message    : " + d.getString("message") + "\n");
                 String downloadPath = d.getString("downloadablePath");
                 if (downloadPath != null && !downloadPath.isBlank()) {
-                    writer.write("  File: " + downloadPath + "\n");
+                    writer.write("Attachment : " + downloadPath + "\n");
                 }
-                writer.write("\n");
+                writer.write("------------------------------------------------------------\n");
             }
         }
         return path;
