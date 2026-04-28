@@ -6,6 +6,8 @@ import com.rento.security.PasswordHasher;
 import com.rento.security.SessionManager;
 import com.rento.utils.ValidationUtil;
 
+import java.util.Date;
+
 /**
  * Authentication service handling registration, login, and session management.
  */
@@ -106,9 +108,18 @@ public class AuthService {
             return "No account found with this email";
         }
 
+        if (user.isLocked()) {
+            return user.getLockReason() != null && !user.getLockReason().isBlank()
+                ? "Account locked: " + user.getLockReason()
+                : "This account has been locked by an administrator";
+        }
+
         if (!PasswordHasher.verifyPassword(password, user.getPassword())) {
             return "Incorrect password";
         }
+
+        user.setLastLoginAt(new Date());
+        userDAO.updateUser(user);
 
         // Set session
         SessionManager.getInstance().login(user);
