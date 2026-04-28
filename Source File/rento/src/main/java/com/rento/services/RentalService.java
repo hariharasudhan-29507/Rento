@@ -1,8 +1,10 @@
 package com.rento.services;
 
+import com.rento.dao.PaymentDAO;
 import com.rento.dao.UserDAO;
 import com.rento.dao.RentalDAO;
 import com.rento.dao.VehicleDAO;
+import com.rento.models.Payment;
 import com.rento.models.Rental;
 import com.rento.models.User;
 import com.rento.models.Vehicle;
@@ -26,6 +28,7 @@ public class RentalService {
     private final RentalDAO rentalDAO;
     private final VehicleDAO vehicleDAO;
     private final UserDAO userDAO;
+    private final PaymentDAO paymentDAO;
     private final NotificationService notificationService;
     private final ReceiptService receiptService;
 
@@ -33,6 +36,7 @@ public class RentalService {
         this.rentalDAO = new RentalDAO();
         this.vehicleDAO = new VehicleDAO();
         this.userDAO = new UserDAO();
+        this.paymentDAO = new PaymentDAO();
         this.notificationService = new NotificationService();
         this.receiptService = new ReceiptService();
     }
@@ -137,6 +141,8 @@ public class RentalService {
             try {
                 String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
                 String receiptPath = receiptService.generateRentalReceipt(rental, outDir);
+                rental.setReceiptPath(receiptPath);
+                rentalDAO.updateRental(rental);
                 notificationService.addNotification(
                     rental.getRenterId(),
                     "Rental confirmed by supplier",
@@ -182,6 +188,8 @@ public class RentalService {
             try {
                 String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
                 String receiptPath = receiptService.generateRentalReceipt(rental, outDir);
+                rental.setReceiptPath(receiptPath);
+                rentalDAO.updateRental(rental);
                 notificationService.addNotification(
                     rental.getRenterId(),
                     "Rental completed",
@@ -294,5 +302,70 @@ public class RentalService {
     private double calculateBaseAmount(double pricePerDay, Date startDate, Date endDate) {
         long days = DateTimeUtil.ceilDaysBetween(startDate, endDate);
         return Math.max(1, days) * pricePerDay;
+    }
+
+    public boolean attachPaymentToRental(ObjectId rentalId, Payment payment) {
+        Rental rental = rentalDAO.findById(rentalId);
+        if (rental == null || payment == null) {
+            return false;
+        }
+        rental.setPaymentId(payment.getId());
+        rental.setPaymentMethod(payment.getPaymentMethod() != null ? payment.getPaymentMethod().name() : null);
+        rental.setPaymentStatus(payment.getStatus() != null ? payment.getStatus().name() : null);
+        rental.setCashPaymentPending(payment.getPaymentMethod() == Payment.PaymentMethod.CASH_ON_DELIVERY);
+        rental.setPaidVerified(payment.getPaymentMethod() != Payment.PaymentMethod.CASH_ON_DELIVERY);
+        if (payment.getPaymentMethod() != Payment.PaymentMethod.CASH_ON_DELIVERY) {
+            try {
+                String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
+                String receiptPath = receiptService.generateRentalReceipt(rental, outDir);
+                rental.setReceiptPath(receiptPath);
+                payment.setReceiptPath(receiptPath);
+                paymentDAO.updatePayment(payment);
+            } catch (Exception ignored) {
+            }
+        }
+        return rentalDAO.updateRental(rental);
+    }
+
+    public boolean verifyCashPaymentForRental(ObjectId rentalId, String verifierName) {
+        Rental rental = rentalDAO.findById(rentalId);
+        if (rental == null || rental.getPaymentId() == null) {
+            return false;
+        }
+        Payment payment = paymentDAO.findById(rental.getPaymentId());
+        if (payment == null || payment.getPaymentMethod() != Payment.PaymentMethod.CASH_ON_DELIVERY) {
+            return false;
+        }
+
+        payment.setCashVerified(true);
+        payment.setCashVerifiedBy(verifierName);
+        payment.setCashVerifiedAt(new Date());
+        payment.setStatus(Payment.PaymentStatus.CASH_CONFIRMED);
+        paymentDAO.updatePayment(payment);
+
+        rental.setCashPaymentPending(false);
+        rental.setPaidVerified(true);
+        rental.setPaidVerifiedBy(verifierName);
+        rental.setPaidVerifiedAt(new Date());
+        rental.setPaymentStatus(payment.getStatus().name());
+
+        try {
+            String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
+            String receiptPath = receiptService.generateRentalReceipt(rental, outDir);
+            rental.setReceiptPath(receiptPath);
+            payment.setReceiptPath(receiptPath);
+            paymentDAO.updatePayment(payment);
+            if (rental.getRenterId() != null) {
+                notificationService.addNotification(
+                    rental.getRenterId(),
+                    "Cash payment verified",
+                    "Supplier confirmed cash payment for " + rental.getVehicleName() + ". Receipt is ready.",
+                    receiptPath
+                );
+            }
+        } catch (Exception ignored) {
+        }
+
+        return rentalDAO.updateRental(rental);
     }
 }
