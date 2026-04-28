@@ -125,11 +125,29 @@ public class DriverDashboardController implements Initializable {
 
         info.getChildren().addAll(vehicleLabel, statusLabel, locationLabel, dateLabel, otpLabel);
 
-        Label detailLabel = new Label("Ready for ride start");
+        Label detailLabel = new Label("Payment: " + (booking.getPaymentMethod() != null ? booking.getPaymentMethod().replace('_', ' ') : "Pending"));
         detailLabel.getStyleClass().add("text-muted");
         info.getChildren().add(detailLabel);
 
-        card.getChildren().add(info);
+        VBox actions = new VBox(8);
+        if (booking.isCashPaymentPending() && !booking.isPaidVerified()) {
+            Button paidBtn = new Button("Mark Cash Paid");
+            paidBtn.getStyleClass().add("btn-accent");
+            paidBtn.setOnAction(event -> {
+                boolean ok = bookingService.verifyCashPaymentForBooking(booking.getId(), SessionManager.getInstance().getCurrentUserName());
+                if (ok) {
+                    AlertUtil.showSuccess("Cash payment verified. Receipt is now available to the customer.");
+                }
+                loadDashboard();
+            });
+            actions.getChildren().add(paidBtn);
+        } else if (booking.isPaidVerified()) {
+            Label paidLabel = new Label("Paid Verified");
+            paidLabel.getStyleClass().addAll("badge", "badge-success");
+            actions.getChildren().add(paidLabel);
+        }
+
+        card.getChildren().addAll(info, actions);
         return card;
     }
 
