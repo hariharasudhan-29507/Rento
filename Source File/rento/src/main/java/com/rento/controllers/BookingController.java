@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+
 /**
  * Controller for the vehicle booking page.
  */
