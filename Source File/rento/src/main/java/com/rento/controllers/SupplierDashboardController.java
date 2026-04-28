@@ -175,7 +175,10 @@ public class SupplierDashboardController implements Initializable {
         Label statusLabel = new Label("● Awaiting OTP Confirmation");
         statusLabel.getStyleClass().addAll("badge", "badge-success");
 
-        info.getChildren().addAll(nameLabel, priceLabel, periodLabel, statusLabel);
+        Label paymentLabel = new Label("Payment: " + (rental.getPaymentMethod() != null ? rental.getPaymentMethod().replace('_', ' ') : "Pending"));
+        paymentLabel.getStyleClass().add("text-muted");
+
+        info.getChildren().addAll(nameLabel, priceLabel, periodLabel, statusLabel, paymentLabel);
 
         VBox actions = new VBox(8);
         TextField otpField = new TextField();
@@ -197,6 +200,22 @@ public class SupplierDashboardController implements Initializable {
         });
 
         actions.getChildren().addAll(otpField, confirmOtpBtn);
+        if (rental.isCashPaymentPending() && !rental.isPaidVerified()) {
+            Button paidBtn = new Button("Mark Cash Paid");
+            paidBtn.getStyleClass().add("btn-accent");
+            paidBtn.setOnAction(e -> {
+                boolean ok = rentalService.verifyCashPaymentForRental(rental.getId(), SessionManager.getInstance().getCurrentUserName());
+                if (ok) {
+                    AlertUtil.showSuccess("Cash payment verified. Receipt is available for the renter.");
+                }
+                loadDashboard();
+            });
+            actions.getChildren().add(paidBtn);
+        } else if (rental.isPaidVerified()) {
+            Label paidBadge = new Label("Paid Verified");
+            paidBadge.getStyleClass().addAll("badge", "badge-success");
+            actions.getChildren().add(paidBadge);
+        }
         card.getChildren().addAll(info, actions);
         return card;
     }
