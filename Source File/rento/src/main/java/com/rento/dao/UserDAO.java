@@ -165,6 +165,10 @@ public class UserDAO {
         doc.append("driverLicenseNumber", user.getDriverLicenseNumber());
         doc.append("role", user.getRole().name());
         doc.append("verified", user.isVerified());
+        doc.append("locked", user.isLocked());
+        doc.append("lockReason", user.getLockReason());
+        doc.append("lockedAt", user.getLockedAt());
+        doc.append("lastLoginAt", user.getLastLoginAt());
         doc.append("age", user.getAge());
         doc.append("walletBalance", user.getWalletBalance());
         doc.append("createdAt", user.getCreatedAt());
@@ -186,10 +190,25 @@ public class UserDAO {
             try { user.setRole(User.Role.valueOf(role)); } catch (Exception ignored) {}
         }
         user.setVerified(doc.getBoolean("verified", false));
+        user.setLocked(doc.getBoolean("locked", false));
+        user.setLockReason(doc.getString("lockReason"));
+        user.setLockedAt(doc.getDate("lockedAt"));
+        user.setLastLoginAt(doc.getDate("lastLoginAt"));
         user.setAge(doc.getInteger("age", 0));
         user.setWalletBalance(doc.getDouble("walletBalance") != null ? doc.getDouble("walletBalance") : 0);
         user.setCreatedAt(doc.getDate("createdAt"));
         user.setUpdatedAt(doc.getDate("updatedAt"));
         return user;
+    }
+
+    public boolean updateLockState(ObjectId userId, boolean locked, String reason) {
+        User user = findById(userId);
+        if (user == null) {
+            return false;
+        }
+        user.setLocked(locked);
+        user.setLockReason(locked ? reason : null);
+        user.setLockedAt(locked ? new Date() : null);
+        return updateUser(user);
     }
 }
