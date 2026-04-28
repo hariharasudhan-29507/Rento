@@ -55,7 +55,7 @@ public class PaymentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         methodCombo.setItems(FXCollections.observableArrayList(
-            "Credit Card", "Debit Card", "UPI", "Net Banking", "Wallet"));
+            "Credit Card", "UPI", "Cash on Delivery"));
         methodCombo.setValue("Credit Card");
         methodCombo.valueProperty().addListener((obs, oldValue, newValue) -> updatePaymentFields());
         updatePaymentFields();
@@ -84,7 +84,7 @@ public class PaymentController implements Initializable {
 
         if (requiresCardDetails()) {
             String cardNum = cardNumberField.getText().replaceAll("[\\s\\-]", "");
-            if (cardNum.length() < 13) {
+            if (!ValidationUtil.isValidCardNumber(cardNum)) {
                 showError("Please enter a valid card number");
                 return;
             }
@@ -100,26 +100,19 @@ public class PaymentController implements Initializable {
                 showError("Please enter a valid CVV");
                 return;
             }
-        } else {
+        } else if (requiresUpiDetails()) {
             String accountValue = cardNumberField.getText() != null ? cardNumberField.getText().trim() : "";
-            if (!ValidationUtil.isNotEmpty(accountValue)) {
-                showError("Please enter payment account details");
+            if (!ValidationUtil.isValidUpiId(accountValue)) {
+                showError("Please enter a valid UPI ID");
                 return;
             }
             if (!ValidationUtil.isNotEmpty(cardNameField.getText())) {
                 showError("Please enter account holder name");
                 return;
             }
-            if ("UPI".equals(methodCombo.getValue()) && !accountValue.matches("^[A-Za-z0-9._-]{2,}@[A-Za-z]{2,}$")) {
-                showError("Please enter a valid UPI ID");
-                return;
-            }
-            if ("Net Banking".equals(methodCombo.getValue()) && accountValue.length() < 6) {
-                showError("Please enter a valid net banking reference");
-                return;
-            }
-            if ("Wallet".equals(methodCombo.getValue()) && accountValue.length() < 8) {
-                showError("Please enter a valid wallet number/reference");
+        } else {
+            if (currentBooking == null) {
+                showError("Booking details are missing for this payment.");
                 return;
             }
         }
@@ -186,36 +179,37 @@ public class PaymentController implements Initializable {
         payBtn.getStyleClass().add("btn-accent");
         payBtn.setDisable(true);
 
-        AlertUtil.showSuccess("Payment successful!\n\nYour OTP: " + otp + "\n\nShare this with your driver at pickup.\nReceipt will be generated after ride confirmation.");
+        if (methodFromSelection() == Payment.PaymentMethod.CASH_ON_DELIVERY) {
+            AlertUtil.showSuccess("Cash on delivery selected.\n\nYour OTP: " + otp + "\n\nShare this with your driver at pickup. The driver will verify payment and unlock the receipt.");
+        } else {
+            AlertUtil.showSuccess("Payment successful!\n\nYour OTP: " + otp + "\n\nShare this with your driver at pickup.\nReceipt will be generated after ride confirmation.");
+        }
     }
 
     @FXML private void onBack() { NavigationManager.goBack(); }
     @FXML private void onNavHome() { NavigationManager.navigateTo("/fxml/landing.fxml"); }
 
     private boolean requiresCardDetails() {
-        String selectedMethod = methodCombo.getValue();
-        return "Credit Card".equals(selectedMethod) || "Debit Card".equals(selectedMethod);
+        return "Credit Card".equals(methodCombo.getValue());
+    }
+
+    private boolean requiresUpiDetails() {
+        return "UPI".equals(methodCombo.getValue());
     }
 
     private Payment.PaymentMethod methodFromSelection() {
-        switch (methodCombo.getValue()) {
-            case "Debit Card":
-                return Payment.PaymentMethod.DEBIT_CARD;
-            case "UPI":
-                return Payment.PaymentMethod.UPI;
-            case "Net Banking":
-                return Payment.PaymentMethod.NET_BANKING;
-            case "Wallet":
-                return Payment.PaymentMethod.WALLET;
-            default:
-                return Payment.PaymentMethod.CREDIT_CARD;
-        }
+        return switch (methodCombo.getValue()) {
+            case "UPI" -> Payment.PaymentMethod.UPI;
+            case "Cash on Delivery" -> Payment.PaymentMethod.CASH_ON_DELIVERY;
+            default -> Payment.PaymentMethod.CREDIT_CARD;
+        };
     }
 
     private void updatePaymentFields() {
         boolean showCardFields = requiresCardDetails();
+        boolean showUpiFields = requiresUpiDetails();
         cardNumberField.setDisable(false);
-        cardNameField.setDisable(false);
+        cardNameField.setDisable("Cash on Delivery".equals(methodCombo.getValue()));
         expiryField.setDisable(!showCardFields);
         cvvField.setDisable(!showCardFields);
 
@@ -231,23 +225,24 @@ public class PaymentController implements Initializable {
                 cardNumberField.setPromptText("name@bank");
                 cardNameField.setPromptText("UPI account holder");
                 break;
-            case "Net Banking":
-                accountNumberLabel.setText("Bank Ref / Login");
-                accountNameLabel.setText("Account Holder");
-                cardNumberField.setPromptText("Customer ID or reference");
-                cardNameField.setPromptText("Bank account holder");
-                break;
-            case "Wallet":
-                accountNumberLabel.setText("Wallet Number / ID");
-                accountNameLabel.setText("Wallet Holder");
-                cardNumberField.setPromptText("Wallet mobile or ID");
-                cardNameField.setPromptText("Wallet holder");
+            case "Cash on Delivery":
+                accountNumberLabel.setText("Collection Mode");
+                accountNameLabel.setText("Verifier");
+                cardNumberField.setPromptText("Cash will be collected by the driver");
+                cardNumberField.setText("Cash on delivery");
+                cardNumberField.setDisable(true);
+                cardNameField.setPromptText("Verified during delivery");
+                cardNameField.clear();
                 break;
             default:
                 accountNumberLabel.setText("Card Number");
                 accountNameLabel.setText("Cardholder Name");
                 cardNumberField.setPromptText("1234 5678 9012 3456");
                 cardNameField.setPromptText("Name on card");
+                if (!showUpiFields) {
+                    cardNumberField.clear();
+                    cardNameField.clear();
+                }
                 break;
         }
     }
@@ -264,9 +259,16 @@ public class PaymentController implements Initializable {
         payment.setTaxAmount(currentBooking != null ? currentBooking.getTaxAmount() : 0);
         payment.setTotalAmount(currentBooking != null ? currentBooking.getTotalCost() : 0);
         payment.setPaymentMethod(method);
-        payment.setCardNumber(accountReference);
+        payment.setPaymentLabel(method.name());
+        if (method == Payment.PaymentMethod.CREDIT_CARD) {
+            payment.setCardNumber(ValidationUtil.maskCardNumber(accountReference));
+        } else if (method == Payment.PaymentMethod.UPI) {
+            payment.setUpiId(ValidationUtil.maskUpiId(accountReference));
+        }
         payment.setCardHolderName(accountHolder);
-        payment.setStatus(Payment.PaymentStatus.COMPLETED);
+        payment.setStatus(method == Payment.PaymentMethod.CASH_ON_DELIVERY
+            ? Payment.PaymentStatus.PENDING_CASH_CONFIRMATION
+            : Payment.PaymentStatus.COMPLETED);
         payment.setTransactionRef(OTPGenerator.generateTransactionRef());
         return payment;
     }
