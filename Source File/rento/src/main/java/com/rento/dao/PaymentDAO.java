@@ -69,6 +69,19 @@ public class PaymentDAO {
         }
     }
 
+    public Payment findByRental(ObjectId rentalId) {
+        try {
+            MongoCollection<Document> col = getCollection();
+            if (col == null) return null;
+
+            Document doc = col.find(Filters.eq("rentalId", rentalId)).first();
+            return doc != null ? documentToPayment(doc) : null;
+        } catch (Exception e) {
+            System.err.println("[PaymentDAO] Find by rental failed: " + e.getMessage());
+            return null;
+        }
+    }
+
     public List<Payment> findByUser(ObjectId userId) {
         List<Payment> payments = new ArrayList<>();
         try {
@@ -117,7 +130,9 @@ public class PaymentDAO {
         Document doc = new Document();
         if (p.getId() != null) doc.append("_id", p.getId());
         doc.append("bookingId", p.getBookingId());
+        doc.append("rentalId", p.getRentalId());
         doc.append("userId", p.getUserId());
+        doc.append("paymentMethodProfileId", p.getPaymentMethodProfileId());
         doc.append("amount", p.getAmount());
         doc.append("taxAmount", p.getTaxAmount());
         doc.append("discountAmount", p.getDiscountAmount());
@@ -126,8 +141,14 @@ public class PaymentDAO {
         doc.append("status", p.getStatus() != null ? p.getStatus().name() : null);
         doc.append("cardNumber", p.getCardNumber());
         doc.append("cardHolderName", p.getCardHolderName());
+        doc.append("upiId", p.getUpiId());
+        doc.append("paymentLabel", p.getPaymentLabel());
         doc.append("transactionRef", p.getTransactionRef());
         doc.append("currency", p.getCurrency());
+        doc.append("cashVerified", p.isCashVerified());
+        doc.append("cashVerifiedBy", p.getCashVerifiedBy());
+        doc.append("cashVerifiedAt", p.getCashVerifiedAt());
+        doc.append("receiptPath", p.getReceiptPath());
         doc.append("paymentDate", p.getPaymentDate());
         doc.append("createdAt", p.getCreatedAt());
         return doc;
@@ -137,7 +158,9 @@ public class PaymentDAO {
         Payment p = new Payment();
         p.setId(doc.getObjectId("_id"));
         p.setBookingId(doc.getObjectId("bookingId"));
+        p.setRentalId(doc.getObjectId("rentalId"));
         p.setUserId(doc.getObjectId("userId"));
+        p.setPaymentMethodProfileId(doc.getObjectId("paymentMethodProfileId"));
         p.setAmount(doc.getDouble("amount") != null ? doc.getDouble("amount") : 0);
         p.setTaxAmount(doc.getDouble("taxAmount") != null ? doc.getDouble("taxAmount") : 0);
         p.setDiscountAmount(doc.getDouble("discountAmount") != null ? doc.getDouble("discountAmount") : 0);
@@ -146,8 +169,14 @@ public class PaymentDAO {
         try { p.setStatus(Payment.PaymentStatus.valueOf(doc.getString("status"))); } catch (Exception ignored) {}
         p.setCardNumber(doc.getString("cardNumber"));
         p.setCardHolderName(doc.getString("cardHolderName"));
+        p.setUpiId(doc.getString("upiId"));
+        p.setPaymentLabel(doc.getString("paymentLabel"));
         p.setTransactionRef(doc.getString("transactionRef"));
         p.setCurrency(doc.getString("currency"));
+        p.setCashVerified(doc.getBoolean("cashVerified", false));
+        p.setCashVerifiedBy(doc.getString("cashVerifiedBy"));
+        p.setCashVerifiedAt(doc.getDate("cashVerifiedAt"));
+        p.setReceiptPath(doc.getString("receiptPath"));
         p.setPaymentDate(doc.getDate("paymentDate"));
         p.setCreatedAt(doc.getDate("createdAt"));
         return p;
