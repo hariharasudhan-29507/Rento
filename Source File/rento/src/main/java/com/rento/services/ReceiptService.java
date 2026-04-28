@@ -4,9 +4,12 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.rento.models.Booking;
 import com.rento.models.Payment;
 import com.rento.models.Rental;
+import com.rento.utils.MongoDBConnection;
 import com.rento.utils.ValidationUtil;
 
 import java.io.File;
@@ -33,7 +36,7 @@ public class ReceiptService {
         // Ensure directory exists
         new File(outputDir).mkdirs();
 
-        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+        com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4, 50, 50, 50, 50);
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
@@ -137,6 +140,9 @@ public class ReceiptService {
         document.add(contact);
 
         document.close();
+        recordReceipt("BOOKING", filePath, payment != null ? payment.getTransactionRef() : "BOOKING-" + System.currentTimeMillis(),
+            payment != null && payment.getStatus() != null ? payment.getStatus().name() : "COMPLETED",
+            payment != null && payment.getPaymentMethod() != null ? payment.getPaymentMethod().name() : "BOOKING");
         return filePath;
     }
 
@@ -150,14 +156,16 @@ public class ReceiptService {
         new File(outputDir).mkdirs();
 
         StringBuilder sb = new StringBuilder();
-        sb.append("═══════════════════════════════════════════════\n");
-        sb.append("            RENTO — PAYMENT RECEIPT            \n");
-        sb.append("   Vehicle Rental & Booking System              \n");
-        sb.append("═══════════════════════════════════════════════\n\n");
+        sb.append("============================================================\n");
+        sb.append("                     RENTO PAYMENT RECEIPT                  \n");
+        sb.append("============================================================\n");
+        sb.append("Generated At   : ").append(DATE_FORMAT.format(new Date())).append("\n");
+        sb.append("Receipt Type   : Booking Payment\n");
+        sb.append("------------------------------------------------------------\n\n");
 
         if (payment != null) {
             sb.append("TRANSACTION DETAILS\n");
-            sb.append("───────────────────────────────────────────────\n");
+            sb.append("------------------------------------------------------------\n");
             sb.append("Transaction ID : ").append(payment.getTransactionRef()).append("\n");
             sb.append("Date           : ").append(DATE_FORMAT.format(payment.getPaymentDate() != null ? payment.getPaymentDate() : new Date())).append("\n");
             sb.append("Method         : ").append(payment.getPaymentMethod() != null ? payment.getPaymentMethod().name() : "N/A").append("\n");
@@ -167,7 +175,7 @@ public class ReceiptService {
 
         if (booking != null) {
             sb.append("BOOKING DETAILS\n");
-            sb.append("───────────────────────────────────────────────\n");
+            sb.append("------------------------------------------------------------\n");
             sb.append("Vehicle        : ").append(booking.getVehicleName()).append("\n");
             sb.append("Pickup         : ").append(booking.getPickupLocation()).append("\n");
             sb.append("Drop-off       : ").append(booking.getDropoffLocation()).append("\n");
@@ -176,20 +184,24 @@ public class ReceiptService {
             sb.append("Duration       : ").append(booking.getRentalDays()).append(" day(s)\n\n");
 
             sb.append("PRICING\n");
-            sb.append("───────────────────────────────────────────────\n");
+            sb.append("------------------------------------------------------------\n");
             sb.append("Total Cost     : ").append(ValidationUtil.formatCurrency(booking.getTotalCost())).append("\n");
             sb.append("Tax (GST 18%)  : ").append(ValidationUtil.formatCurrency(booking.getTaxAmount())).append("\n");
             sb.append("Deposit        : ").append(ValidationUtil.formatCurrency(booking.getDepositAmount())).append("\n");
         }
 
-        sb.append("\n═══════════════════════════════════════════════\n");
-        sb.append("Thank you for choosing Rento! Safe travels.\n");
+        sb.append("\n============================================================\n");
+        sb.append("Thank you for choosing Rento. Please keep this receipt for\n");
+        sb.append("your travel records and payment verification.\n");
         sb.append("Support: sudanayyappan_bcs28@mepcoeng.ac.in\n");
-        sb.append("═══════════════════════════════════════════════\n");
+        sb.append("============================================================\n");
 
         try (FileWriter writer = new FileWriter(filePath)) {
             writer.write(sb.toString());
         }
+        recordReceipt("BOOKING_TXT", filePath, payment != null ? payment.getTransactionRef() : "BOOKING-" + System.currentTimeMillis(),
+            payment != null && payment.getStatus() != null ? payment.getStatus().name() : "COMPLETED",
+            payment != null && payment.getPaymentMethod() != null ? payment.getPaymentMethod().name() : "BOOKING");
         return filePath;
     }
 
@@ -210,17 +222,48 @@ public class ReceiptService {
         String filePath = outputDir + File.separator + fileName;
         new File(outputDir).mkdirs();
         try (FileWriter writer = new FileWriter(filePath)) {
-            writer.write("RENTO RENTAL RECEIPT\n");
-            writer.write("====================\n");
-            writer.write("Vehicle   : " + (rental.getVehicleName() != null ? rental.getVehicleName() : "N/A") + "\n");
-            writer.write("Renter    : " + (rental.getRenterName() != null ? rental.getRenterName() : "N/A") + "\n");
-            writer.write("Supplier  : " + (rental.getSupplierName() != null ? rental.getSupplierName() : "N/A") + "\n");
-            writer.write("Days      : " + rental.getRentalDays() + "\n");
-            writer.write("Amount    : " + ValidationUtil.formatCurrency(rental.getTotalAmount()) + "\n");
-            writer.write("Penalty   : " + ValidationUtil.formatCurrency(rental.getPenaltyAmount()) + "\n");
-            writer.write("Status    : " + rental.getStatus() + "\n");
-            writer.write("Generated : " + DATE_FORMAT.format(new Date()) + "\n");
+            writer.write("============================================================\n");
+            writer.write("                     RENTO RENTAL RECEIPT                   \n");
+            writer.write("============================================================\n");
+            writer.write("Generated At   : " + DATE_FORMAT.format(new Date()) + "\n");
+            writer.write("Vehicle        : " + (rental.getVehicleName() != null ? rental.getVehicleName() : "N/A") + "\n");
+            writer.write("Renter         : " + (rental.getRenterName() != null ? rental.getRenterName() : "N/A") + "\n");
+            writer.write("Supplier       : " + (rental.getSupplierName() != null ? rental.getSupplierName() : "N/A") + "\n");
+            writer.write("Duration       : " + rental.getRentalDurationLabel() + "\n");
+            writer.write("Base Amount    : " + ValidationUtil.formatCurrency(rental.getTotalAmount()) + "\n");
+            writer.write("Penalty        : " + ValidationUtil.formatCurrency(rental.getPenaltyAmount()) + "\n");
+            writer.write("Payment Method : " + (rental.getPaymentMethod() != null ? rental.getPaymentMethod() : "N/A") + "\n");
+            writer.write("Payment Status : " + (rental.getPaymentStatus() != null ? rental.getPaymentStatus() : "N/A") + "\n");
+            writer.write("Status         : " + rental.getStatus() + "\n");
+            writer.write("Receipt Path   : " + filePath + "\n");
+            writer.write("============================================================\n");
         }
+        recordReceipt("RENTAL", filePath, "RENTAL-" + System.currentTimeMillis(),
+            rental.getStatus() != null ? rental.getStatus().name() : "COMPLETED",
+            rental.getPaymentMethod() != null ? rental.getPaymentMethod() : "RENTAL");
         return filePath;
+    }
+
+    private void recordReceipt(String type, String path, String code, String status, String method) {
+        try {
+            MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
+            if (db == null) {
+                return;
+            }
+            MongoCollection<org.bson.Document> col = db.getCollection("receipts");
+            col.insertOne(new org.bson.Document("receiptCode", code)
+                .append("receiptType", type)
+                .append("documentTitle", "Rento " + type + " receipt")
+                .append("filePath", path)
+                .append("fileFormat", path.endsWith(".pdf") ? "PDF" : "TXT")
+                .append("status", status)
+                .append("paymentMethod", method)
+                .append("issuedBy", "Rento System")
+                .append("currency", "INR")
+                .append("deliveryChannel", "DOWNLOAD")
+                .append("printable", true)
+                .append("createdAt", new Date()));
+        } catch (Exception ignored) {
+        }
     }
 }
