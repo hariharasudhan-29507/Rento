@@ -26,7 +26,19 @@
             <HBox spacing="20">
                 <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
                     <Label fx:id="totalUsers" text="0" styleClass="stat-value"/>
-                    <Label text="Total Actors" styleClass="stat-label"/>
+                    <Label text="Total Users" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalDrivers" text="0" styleClass="stat-value"/>
+                    <Label text="Drivers" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalSuppliers" text="0" styleClass="stat-value"/>
+                    <Label text="Suppliers" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                    <Label fx:id="totalCollections" text="0" styleClass="stat-value"/>
+                    <Label text="Collections" styleClass="stat-label"/>
                 </VBox>
                 <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
                     <Label fx:id="totalVehicles" text="0" styleClass="stat-value"/>
@@ -81,6 +93,21 @@
 
             <HBox spacing="24">
                 <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="User Controls" styleClass="heading-3"/>
+                    <VBox fx:id="userManagementList" spacing="10"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Driver Controls" styleClass="heading-3"/>
+                    <VBox fx:id="driverManagementList" spacing="10"/>
+                </VBox>
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
+                    <Label text="Supplier Controls" styleClass="heading-3"/>
+                    <VBox fx:id="supplierManagementList" spacing="10"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24">
+                <VBox styleClass="card" spacing="12" HBox.hgrow="ALWAYS">
                     <Label text="Supplier Change Approvals" styleClass="heading-3"/>
                     <VBox fx:id="supplierChangeList" spacing="12"/>
                     <Label fx:id="noSupplierChangesLabel" text="No supplier approvals pending." styleClass="text-muted"/>
@@ -94,6 +121,11 @@
                     <Button text="Download Full System Export" styleClass="btn-secondary" onAction="#onDownloadSystemExport"/>
                 </VBox>
             </HBox>
+
+            <VBox styleClass="card" spacing="12">
+                <Label text="Full System Data View" styleClass="heading-3"/>
+                <TextArea fx:id="systemDataArea" prefRowCount="18" wrapText="false"/>
+            </VBox>
         </VBox>
 
         <Region VBox.vgrow="ALWAYS"/>
