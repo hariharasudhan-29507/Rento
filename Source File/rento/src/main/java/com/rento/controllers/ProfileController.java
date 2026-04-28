@@ -3,16 +3,22 @@ package com.rento.controllers;
 import com.rento.dao.BookingDAO;
 import com.rento.dao.RentalDAO;
 import com.rento.dao.UserDAO;
+import com.rento.models.PaymentMethodProfile;
 import com.rento.models.User;
 import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
 import com.rento.services.AuthService;
 import com.rento.services.NotificationService;
+import com.rento.services.PaymentMethodService;
 import com.rento.utils.AlertUtil;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -44,15 +50,29 @@ public class ProfileController implements Initializable {
     @FXML private Button logoutBtn;
     @FXML private Button roleDashboardBtn;
     @FXML private Label notificationsSummaryLabel;
+    @FXML private ComboBox<String> paymentMethodTypeCombo;
+    @FXML private TextField paymentProfileNameField;
+    @FXML private TextField paymentHolderNameField;
+    @FXML private TextField paymentReferenceField;
+    @FXML private TextField paymentProviderField;
+    @FXML private TextField paymentBillingAddressField;
+    @FXML private CheckBox preferredPaymentCheck;
+    @FXML private Label paymentMethodStatusLabel;
+    @FXML private VBox paymentMethodList;
 
     private final AuthService authService = new AuthService();
     private final BookingDAO bookingDAO = new BookingDAO();
     private final RentalDAO rentalDAO = new RentalDAO();
     private final UserDAO userDAO = new UserDAO();
     private final NotificationService notificationService = new NotificationService();
+    private final PaymentMethodService paymentMethodService = new PaymentMethodService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        paymentMethodTypeCombo.setItems(FXCollections.observableArrayList("Credit Card", "UPI", "Cash on Delivery"));
+        paymentMethodTypeCombo.setValue("Credit Card");
+        paymentMethodTypeCombo.valueProperty().addListener((obs, oldVal, newVal) -> updatePaymentMethodHints());
+        updatePaymentMethodHints();
         if (SessionManager.getInstance().isGuest()) {
             showGuestMode();
         } else {
@@ -94,7 +114,9 @@ public class ProfileController implements Initializable {
             detailEmail.setText(user.getEmail());
             detailPhone.setText(user.getPhone() != null ? user.getPhone() : "Not set");
             detailRole.setText(formatRole(user.getRole()));
-            detailStatus.setText(user.isVerified() ? "● Verified" : "● Unverified");
+            detailStatus.setText(user.isLocked()
+                ? "● Locked"
+                : user.isVerified() ? "● Verified" : "● Unverified");
             detailAge.setText(user.getAge() > 0 ? String.valueOf(user.getAge()) : "Not set");
             detailWallet.setText(com.rento.utils.ValidationUtil.formatCurrency(user.getWalletBalance()));
 
@@ -116,6 +138,7 @@ public class ProfileController implements Initializable {
             roleDashboardBtn.setManaged(true);
             roleDashboardBtn.setText(getRoleDashboardLabel(user.getRole()));
             loadNotificationsSummary(user);
+            loadPaymentMethods(user);
         }
     }
 
@@ -190,6 +213,41 @@ public class ProfileController implements Initializable {
         }
     }
 
+    @FXML
+    private void onSavePaymentMethod() {
+        if (SessionManager.getInstance().isGuest() || SessionManager.getInstance().getCurrentUser() == null) {
+            AlertUtil.showInfo("Payment Methods", "Please sign in to save a payment method.");
+            return;
+        }
+        String error = paymentMethodService.savePaymentMethod(
+            SessionManager.getInstance().getCurrentUser().getId(),
+            mapMethodType(),
+            paymentProfileNameField.getText(),
+            paymentHolderNameField.getText(),
+            paymentReferenceField.getText(),
+            paymentProviderField.getText(),
+            paymentBillingAddressField.getText(),
+            preferredPaymentCheck.isSelected()
+        );
+        if (error != null) {
+            paymentMethodStatusLabel.setText(error);
+            return;
+        }
+        paymentMethodStatusLabel.setText("Payment method saved successfully.");
+        paymentProfileNameField.clear();
+        paymentHolderNameField.clear();
+        paymentReferenceField.clear();
+        paymentProviderField.clear();
+        paymentBillingAddressField.clear();
+        preferredPaymentCheck.setSelected(false);
+        if (SessionManager.getInstance().getCurrentUser() != null) {
+            User user = userDAO.findById(SessionManager.getInstance().getCurrentUser().getId());
+            if (user != null) {
+                loadPaymentMethods(user);
+            }
+        }
+    }
+
     private String formatRole(User.Role role) {
         return role == null ? "Guest" : role.name().replace('_', ' ');
     }
@@ -205,5 +263,44 @@ public class ProfileController implements Initializable {
             default:
                 return "Rental Marketplace";
         }
+    }
+
+    private void loadPaymentMethods(User user) {
+        paymentMethodList.getChildren().clear();
+        for (PaymentMethodProfile profile : paymentMethodService.getPaymentMethodsForUser(user.getId())) {
+            Label label = new Label(profile.getProfileName() + " • "
+                + profile.getMethodType().name().replace('_', ' ') + " • "
+                + profile.getMaskedReference()
+                + (profile.isPreferred() ? " • Preferred" : ""));
+            label.getStyleClass().add("text-body");
+            paymentMethodList.getChildren().add(label);
+        }
+        if (paymentMethodList.getChildren().isEmpty()) {
+            Label empty = new Label("No saved payment methods yet.");
+            empty.getStyleClass().add("text-muted");
+            paymentMethodList.getChildren().add(empty);
+        }
+    }
+
+    private void updatePaymentMethodHints() {
+        String type = paymentMethodTypeCombo.getValue();
+        if ("UPI".equals(type)) {
+            paymentReferenceField.setPromptText("name@bank");
+            paymentProviderField.setPromptText("UPI app or bank");
+        } else if ("Cash on Delivery".equals(type)) {
+            paymentReferenceField.setPromptText("Cash on delivery");
+            paymentProviderField.setPromptText("Collected by driver or supplier");
+        } else {
+            paymentReferenceField.setPromptText("1234 5678 9012 3456");
+            paymentProviderField.setPromptText("Card issuer");
+        }
+    }
+
+    private PaymentMethodProfile.MethodType mapMethodType() {
+        return switch (paymentMethodTypeCombo.getValue()) {
+            case "UPI" -> PaymentMethodProfile.MethodType.UPI;
+            case "Cash on Delivery" -> PaymentMethodProfile.MethodType.CASH_ON_DELIVERY;
+            default -> PaymentMethodProfile.MethodType.CREDIT_CARD;
+        };
     }
 }
