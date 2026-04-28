@@ -162,6 +162,10 @@ public class BookingDetailController implements Initializable {
             showError("Please enter a drop-off location");
             return;
         }
+        if (pickupField.getText().trim().length() < 3 || dropoffField.getText().trim().length() < 3) {
+            showError("Pickup and drop-off locations must be at least 3 characters");
+            return;
+        }
 
         LocalDate pickup = pickupDate.getValue();
         LocalDate ret = returnDate.getValue();
