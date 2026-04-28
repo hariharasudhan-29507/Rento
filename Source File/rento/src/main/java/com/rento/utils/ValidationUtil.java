@@ -19,6 +19,9 @@ public class ValidationUtil {
     private static final Pattern CVV_PATTERN =
         Pattern.compile("^[0-9]{3,4}$");
 
+    private static final Pattern UPI_PATTERN =
+        Pattern.compile("^[A-Za-z0-9._-]{2,}@[A-Za-z]{2,}$");
+
     private static final Pattern NAME_PATTERN =
         Pattern.compile("^[A-Za-z\\s]{2,50}$");
 
@@ -77,6 +80,10 @@ public class ValidationUtil {
         return cvv != null && CVV_PATTERN.matcher(cvv).matches();
     }
 
+    public static boolean isValidUpiId(String upiId) {
+        return upiId != null && UPI_PATTERN.matcher(upiId.trim()).matches();
+    }
+
     public static boolean isValidExpiryDate(String expiry) {
         if (expiry == null) return false;
         String[] parts = expiry.split("/");
@@ -119,6 +126,18 @@ public class ValidationUtil {
         if (number == null || number.length() < 4) return "****";
         String cleaned = number.replaceAll("[\\s\\-]", "");
         return "**** **** **** " + cleaned.substring(cleaned.length() - 4);
+    }
+
+    public static String maskUpiId(String upiId) {
+        if (upiId == null || upiId.isBlank()) {
+            return "****@upi";
+        }
+        String cleaned = upiId.trim();
+        int atIndex = cleaned.indexOf('@');
+        if (atIndex <= 1) {
+            return "****" + cleaned.substring(Math.max(0, atIndex));
+        }
+        return cleaned.charAt(0) + "***" + cleaned.substring(atIndex);
     }
 
     /**
