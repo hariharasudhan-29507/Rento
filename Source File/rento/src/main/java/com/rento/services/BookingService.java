@@ -1,6 +1,7 @@
 package com.rento.services;
 
 import com.rento.dao.BookingDAO;
+import com.rento.dao.PaymentDAO;
 import com.rento.dao.UserDAO;
 import com.rento.dao.VehicleDAO;
 import com.rento.models.Booking;
@@ -24,6 +25,7 @@ public class BookingService {
     private final BookingDAO bookingDAO;
     private final VehicleDAO vehicleDAO;
     private final UserDAO userDAO;
+    private final PaymentDAO paymentDAO;
     private final ReceiptService receiptService;
     private final NotificationService notificationService;
 
@@ -37,6 +39,7 @@ public class BookingService {
         this.bookingDAO = new BookingDAO();
         this.vehicleDAO = new VehicleDAO();
         this.userDAO = new UserDAO();
+        this.paymentDAO = new PaymentDAO();
         this.receiptService = new ReceiptService();
         this.notificationService = new NotificationService();
     }
@@ -196,10 +199,15 @@ public class BookingService {
         if (updated && booking.getUserId() != null) {
             try {
                 String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
-                Payment payment = new Payment();
-                payment.setTransactionRef(OTPGenerator.generateTransactionRef());
-                payment.setTotalAmount(booking.getTotalCost());
+                Payment payment = booking.getPaymentId() != null ? paymentDAO.findById(booking.getPaymentId()) : null;
+                if (payment == null) {
+                    payment = new Payment();
+                    payment.setTransactionRef(OTPGenerator.generateTransactionRef());
+                    payment.setTotalAmount(booking.getTotalCost());
+                }
                 String path = receiptService.generatePDFReceipt(booking, payment, outDir);
+                booking.setReceiptPath(path);
+                bookingDAO.updateBooking(booking);
                 notificationService.addNotification(booking.getUserId(), "Ride receipt generated", "Your completed ride receipt is ready.", path);
             } catch (Exception ignored) {
             }
@@ -332,12 +340,30 @@ public class BookingService {
         if (booking == null) {
             return;
         }
+        if (payment != null) {
+            booking.setPaymentId(payment.getId());
+            booking.setPaymentMethod(payment.getPaymentMethod() != null ? payment.getPaymentMethod().name() : null);
+            booking.setPaymentStatus(payment.getStatus() != null ? payment.getStatus().name() : null);
+            booking.setCashPaymentPending(payment.getPaymentMethod() == Payment.PaymentMethod.CASH_ON_DELIVERY);
+            booking.setPaidVerified(payment.getPaymentMethod() != Payment.PaymentMethod.CASH_ON_DELIVERY);
+            if (payment.getPaymentMethod() != Payment.PaymentMethod.CASH_ON_DELIVERY) {
+                try {
+                    String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
+                    String receiptPath = receiptService.generatePDFReceipt(booking, payment, outDir);
+                    booking.setReceiptPath(receiptPath);
+                    payment.setReceiptPath(receiptPath);
+                    paymentDAO.updatePayment(payment);
+                } catch (Exception ignored) {
+                }
+            }
+            bookingDAO.updateBooking(booking);
+        }
         if (booking.getUserId() != null) {
             notificationService.addNotification(
                 booking.getUserId(),
                 "Payment received",
-                "Payment completed for " + booking.getVehicleName() + ". Booking OTP is ready for pickup.",
-                null
+                "Payment recorded for " + booking.getVehicleName() + ". Booking OTP is ready for pickup.",
+                booking.getReceiptPath()
             );
         }
         if (booking.getPreferredDriverId() != null) {
@@ -351,5 +377,46 @@ public class BookingService {
         if (payment != null && booking.getId() != null) {
             System.out.println("[BookingService] Payment recorded for booking " + booking.getId() + " with ref " + payment.getTransactionRef());
         }
+    }
+
+    public boolean verifyCashPaymentForBooking(ObjectId bookingId, String verifierName) {
+        Booking booking = bookingDAO.findById(bookingId);
+        if (booking == null || booking.getPaymentId() == null) {
+            return false;
+        }
+        Payment payment = paymentDAO.findById(booking.getPaymentId());
+        if (payment == null || payment.getPaymentMethod() != Payment.PaymentMethod.CASH_ON_DELIVERY) {
+            return false;
+        }
+
+        payment.setCashVerified(true);
+        payment.setCashVerifiedBy(verifierName);
+        payment.setCashVerifiedAt(new Date());
+        payment.setStatus(Payment.PaymentStatus.CASH_CONFIRMED);
+        paymentDAO.updatePayment(payment);
+
+        booking.setCashPaymentPending(false);
+        booking.setPaidVerified(true);
+        booking.setPaidVerifiedBy(verifierName);
+        booking.setPaidVerifiedAt(new Date());
+        booking.setPaymentStatus(payment.getStatus().name());
+
+        try {
+            String outDir = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "RentoReceipts";
+            String receiptPath = receiptService.generatePDFReceipt(booking, payment, outDir);
+            booking.setReceiptPath(receiptPath);
+            payment.setReceiptPath(receiptPath);
+            paymentDAO.updatePayment(payment);
+            if (booking.getUserId() != null) {
+                notificationService.addNotification(
+                    booking.getUserId(),
+                    "Cash payment verified",
+                    "Your driver confirmed cash payment for " + booking.getVehicleName() + ". Download the receipt anytime.",
+                    receiptPath
+                );
+            }
+        } catch (Exception ignored) {
+        }
+        return bookingDAO.updateBooking(booking);
     }
 }
