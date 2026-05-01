@@ -1,12 +1,12 @@
 package com.rento.dao;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import com.rento.models.User;
+import com.rento.utils.MongoCollections;
 import com.rento.utils.MongoDBConnection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -20,12 +20,10 @@ import java.util.List;
  */
 public class UserDAO {
 
-    private static final String COLLECTION_NAME = "users";
+    public static final String COLLECTION_NAME = MongoCollections.USERS;
 
     private MongoCollection<Document> getCollection() {
-        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
-        if (db == null) return null;
-        return db.getCollection(COLLECTION_NAME);
+        return MongoDBConnection.getInstance().getCollection(COLLECTION_NAME);
     }
 
     public boolean insertUser(User user) {
@@ -195,10 +193,15 @@ public class UserDAO {
         user.setLockedAt(doc.getDate("lockedAt"));
         user.setLastLoginAt(doc.getDate("lastLoginAt"));
         user.setAge(doc.getInteger("age", 0));
-        user.setWalletBalance(doc.getDouble("walletBalance") != null ? doc.getDouble("walletBalance") : 0);
+        user.setWalletBalance(readDouble(doc, "walletBalance"));
         user.setCreatedAt(doc.getDate("createdAt"));
         user.setUpdatedAt(doc.getDate("updatedAt"));
         return user;
+    }
+
+    private double readDouble(Document doc, String field) {
+        Object value = doc.get(field);
+        return value instanceof Number ? ((Number) value).doubleValue() : 0;
     }
 
     public boolean updateLockState(ObjectId userId, boolean locked, String reason) {
