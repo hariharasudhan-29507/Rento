@@ -246,3 +246,4 @@ public class BookingDetailController implements Initializable {
         return availableDrivers.get(selectedIndex - 1).getId();
     }
 }
+
