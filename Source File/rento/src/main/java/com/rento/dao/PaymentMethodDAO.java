@@ -1,10 +1,10 @@
 package com.rento.dao;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.rento.models.PaymentMethodProfile;
+import com.rento.utils.MongoCollections;
 import com.rento.utils.MongoDBConnection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class PaymentMethodDAO {
 
-    private static final String COLLECTION_NAME = "payment_methods";
+    public static final String COLLECTION_NAME = MongoCollections.PAYMENT_METHODS;
 
     private MongoCollection<Document> getCollection() {
-        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
-        if (db == null) return null;
-        return db.getCollection(COLLECTION_NAME);
+        return MongoDBConnection.getInstance().getCollection(COLLECTION_NAME);
     }
 
     public boolean insert(PaymentMethodProfile profile) {
