@@ -7,6 +7,7 @@ import com.rento.models.Vehicle;
 import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
 import com.rento.services.AuthService;
+import com.rento.services.PaymentService;
 import com.rento.services.RentalService;
 import com.rento.utils.DateTimeUtil;
 import com.rento.utils.AlertUtil;
@@ -14,7 +15,10 @@ import com.rento.utils.ValidationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
@@ -35,21 +39,45 @@ public class SupplierDashboardController implements Initializable {
     @FXML private Label pendingApprovals;
     @FXML private Label totalRevenue;
     @FXML private Label walletBalance;
+    @FXML private VBox dashboardSection;
+    @FXML private VBox walletSection;
+    @FXML private Label walletSectionBalance;
+    @FXML private Label walletSectionRevenue;
+    @FXML private VBox walletTransactionList;
+    @FXML private TextField walletTopUpAmountField;
+    @FXML private ComboBox<String> walletTopUpMethodCombo;
+    @FXML private TextField walletTopUpHolderField;
+    @FXML private TextField walletTopUpReferenceField;
+    @FXML private TextField walletTopUpExpiryField;
+    @FXML private PasswordField walletTopUpCvvField;
+    @FXML private Label walletTopUpStatusLabel;
     @FXML private VBox approvalList;
     @FXML private Label noApprovalsLabel;
     @FXML private FlowPane vehicleFleet;
     @FXML private Label noVehiclesLabel;
-    @FXML private PieChart fleetStatusChart;
-    @FXML private BarChart<String, Number> supplierTrendChart;
+    @FXML private Pagination analyticsPagination;
 
     private final RentalService rentalService = new RentalService();
     private final VehicleDAO vehicleDAO = new VehicleDAO();
     private final AuthService authService = new AuthService();
     private final UserDAO userDAO = new UserDAO();
+    private final PaymentService paymentService = new PaymentService();
+    private List<Rental> requestedCache = List.of();
+    private List<Rental> approvedCache = List.of();
+    private List<Rental> activeCache = List.of();
+    private List<Rental> allSupplierRentalsCache = List.of();
+    private List<Vehicle> vehicleCache = List.of();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         welcomeLabel.setText("Welcome, " + SessionManager.getInstance().getCurrentUserName() + " (Supplier)");
+        analyticsPagination.setPageCount(3);
+        analyticsPagination.setPageFactory(this::createAnalyticsPage);
+        walletTopUpMethodCombo.setItems(javafx.collections.FXCollections.observableArrayList("Credit Card", "UPI"));
+        walletTopUpMethodCombo.setValue("Credit Card");
+        walletTopUpMethodCombo.valueProperty().addListener((obs, oldValue, newValue) -> updateWalletTopUpHints());
+        updateWalletTopUpHints();
+        showDashboardSection();
         loadDashboard();
     }
 
@@ -64,16 +92,22 @@ public class SupplierDashboardController implements Initializable {
         List<Rental> approved = rentalService.getAwaitingOtpBySupplier(SessionManager.getInstance().getCurrentUser().getId());
         List<Rental> active = rentalService.getActiveRentalsBySupplier(SessionManager.getInstance().getCurrentUser().getId());
         List<Rental> allSupplierRentals = rentalService.getRentalsBySupplier(SessionManager.getInstance().getCurrentUser().getId());
+        requestedCache = requested;
+        approvedCache = approved;
+        activeCache = active;
+        allSupplierRentalsCache = allSupplierRentals;
 
         int totalPending = requested.size() + approved.size();
         pendingApprovals.setText(String.valueOf(totalPending));
         activeRentals.setText(String.valueOf(active.size()));
-        totalRevenue.setText(ValidationUtil.formatCurrency(
-            allSupplierRentals.stream().mapToDouble(r -> r.getTotalAmount() + r.getPenaltyAmount()).sum()
-        ));
+        double grossRevenue = allSupplierRentals.stream().mapToDouble(r -> r.getTotalAmount() + r.getPenaltyAmount()).sum();
+        totalRevenue.setText(ValidationUtil.formatCurrency(grossRevenue));
+        walletSectionRevenue.setText(ValidationUtil.formatCurrency(grossRevenue));
         if (SessionManager.getInstance().getCurrentUser() != null) {
             com.rento.models.User freshUser = userDAO.findById(SessionManager.getInstance().getCurrentUser().getId());
-            walletBalance.setText(ValidationUtil.formatCurrency(freshUser != null ? freshUser.getWalletBalance() : 0));
+            String wallet = ValidationUtil.formatCurrency(freshUser != null ? freshUser.getWalletBalance() : 0);
+            walletBalance.setText(wallet);
+            walletSectionBalance.setText(wallet);
         }
 
         approvalList.getChildren().clear();
@@ -93,6 +127,7 @@ public class SupplierDashboardController implements Initializable {
 
         try {
             List<Vehicle> vehicles = vehicleDAO.findByOwner(SessionManager.getInstance().getCurrentUser().getId());
+            vehicleCache = vehicles;
             totalVehicles.setText(String.valueOf(vehicles.size()));
             vehicleFleet.getChildren().clear();
             if (!vehicles.isEmpty()) {
@@ -103,7 +138,9 @@ public class SupplierDashboardController implements Initializable {
             }
         } catch (Exception ignored) {}
 
-        updateCharts();
+        updateWalletTransactions(allSupplierRentals);
+        analyticsPagination.setCurrentPageIndex(Math.min(analyticsPagination.getCurrentPageIndex(), 2));
+        analyticsPagination.setPageFactory(this::createAnalyticsPage);
     }
 
     private HBox createRequestCard(Rental rental) {
@@ -243,40 +280,173 @@ public class SupplierDashboardController implements Initializable {
         return card;
     }
 
-    private void updateCharts() {
-        if (SessionManager.getInstance().getCurrentUser() == null) {
-            return;
-        }
-
-        List<Vehicle> vehicles = vehicleDAO.findByOwner(SessionManager.getInstance().getCurrentUser().getId());
-        long available = vehicles.stream().filter(v -> v.getStatus() == Vehicle.Status.AVAILABLE).count();
-        long inUse = vehicles.stream().filter(v -> v.getStatus() == Vehicle.Status.IN_USE).count();
-        long maintenance = vehicles.stream().filter(v -> v.getStatus() == Vehicle.Status.MAINTENANCE).count();
-
-        fleetStatusChart.getData().setAll(
-            new PieChart.Data("Available", available),
-            new PieChart.Data("In Use", inUse),
-            new PieChart.Data("Maintenance", maintenance)
-        );
-
-        List<Rental> rentals = rentalService.getRentalsBySupplier(SessionManager.getInstance().getCurrentUser().getId());
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Supplier Metrics");
-        series.getData().add(new XYChart.Data<>("Requested", rentals.stream().filter(r -> r.getStatus() == Rental.RentalStatus.REQUESTED).count()));
-        series.getData().add(new XYChart.Data<>("Active", rentals.stream().filter(r -> r.getStatus() == Rental.RentalStatus.ACTIVE).count()));
-        series.getData().add(new XYChart.Data<>("Overdue", rentals.stream().filter(r -> r.getStatus() == Rental.RentalStatus.OVERDUE).count()));
-        series.getData().add(new XYChart.Data<>("Completed", rentals.stream().filter(r -> r.getStatus() == Rental.RentalStatus.COMPLETED).count()));
-        supplierTrendChart.getData().clear();
-        supplierTrendChart.getData().add(series);
-    }
-
     @FXML private void onRefresh() { loadDashboard(); }
+    @FXML private void onShowDashboard() { showDashboardSection(); }
+    @FXML private void onShowWallet() { showWalletSection(); }
     @FXML private void onAddVehicle() { NavigationManager.navigateTo("/fxml/rent.fxml"); }
     @FXML private void onNavHome() { NavigationManager.navigateTo("/fxml/landing.fxml"); }
-    @FXML private void onNavProfile() { NavigationManager.navigateTo("/fxml/profile.fxml"); }
     @FXML private void onLogout() {
         authService.logout();
         NavigationManager.clearHistory();
         NavigationManager.navigateTo("/fxml/landing.fxml");
+    }
+
+    private void showDashboardSection() {
+        dashboardSection.setManaged(true);
+        dashboardSection.setVisible(true);
+        walletSection.setManaged(false);
+        walletSection.setVisible(false);
+    }
+
+    private void showWalletSection() {
+        walletSection.setManaged(true);
+        walletSection.setVisible(true);
+        dashboardSection.setManaged(false);
+        dashboardSection.setVisible(false);
+    }
+
+    private void updateWalletTransactions(List<Rental> rentals) {
+        walletTransactionList.getChildren().clear();
+        if (SessionManager.getInstance().getCurrentUser() != null) {
+            paymentService.getWalletTopUpsByUser(SessionManager.getInstance().getCurrentUser().getId()).forEach(payment -> {
+                Label item = new Label(
+                    "Wallet top-up • +" + ValidationUtil.formatCurrency(payment.getTotalAmount())
+                        + " • " + payment.getPaymentMethod()
+                        + " • " + payment.getTransactionRef()
+                );
+                item.getStyleClass().add("text-body");
+                walletTransactionList.getChildren().add(item);
+            });
+        }
+        List<Rental> completed = rentals.stream()
+            .filter(rental -> rental.getStatus() == Rental.RentalStatus.COMPLETED)
+            .toList();
+        if (completed.isEmpty()) {
+            Label empty = new Label("No supplier wallet credits yet.");
+            empty.getStyleClass().add("text-muted");
+            walletTransactionList.getChildren().add(empty);
+            return;
+        }
+        for (Rental rental : completed) {
+            double value = rental.getTotalAmount() + rental.getPenaltyAmount();
+            Label item = new Label(
+                rental.getVehicleName() + " • +" + ValidationUtil.formatCurrency(value)
+                    + " • Settled from " + (rental.getRenterName() != null ? rental.getRenterName() : "renter")
+            );
+            item.getStyleClass().add("text-body");
+            walletTransactionList.getChildren().add(item);
+        }
+    }
+
+    @FXML
+    private void onTopUpWallet() {
+        if (SessionManager.getInstance().getCurrentUser() == null) {
+            return;
+        }
+        double amount;
+        try {
+            amount = Double.parseDouble(walletTopUpAmountField.getText().trim());
+        } catch (Exception ex) {
+            walletTopUpStatusLabel.setText("Enter a valid amount.");
+            return;
+        }
+        com.rento.models.Payment.PaymentMethod method = "UPI".equals(walletTopUpMethodCombo.getValue())
+            ? com.rento.models.Payment.PaymentMethod.UPI
+            : com.rento.models.Payment.PaymentMethod.CREDIT_CARD;
+        com.rento.models.Payment payment = paymentService.topUpWallet(
+            SessionManager.getInstance().getCurrentUser().getId(),
+            amount,
+            method,
+            walletTopUpReferenceField.getText(),
+            walletTopUpHolderField.getText(),
+            walletTopUpExpiryField.getText(),
+            walletTopUpCvvField.getText()
+        );
+        if (payment == null) {
+            walletTopUpStatusLabel.setText("Wallet top-up failed. Check details and try again.");
+            return;
+        }
+        walletTopUpStatusLabel.setText("Added " + ValidationUtil.formatCurrency(amount) + " • Ref " + payment.getTransactionRef());
+        walletTopUpAmountField.clear();
+        walletTopUpHolderField.clear();
+        walletTopUpReferenceField.clear();
+        walletTopUpExpiryField.clear();
+        walletTopUpCvvField.clear();
+        loadDashboard();
+    }
+
+    private void updateWalletTopUpHints() {
+        boolean upi = "UPI".equals(walletTopUpMethodCombo.getValue());
+        walletTopUpReferenceField.setPromptText(upi ? "name@bank" : "1234 5678 9012 3456");
+        walletTopUpHolderField.setPromptText(upi ? "UPI account holder" : "Card holder name");
+        walletTopUpExpiryField.setDisable(upi);
+        walletTopUpCvvField.setDisable(upi);
+        if (upi) {
+            walletTopUpExpiryField.clear();
+            walletTopUpCvvField.clear();
+        }
+    }
+
+    private Node createAnalyticsPage(Integer index) {
+        int pageIndex = index == null ? 0 : index;
+        VBox container = new VBox(12);
+        container.getStyleClass().add("card");
+
+        if (pageIndex == 0) {
+            long available = vehicleCache.stream().filter(v -> v.getStatus() == Vehicle.Status.AVAILABLE).count();
+            long inUse = vehicleCache.stream().filter(v -> v.getStatus() == Vehicle.Status.IN_USE).count();
+            long maintenance = vehicleCache.stream().filter(v -> v.getStatus() == Vehicle.Status.MAINTENANCE).count();
+            Label title = new Label("Fleet Status");
+            title.getStyleClass().add("heading-3");
+            PieChart chart = new PieChart();
+            chart.setPrefHeight(280);
+            chart.getData().setAll(
+                new PieChart.Data("Available", available),
+                new PieChart.Data("In Use", inUse),
+                new PieChart.Data("Maintenance", maintenance)
+            );
+            container.getChildren().addAll(title, chart);
+            return container;
+        }
+
+        if (pageIndex == 1) {
+            Label title = new Label("Rental Stage Pipeline");
+            title.getStyleClass().add("heading-3");
+            BarChart<String, Number> chart = createBarChart("Stage", "Count");
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.getData().add(new XYChart.Data<>("Requested", requestedCache.size()));
+            series.getData().add(new XYChart.Data<>("Approved", approvedCache.size()));
+            series.getData().add(new XYChart.Data<>("Active", activeCache.stream().filter(r -> r.getStatus() == Rental.RentalStatus.ACTIVE).count()));
+            series.getData().add(new XYChart.Data<>("Overdue", activeCache.stream().filter(r -> r.getStatus() == Rental.RentalStatus.OVERDUE).count()));
+            series.getData().add(new XYChart.Data<>("Completed", allSupplierRentalsCache.stream().filter(r -> r.getStatus() == Rental.RentalStatus.COMPLETED).count()));
+            chart.getData().add(series);
+            container.getChildren().addAll(title, chart);
+            return container;
+        }
+
+        Label title = new Label("Revenue And Exposure");
+        title.getStyleClass().add("heading-3");
+        BarChart<String, Number> chart = createBarChart("Metric", "Amount");
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.getData().add(new XYChart.Data<>("Completed Revenue", allSupplierRentalsCache.stream()
+            .filter(r -> r.getStatus() == Rental.RentalStatus.COMPLETED)
+            .mapToDouble(r -> r.getTotalAmount() + r.getPenaltyAmount()).sum()));
+        series.getData().add(new XYChart.Data<>("Active Exposure", activeCache.stream()
+            .mapToDouble(r -> r.getTotalAmount() + r.getPenaltyAmount()).sum()));
+        chart.getData().add(series);
+        container.getChildren().addAll(title, chart);
+        return container;
+    }
+
+    private BarChart<String, Number> createBarChart(String xLabel, String yLabel) {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel(xLabel);
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel(yLabel);
+        BarChart<String, Number> chart = new BarChart<>(xAxis, yAxis);
+        chart.setLegendVisible(false);
+        chart.setCategoryGap(18);
+        chart.setPrefHeight(280);
+        return chart;
     }
 }
