@@ -9,6 +9,7 @@ import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
 import com.rento.services.AuthService;
 import com.rento.services.NotificationService;
+import com.rento.services.PaymentService;
 import com.rento.services.PaymentMethodService;
 import com.rento.utils.AlertUtil;
 import javafx.collections.FXCollections;
@@ -18,7 +19,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -37,6 +40,10 @@ public class ProfileController implements Initializable {
     @FXML private Label roleLabel;
     @FXML private VBox guestNotice;
     @FXML private VBox userInfoSection;
+    @FXML private HBox statsSection;
+    @FXML private VBox quickActionsSection;
+    @FXML private VBox walletTopUpSection;
+    @FXML private VBox paymentMethodsSection;
     @FXML private Label bookingCount;
     @FXML private Label rentalCount;
     @FXML private Label accountAge;
@@ -50,6 +57,14 @@ public class ProfileController implements Initializable {
     @FXML private Button logoutBtn;
     @FXML private Button roleDashboardBtn;
     @FXML private Label notificationsSummaryLabel;
+    @FXML private TextField walletAmountField;
+    @FXML private ComboBox<String> walletMethodCombo;
+    @FXML private TextField walletHolderNameField;
+    @FXML private TextField walletReferenceField;
+    @FXML private TextField walletExpiryField;
+    @FXML private PasswordField walletCvvField;
+    @FXML private Label walletTopUpStatusLabel;
+    @FXML private VBox walletTopUpHistoryList;
     @FXML private ComboBox<String> paymentMethodTypeCombo;
     @FXML private TextField paymentProfileNameField;
     @FXML private TextField paymentHolderNameField;
@@ -65,6 +80,7 @@ public class ProfileController implements Initializable {
     private final RentalDAO rentalDAO = new RentalDAO();
     private final UserDAO userDAO = new UserDAO();
     private final NotificationService notificationService = new NotificationService();
+    private final PaymentService paymentService = new PaymentService();
     private final PaymentMethodService paymentMethodService = new PaymentMethodService();
 
     @Override
@@ -73,6 +89,10 @@ public class ProfileController implements Initializable {
         paymentMethodTypeCombo.setValue("Credit Card");
         paymentMethodTypeCombo.valueProperty().addListener((obs, oldVal, newVal) -> updatePaymentMethodHints());
         updatePaymentMethodHints();
+        walletMethodCombo.setItems(FXCollections.observableArrayList("Credit Card", "UPI"));
+        walletMethodCombo.setValue("Credit Card");
+        walletMethodCombo.valueProperty().addListener((obs, oldVal, newVal) -> updateWalletTopUpHints());
+        updateWalletTopUpHints();
         if (SessionManager.getInstance().isGuest()) {
             showGuestMode();
         } else {
@@ -105,6 +125,7 @@ public class ProfileController implements Initializable {
         User sessionUser = SessionManager.getInstance().getCurrentUser();
         User user = sessionUser != null ? userDAO.findById(sessionUser.getId()) : null;
         if (user != null) {
+            boolean isAdmin = user.getRole() == User.Role.ADMIN;
             nameLabel.setText(user.getFullName());
             emailLabel.setText(user.getEmail());
             roleLabel.setText(formatRole(user.getRole()));
@@ -124,21 +145,34 @@ public class ProfileController implements Initializable {
                 accountAge.setText(new SimpleDateFormat("MMM yyyy").format(user.getCreatedAt()));
             }
 
-            if (user.getRole() == User.Role.DRIVER) {
-                bookingCount.setText(String.valueOf(bookingDAO.findByDriver(user.getId()).size()));
-            } else {
-                bookingCount.setText(String.valueOf(bookingDAO.findByUser(user.getId()).size()));
-            }
-            if (user.getRole() == User.Role.SUPPLIER) {
-                rentalCount.setText(String.valueOf(rentalDAO.findBySupplier(user.getId()).size()));
-            } else {
-                rentalCount.setText(String.valueOf(rentalDAO.findByRenter(user.getId()).size()));
+            if (!isAdmin) {
+                if (user.getRole() == User.Role.DRIVER) {
+                    bookingCount.setText(String.valueOf(bookingDAO.findByDriver(user.getId()).size()));
+                } else {
+                    bookingCount.setText(String.valueOf(bookingDAO.findByUser(user.getId()).size()));
+                }
+                if (user.getRole() == User.Role.SUPPLIER) {
+                    rentalCount.setText(String.valueOf(rentalDAO.findBySupplier(user.getId()).size()));
+                } else {
+                    rentalCount.setText(String.valueOf(rentalDAO.findByRenter(user.getId()).size()));
+                }
             }
             roleDashboardBtn.setVisible(true);
             roleDashboardBtn.setManaged(true);
             roleDashboardBtn.setText(getRoleDashboardLabel(user.getRole()));
+            statsSection.setVisible(!isAdmin);
+            statsSection.setManaged(!isAdmin);
+            quickActionsSection.setVisible(!isAdmin);
+            quickActionsSection.setManaged(!isAdmin);
+            walletTopUpSection.setVisible(!isAdmin);
+            walletTopUpSection.setManaged(!isAdmin);
+            paymentMethodsSection.setVisible(!isAdmin);
+            paymentMethodsSection.setManaged(!isAdmin);
             loadNotificationsSummary(user);
-            loadPaymentMethods(user);
+            if (!isAdmin) {
+                loadWalletTopUpHistory(user);
+                loadPaymentMethods(user);
+            }
         }
     }
 
@@ -159,8 +193,27 @@ public class ProfileController implements Initializable {
     @FXML private void onLogin() { NavigationManager.navigateTo("/fxml/login.fxml"); }
     @FXML private void onRegister() { NavigationManager.navigateTo("/fxml/register.fxml"); }
     @FXML private void onNavHome() { NavigationManager.navigateTo("/fxml/landing.fxml"); }
-    @FXML private void onNavBook() { NavigationManager.navigateTo("/fxml/booking.fxml"); }
-    @FXML private void onNavRent() { NavigationManager.navigateTo("/fxml/rent.fxml"); }
+    @FXML private void onBack() {
+        if (NavigationManager.canGoBack()) {
+            NavigationManager.goBack();
+        } else {
+            NavigationManager.navigateTo("/fxml/landing.fxml");
+        }
+    }
+    @FXML private void onNavBook() {
+        if (SessionManager.getInstance().getCurrentRole() == User.Role.USER) {
+            NavigationManager.navigateTo("/fxml/booking.fxml");
+        } else {
+            onOpenRoleDashboard();
+        }
+    }
+    @FXML private void onNavRent() {
+        if (SessionManager.getInstance().getCurrentRole() == User.Role.USER) {
+            NavigationManager.navigateTo("/fxml/rent.fxml");
+        } else {
+            onOpenRoleDashboard();
+        }
+    }
     @FXML private void onNavContact() { NavigationManager.navigateTo("/fxml/contact.fxml"); }
     @FXML private void onOpenRoleDashboard() {
         User.Role role = SessionManager.getInstance().getCurrentRole();
@@ -248,6 +301,50 @@ public class ProfileController implements Initializable {
         }
     }
 
+    @FXML
+    private void onTopUpWallet() {
+        if (SessionManager.getInstance().isGuest() || SessionManager.getInstance().getCurrentUser() == null) {
+            AlertUtil.showInfo("Wallet", "Please sign in to add money to your wallet.");
+            return;
+        }
+        double amount;
+        try {
+            amount = Double.parseDouble(walletAmountField.getText().trim());
+        } catch (Exception ex) {
+            walletTopUpStatusLabel.setText("Enter a valid wallet top-up amount.");
+            return;
+        }
+        PaymentService topUpService = paymentService;
+        com.rento.models.Payment.PaymentMethod method = "UPI".equals(walletMethodCombo.getValue())
+            ? com.rento.models.Payment.PaymentMethod.UPI
+            : com.rento.models.Payment.PaymentMethod.CREDIT_CARD;
+        com.rento.models.Payment payment = topUpService.topUpWallet(
+            SessionManager.getInstance().getCurrentUser().getId(),
+            amount,
+            method,
+            walletReferenceField.getText(),
+            walletHolderNameField.getText(),
+            walletExpiryField.getText(),
+            walletCvvField.getText()
+        );
+        if (payment == null) {
+            walletTopUpStatusLabel.setText("Wallet top-up failed. Check payment details and try again.");
+            return;
+        }
+        walletTopUpStatusLabel.setText("Wallet top-up successful: " + com.rento.utils.ValidationUtil.formatCurrency(amount)
+            + " • Ref " + payment.getTransactionRef());
+        walletAmountField.clear();
+        walletReferenceField.clear();
+        walletHolderNameField.clear();
+        walletExpiryField.clear();
+        walletCvvField.clear();
+        User refreshed = userDAO.findById(SessionManager.getInstance().getCurrentUser().getId());
+        if (refreshed != null) {
+            detailWallet.setText(com.rento.utils.ValidationUtil.formatCurrency(refreshed.getWalletBalance()));
+            loadWalletTopUpHistory(refreshed);
+        }
+    }
+
     private String formatRole(User.Role role) {
         return role == null ? "Guest" : role.name().replace('_', ' ');
     }
@@ -282,6 +379,24 @@ public class ProfileController implements Initializable {
         }
     }
 
+    private void loadWalletTopUpHistory(User user) {
+        walletTopUpHistoryList.getChildren().clear();
+        for (com.rento.models.Payment payment : paymentService.getWalletTopUpsByUser(user.getId())) {
+            Label item = new Label(
+                com.rento.utils.ValidationUtil.formatCurrency(payment.getTotalAmount())
+                    + " • " + payment.getPaymentMethod()
+                    + " • " + payment.getTransactionRef()
+            );
+            item.getStyleClass().add("text-body");
+            walletTopUpHistoryList.getChildren().add(item);
+        }
+        if (walletTopUpHistoryList.getChildren().isEmpty()) {
+            Label empty = new Label("No wallet top-ups yet.");
+            empty.getStyleClass().add("text-muted");
+            walletTopUpHistoryList.getChildren().add(empty);
+        }
+    }
+
     private void updatePaymentMethodHints() {
         String type = paymentMethodTypeCombo.getValue();
         if ("UPI".equals(type)) {
@@ -293,6 +408,18 @@ public class ProfileController implements Initializable {
         } else {
             paymentReferenceField.setPromptText("1234 5678 9012 3456");
             paymentProviderField.setPromptText("Card issuer");
+        }
+    }
+
+    private void updateWalletTopUpHints() {
+        boolean upi = "UPI".equals(walletMethodCombo.getValue());
+        walletReferenceField.setPromptText(upi ? "name@bank" : "1234 5678 9012 3456");
+        walletHolderNameField.setPromptText(upi ? "UPI account holder" : "Card holder name");
+        walletExpiryField.setDisable(upi);
+        walletCvvField.setDisable(upi);
+        if (upi) {
+            walletExpiryField.clear();
+            walletCvvField.clear();
         }
     }
 
