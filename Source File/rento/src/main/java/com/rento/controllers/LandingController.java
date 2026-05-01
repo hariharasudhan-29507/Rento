@@ -2,6 +2,7 @@ package com.rento.controllers;
 
 import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
+import com.rento.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,10 +16,16 @@ import java.util.ResourceBundle;
 public class LandingController implements Initializable {
 
     @FXML private Button profileBtn;
+    @FXML private Button bookNavButton;
+    @FXML private Button rentNavButton;
+    @FXML private Button userBoardNavButton;
+    @FXML private Button driverBoardNavButton;
+    @FXML private Button supplierBoardNavButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateProfileButton();
+        updateNavigationByRole();
     }
 
     private void updateProfileButton() {
@@ -27,6 +34,20 @@ public class LandingController implements Initializable {
         } else {
             profileBtn.setText("⬤ Sign In");
         }
+    }
+
+    private void updateNavigationByRole() {
+        boolean isAdmin = SessionManager.getInstance().getCurrentRole() == User.Role.ADMIN;
+        bookNavButton.setVisible(!isAdmin);
+        bookNavButton.setManaged(!isAdmin);
+        rentNavButton.setVisible(!isAdmin);
+        rentNavButton.setManaged(!isAdmin);
+        userBoardNavButton.setVisible(isAdmin);
+        userBoardNavButton.setManaged(isAdmin);
+        driverBoardNavButton.setVisible(isAdmin);
+        driverBoardNavButton.setManaged(isAdmin);
+        supplierBoardNavButton.setVisible(isAdmin);
+        supplierBoardNavButton.setManaged(isAdmin);
     }
 
     @FXML
@@ -43,8 +64,10 @@ public class LandingController implements Initializable {
     private void onNavBook() {
         if (SessionManager.getInstance().isGuest()) {
             NavigationManager.navigateTo("/fxml/login.fxml");
-        } else {
+        } else if (SessionManager.getInstance().getCurrentRole() == com.rento.models.User.Role.USER) {
             NavigationManager.navigateTo("/fxml/booking.fxml");
+        } else {
+            NavigationManager.navigateTo(resolveRoleDashboard());
         }
     }
 
@@ -52,8 +75,10 @@ public class LandingController implements Initializable {
     private void onNavRent() {
         if (SessionManager.getInstance().isGuest()) {
             NavigationManager.navigateTo("/fxml/login.fxml");
-        } else {
+        } else if (SessionManager.getInstance().getCurrentRole() == com.rento.models.User.Role.USER) {
             NavigationManager.navigateTo("/fxml/rent.fxml");
+        } else {
+            NavigationManager.navigateTo(resolveRoleDashboard());
         }
     }
 
@@ -63,11 +88,47 @@ public class LandingController implements Initializable {
     }
 
     @FXML
+    private void onNavAdminUserBoard() {
+        NavigationManager.navigateTo("/fxml/admin_dashboard.fxml", controller -> {
+            if (controller instanceof AdminDashboardController adminDashboardController) {
+                adminDashboardController.openBoard("USER");
+            }
+        });
+    }
+
+    @FXML
+    private void onNavAdminDriverBoard() {
+        NavigationManager.navigateTo("/fxml/admin_dashboard.fxml", controller -> {
+            if (controller instanceof AdminDashboardController adminDashboardController) {
+                adminDashboardController.openBoard("DRIVER");
+            }
+        });
+    }
+
+    @FXML
+    private void onNavAdminSupplierBoard() {
+        NavigationManager.navigateTo("/fxml/admin_dashboard.fxml", controller -> {
+            if (controller instanceof AdminDashboardController adminDashboardController) {
+                adminDashboardController.openBoard("SUPPLIER");
+            }
+        });
+    }
+
+    @FXML
     private void onNavProfile() {
         if (SessionManager.getInstance().isGuest()) {
             NavigationManager.navigateTo("/fxml/login.fxml");
         } else {
             NavigationManager.navigateTo("/fxml/profile.fxml");
         }
+    }
+
+    private String resolveRoleDashboard() {
+        return switch (SessionManager.getInstance().getCurrentRole()) {
+            case ADMIN -> "/fxml/admin_dashboard.fxml";
+            case DRIVER -> "/fxml/driver_dashboard.fxml";
+            case SUPPLIER -> "/fxml/supplier_dashboard.fxml";
+            default -> "/fxml/profile.fxml";
+        };
     }
 }
