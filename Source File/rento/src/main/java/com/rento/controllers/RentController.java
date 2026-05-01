@@ -83,6 +83,14 @@ public class RentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (SessionManager.getInstance().getCurrentRole() == User.Role.DRIVER) {
+            NavigationManager.navigateTo("/fxml/driver_dashboard.fxml");
+            return;
+        }
+        if (SessionManager.getInstance().getCurrentRole() == User.Role.ADMIN) {
+            NavigationManager.navigateTo("/fxml/admin_dashboard.fxml");
+            return;
+        }
         updateProfileButton();
 
         categoryCombo.setItems(FXCollections.observableArrayList(
@@ -116,8 +124,8 @@ public class RentController implements Initializable {
 
     private void configureSectionsByRole() {
         User.Role role = SessionManager.getInstance().getCurrentRole();
-        boolean supplierMode = role == User.Role.SUPPLIER || role == User.Role.ADMIN;
-        boolean renterMode = role == User.Role.USER || role == User.Role.ADMIN;
+        boolean supplierMode = role == User.Role.SUPPLIER;
+        boolean renterMode = role == User.Role.USER;
 
         supplierListingSection.setManaged(supplierMode);
         supplierListingSection.setVisible(supplierMode);
@@ -130,8 +138,6 @@ public class RentController implements Initializable {
 
         if (role == User.Role.SUPPLIER) {
             pageSubtitle.setText("Publish vehicles for rent and monitor customer requests from your supplier dashboard.");
-        } else if (role == User.Role.ADMIN) {
-            pageSubtitle.setText("Review the supplier marketplace and simulate the full rental lifecycle.");
         } else {
             pageSubtitle.setText("Choose a supplier vehicle, request a rental period, and finish on time to avoid penalties.");
         }
