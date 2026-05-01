@@ -1,10 +1,10 @@
 package com.rento.dao;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.rento.models.Vehicle;
+import com.rento.utils.MongoCollections;
 import com.rento.utils.MongoDBConnection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class VehicleDAO {
 
-    private static final String COLLECTION_NAME = "vehicles";
+    public static final String COLLECTION_NAME = MongoCollections.VEHICLES;
 
     private MongoCollection<Document> getCollection() {
-        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
-        if (db == null) return null;
-        return db.getCollection(COLLECTION_NAME);
+        return MongoDBConnection.getInstance().getCollection(COLLECTION_NAME);
     }
 
     public boolean insertVehicle(Vehicle vehicle) {
@@ -196,9 +194,9 @@ public class VehicleDAO {
         try { v.setCategory(Vehicle.Category.valueOf(doc.getString("category"))); } catch (Exception ignored) {}
         try { v.setFuelType(Vehicle.FuelType.valueOf(doc.getString("fuelType"))); } catch (Exception ignored) {}
         try { v.setStatus(Vehicle.Status.valueOf(doc.getString("status"))); } catch (Exception ignored) {}
-        v.setCurrentMileage(doc.getDouble("currentMileage") != null ? doc.getDouble("currentMileage") : 0);
-        v.setNextServiceDue(doc.getDouble("nextServiceDue") != null ? doc.getDouble("nextServiceDue") : 0);
-        v.setDailyRate(doc.getDouble("dailyRate") != null ? doc.getDouble("dailyRate") : 0);
+        v.setCurrentMileage(readDouble(doc, "currentMileage"));
+        v.setNextServiceDue(readDouble(doc, "nextServiceDue"));
+        v.setDailyRate(readDouble(doc, "dailyRate"));
         v.setSeats(doc.getInteger("seats", 4));
         v.setColor(doc.getString("color"));
         v.setImageUrl(doc.getString("imageUrl"));
@@ -210,5 +208,10 @@ public class VehicleDAO {
         v.setCreatedAt(doc.getDate("createdAt"));
         v.setUpdatedAt(doc.getDate("updatedAt"));
         return v;
+    }
+
+    private double readDouble(Document doc, String field) {
+        Object value = doc.get(field);
+        return value instanceof Number ? ((Number) value).doubleValue() : 0;
     }
 }
