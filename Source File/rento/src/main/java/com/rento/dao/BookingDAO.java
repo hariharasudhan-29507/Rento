@@ -1,10 +1,10 @@
 package com.rento.dao;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.rento.models.Booking;
+import com.rento.utils.MongoCollections;
 import com.rento.utils.MongoDBConnection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class BookingDAO {
 
-    private static final String COLLECTION_NAME = "bookings";
+    public static final String COLLECTION_NAME = MongoCollections.BOOKINGS;
 
     private MongoCollection<Document> getCollection() {
-        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
-        if (db == null) return null;
-        return db.getCollection(COLLECTION_NAME);
+        return MongoDBConnection.getInstance().getCollection(COLLECTION_NAME);
     }
 
     public boolean insertBooking(Booking booking) {
@@ -191,10 +189,10 @@ public class BookingDAO {
         b.setDropoffLocation(doc.getString("dropoffLocation"));
         b.setPickupDateTime(doc.getDate("pickupDateTime"));
         b.setReturnDateTime(doc.getDate("returnDateTime"));
-        b.setTotalCost(doc.getDouble("totalCost") != null ? doc.getDouble("totalCost") : 0);
-        b.setDepositAmount(doc.getDouble("depositAmount") != null ? doc.getDouble("depositAmount") : 0);
-        b.setTaxAmount(doc.getDouble("taxAmount") != null ? doc.getDouble("taxAmount") : 0);
-        b.setDiscountApplied(doc.getDouble("discountApplied") != null ? doc.getDouble("discountApplied") : 0);
+        b.setTotalCost(readDouble(doc, "totalCost"));
+        b.setDepositAmount(readDouble(doc, "depositAmount"));
+        b.setTaxAmount(readDouble(doc, "taxAmount"));
+        b.setDiscountApplied(readDouble(doc, "discountApplied"));
         b.setPaymentId(doc.getObjectId("paymentId"));
         b.setPaymentMethod(doc.getString("paymentMethod"));
         b.setPaymentStatus(doc.getString("paymentStatus"));
@@ -213,5 +211,10 @@ public class BookingDAO {
         b.setCreatedAt(doc.getDate("createdAt"));
         b.setUpdatedAt(doc.getDate("updatedAt"));
         return b;
+    }
+
+    private double readDouble(Document doc, String field) {
+        Object value = doc.get(field);
+        return value instanceof Number ? ((Number) value).doubleValue() : 0;
     }
 }
