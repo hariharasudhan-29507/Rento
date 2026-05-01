@@ -13,24 +13,30 @@ import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
 import com.rento.services.AuthService;
 import com.rento.services.AdminExportService;
-import com.rento.services.SystemCollectionBootstrapService;
 import com.rento.utils.AlertUtil;
 import com.rento.services.RentalService;
+import com.rento.utils.MongoCollections;
+import com.rento.utils.MongoDBConnection;
 import com.rento.utils.ValidationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -47,8 +53,10 @@ public class AdminDashboardController implements Initializable {
     @FXML private Label totalBookings;
     @FXML private Label totalRentals;
     @FXML private Label overduePenaltyTotal;
-    @FXML private PieChart actorMixChart;
-    @FXML private BarChart<String, Number> operationsChart;
+    @FXML private VBox userBoardSection;
+    @FXML private VBox driverBoardSection;
+    @FXML private VBox supplierBoardSection;
+    @FXML private Pagination analyticsPagination;
     @FXML private VBox actorList;
     @FXML private VBox userManagementList;
     @FXML private VBox driverManagementList;
@@ -68,11 +76,18 @@ public class AdminDashboardController implements Initializable {
     private final RentalService rentalService = new RentalService();
     private final AuthService authService = new AuthService();
     private final AdminExportService adminExportService = new AdminExportService();
-    private final SystemCollectionBootstrapService collectionBootstrapService = new SystemCollectionBootstrapService();
+    private List<User> userCache = List.of();
+    private List<Vehicle> vehicleCache = List.of();
+    private List<Booking> bookingCache = List.of();
+    private List<Rental> rentalCache = List.of();
+    private List<Payment> paymentCache = List.of();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         welcomeLabel.setText("Welcome, " + SessionManager.getInstance().getCurrentUserName() + " (Administrator)");
+        analyticsPagination.setPageCount(4);
+        analyticsPagination.setPageFactory(this::createAnalyticsPage);
+        showUserBoard();
         loadDashboard();
     }
 
@@ -82,11 +97,16 @@ public class AdminDashboardController implements Initializable {
         List<Booking> bookings = bookingDAO.findAll();
         List<Rental> rentals = rentalService.getAllRentals();
         List<Payment> payments = paymentDAO.findAll();
+        userCache = users;
+        vehicleCache = vehicles;
+        bookingCache = bookings;
+        rentalCache = rentals;
+        paymentCache = payments;
 
         totalUsers.setText(String.valueOf(users.stream().filter(u -> u.getRole() == User.Role.USER).count()));
         totalDrivers.setText(String.valueOf(users.stream().filter(u -> u.getRole() == User.Role.DRIVER).count()));
         totalSuppliers.setText(String.valueOf(users.stream().filter(u -> u.getRole() == User.Role.SUPPLIER).count()));
-        totalCollections.setText(String.valueOf(collectionBootstrapService.getCollectionCounts().size()));
+        totalCollections.setText(String.valueOf(getCollectionCounts().size()));
         totalVehicles.setText(String.valueOf(vehicles.size()));
         totalBookings.setText(String.valueOf(bookings.size()));
         totalRentals.setText(String.valueOf(rentals.size()));
@@ -94,46 +114,33 @@ public class AdminDashboardController implements Initializable {
             rentals.stream().mapToDouble(Rental::getPenaltyAmount).sum()
         ));
 
-        updateCharts(users, bookings, rentals, payments);
-        updateActorList(users);
+        updateActorList(users, bookings, rentals);
         updateManagedActorLists(users);
         updateIncidentList(rentals, vehicles);
         updateSupplierChangeList(vehicles);
         populateMailRecipients(users);
         updateSystemDataArea(users, vehicles, bookings, rentals, payments);
+        analyticsPagination.setCurrentPageIndex(Math.min(analyticsPagination.getCurrentPageIndex(), 3));
+        analyticsPagination.setPageFactory(this::createAnalyticsPage);
     }
 
-    private void updateCharts(List<User> users, List<Booking> bookings, List<Rental> rentals, List<Payment> payments) {
-        long customers = users.stream().filter(u -> u.getRole() == User.Role.USER).count();
-        long suppliers = users.stream().filter(u -> u.getRole() == User.Role.SUPPLIER).count();
-        long drivers = users.stream().filter(u -> u.getRole() == User.Role.DRIVER).count();
-        long admins = users.stream().filter(u -> u.getRole() == User.Role.ADMIN).count();
-
-        actorMixChart.getData().setAll(
-            new PieChart.Data("Customers", customers),
-            new PieChart.Data("Suppliers", suppliers),
-            new PieChart.Data("Drivers", drivers),
-            new PieChart.Data("Admins", admins)
-        );
-
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Platform Volume");
-        series.getData().add(new XYChart.Data<>("Bookings", bookings.size()));
-        series.getData().add(new XYChart.Data<>("Rentals", rentals.size()));
-        series.getData().add(new XYChart.Data<>("Payments", payments.size()));
-        series.getData().add(new XYChart.Data<>("Overdue", rentals.stream().filter(r -> r.getStatus() == Rental.RentalStatus.OVERDUE).count()));
-        operationsChart.getData().clear();
-        operationsChart.getData().add(series);
-    }
-
-    private void updateActorList(List<User> users) {
+    private void updateActorList(List<User> users, List<Booking> bookings, List<Rental> rentals) {
         actorList.getChildren().clear();
-        for (User user : users) {
-            Label item = new Label(user.getFullName() + " • " + user.getRole().name() + " • "
-                + user.getEmail() + " • Wallet " + ValidationUtil.formatCurrency(user.getWalletBalance())
+        for (User user : users.stream().filter(u -> u.getRole() == User.Role.USER).toList()) {
+            long userBookings = bookings.stream().filter(booking -> user.getId() != null && user.getId().equals(booking.getUserId())).count();
+            long userRentals = rentals.stream().filter(rental -> user.getId() != null && user.getId().equals(rental.getRenterId())).count();
+            Label item = new Label(user.getFullName() + " • " + user.getEmail()
+                + " • Bookings " + userBookings
+                + " • Rentals " + userRentals
+                + " • Wallet " + ValidationUtil.formatCurrency(user.getWalletBalance())
                 + (user.isLocked() ? " • LOCKED" : " • ACTIVE"));
             item.getStyleClass().add("text-body");
             actorList.getChildren().add(item);
+        }
+        if (actorList.getChildren().isEmpty()) {
+            Label empty = new Label("No customer accounts found.");
+            empty.getStyleClass().add("text-muted");
+            actorList.getChildren().add(empty);
         }
     }
 
@@ -146,9 +153,9 @@ public class AdminDashboardController implements Initializable {
             if (user.getRole() == User.Role.USER) {
                 userManagementList.getChildren().add(createActorAdminCard(user));
             } else if (user.getRole() == User.Role.DRIVER) {
-                driverManagementList.getChildren().add(createActorAdminCard(user));
+                driverManagementList.getChildren().add(createDriverAdminCard(user));
             } else if (user.getRole() == User.Role.SUPPLIER) {
-                supplierManagementList.getChildren().add(createActorAdminCard(user));
+                supplierManagementList.getChildren().add(createSupplierAdminCard(user));
             }
         }
     }
@@ -175,6 +182,39 @@ public class AdminDashboardController implements Initializable {
         });
 
         card.getChildren().addAll(name, meta, actionBtn);
+        return card;
+    }
+
+    private VBox createDriverAdminCard(User user) {
+        VBox card = createActorAdminCard(user);
+        long assigned = bookingCache.stream().filter(booking -> user.getId() != null && user.getId().equals(booking.getDriverId())).count();
+        long completed = bookingCache.stream()
+            .filter(booking -> user.getId() != null && user.getId().equals(booking.getDriverId()))
+            .filter(booking -> booking.getStatus() == Booking.BookingStatus.COMPLETED)
+            .count();
+        Label metrics = new Label("Assigned rides: " + assigned + " • Completed: " + completed
+            + " • Wallet: " + ValidationUtil.formatCurrency(user.getWalletBalance()));
+        metrics.getStyleClass().add("text-muted");
+        card.getChildren().add(1, metrics);
+        return card;
+    }
+
+    private VBox createSupplierAdminCard(User user) {
+        VBox card = createActorAdminCard(user);
+        long fleet = vehicleCache.stream().filter(vehicle -> user.getId() != null && user.getId().equals(vehicle.getOwnerId())).count();
+        long active = rentalCache.stream()
+            .filter(rental -> user.getId() != null && user.getId().equals(rental.getSupplierId()))
+            .filter(rental -> rental.getStatus() == Rental.RentalStatus.ACTIVE || rental.getStatus() == Rental.RentalStatus.OVERDUE)
+            .count();
+        double revenue = rentalCache.stream()
+            .filter(rental -> user.getId() != null && user.getId().equals(rental.getSupplierId()))
+            .filter(rental -> rental.getStatus() == Rental.RentalStatus.COMPLETED)
+            .mapToDouble(rental -> rental.getTotalAmount() + rental.getPenaltyAmount())
+            .sum();
+        Label metrics = new Label("Fleet: " + fleet + " • Active rentals: " + active
+            + " • Revenue: " + ValidationUtil.formatCurrency(revenue));
+        metrics.getStyleClass().add("text-muted");
+        card.getChildren().add(1, metrics);
         return card;
     }
 
@@ -262,7 +302,7 @@ public class AdminDashboardController implements Initializable {
                                       List<Rental> rentals, List<Payment> payments) {
         StringBuilder builder = new StringBuilder();
         builder.append("Collection Summary\n");
-        collectionBootstrapService.getCollectionCounts().forEach((name, count) ->
+        getCollectionCounts().forEach((name, count) ->
             builder.append("- ").append(name).append(": ").append(count).append('\n')
         );
         builder.append("\nUsers\n");
@@ -281,6 +321,10 @@ public class AdminDashboardController implements Initializable {
         payments.forEach(payment -> builder.append(payment.getTransactionRef()).append(" | ")
             .append(payment.getPaymentMethod()).append(" | ").append(payment.getStatus()).append('\n'));
         systemDataArea.setText(builder.toString());
+    }
+
+    private Map<String, Long> getCollectionCounts() {
+        return MongoDBConnection.getInstance().getCollectionCounts(MongoCollections.ALL_COLLECTIONS);
     }
 
     @FXML
@@ -303,6 +347,9 @@ public class AdminDashboardController implements Initializable {
     }
 
     @FXML private void onRefresh() { loadDashboard(); }
+    @FXML private void onShowUserBoard() { showUserBoard(); }
+    @FXML private void onShowDriverBoard() { showDriverBoard(); }
+    @FXML private void onShowSupplierBoard() { showSupplierBoard(); }
     @FXML
     private void onDownloadSystemExport() {
         try {
@@ -319,5 +366,116 @@ public class AdminDashboardController implements Initializable {
         authService.logout();
         NavigationManager.clearHistory();
         NavigationManager.navigateTo("/fxml/landing.fxml");
+    }
+
+    private void showUserBoard() {
+        userBoardSection.setManaged(true);
+        userBoardSection.setVisible(true);
+        driverBoardSection.setManaged(false);
+        driverBoardSection.setVisible(false);
+        supplierBoardSection.setManaged(false);
+        supplierBoardSection.setVisible(false);
+    }
+
+    private void showDriverBoard() {
+        userBoardSection.setManaged(false);
+        userBoardSection.setVisible(false);
+        driverBoardSection.setManaged(true);
+        driverBoardSection.setVisible(true);
+        supplierBoardSection.setManaged(false);
+        supplierBoardSection.setVisible(false);
+    }
+
+    private void showSupplierBoard() {
+        userBoardSection.setManaged(false);
+        userBoardSection.setVisible(false);
+        driverBoardSection.setManaged(false);
+        driverBoardSection.setVisible(false);
+        supplierBoardSection.setManaged(true);
+        supplierBoardSection.setVisible(true);
+    }
+
+    public void openBoard(String board) {
+        if ("DRIVER".equalsIgnoreCase(board)) {
+            showDriverBoard();
+            return;
+        }
+        if ("SUPPLIER".equalsIgnoreCase(board)) {
+            showSupplierBoard();
+            return;
+        }
+        showUserBoard();
+    }
+
+    private Node createAnalyticsPage(Integer index) {
+        int pageIndex = index == null ? 0 : index;
+        VBox container = new VBox(12);
+        container.getStyleClass().add("card");
+
+        if (pageIndex == 0) {
+            Label title = new Label("Actor Mix");
+            title.getStyleClass().add("heading-3");
+            PieChart chart = new PieChart();
+            chart.setPrefHeight(280);
+            chart.getData().setAll(
+                new PieChart.Data("Customers", userCache.stream().filter(u -> u.getRole() == User.Role.USER).count()),
+                new PieChart.Data("Suppliers", userCache.stream().filter(u -> u.getRole() == User.Role.SUPPLIER).count()),
+                new PieChart.Data("Drivers", userCache.stream().filter(u -> u.getRole() == User.Role.DRIVER).count()),
+                new PieChart.Data("Admins", userCache.stream().filter(u -> u.getRole() == User.Role.ADMIN).count())
+            );
+            container.getChildren().addAll(title, chart);
+            return container;
+        }
+
+        if (pageIndex == 1) {
+            Label title = new Label("Platform Volume");
+            title.getStyleClass().add("heading-3");
+            BarChart<String, Number> chart = createBarChart("Platform Metric", "Count");
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.getData().add(new XYChart.Data<>("Bookings", bookingCache.size()));
+            series.getData().add(new XYChart.Data<>("Rentals", rentalCache.size()));
+            series.getData().add(new XYChart.Data<>("Payments", paymentCache.size()));
+            series.getData().add(new XYChart.Data<>("Overdue", rentalCache.stream().filter(r -> r.getStatus() == Rental.RentalStatus.OVERDUE).count()));
+            chart.getData().add(series);
+            container.getChildren().addAll(title, chart);
+            return container;
+        }
+
+        if (pageIndex == 2) {
+            Label title = new Label("Wallet Balance By Role");
+            title.getStyleClass().add("heading-3");
+            BarChart<String, Number> chart = createBarChart("Role", "Wallet Value");
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.getData().add(new XYChart.Data<>("Users", userCache.stream().filter(u -> u.getRole() == User.Role.USER).mapToDouble(User::getWalletBalance).sum()));
+            series.getData().add(new XYChart.Data<>("Drivers", userCache.stream().filter(u -> u.getRole() == User.Role.DRIVER).mapToDouble(User::getWalletBalance).sum()));
+            series.getData().add(new XYChart.Data<>("Suppliers", userCache.stream().filter(u -> u.getRole() == User.Role.SUPPLIER).mapToDouble(User::getWalletBalance).sum()));
+            chart.getData().add(series);
+            container.getChildren().addAll(title, chart);
+            return container;
+        }
+
+        Label title = new Label("Revenue And Penalty Exposure");
+        title.getStyleClass().add("heading-3");
+        BarChart<String, Number> chart = createBarChart("Metric", "Amount");
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.getData().add(new XYChart.Data<>("Rental Revenue", rentalCache.stream()
+            .filter(rental -> rental.getStatus() == Rental.RentalStatus.COMPLETED)
+            .mapToDouble(rental -> rental.getTotalAmount() + rental.getPenaltyAmount()).sum()));
+        series.getData().add(new XYChart.Data<>("Penalty Exposure", rentalCache.stream().mapToDouble(Rental::getPenaltyAmount).sum()));
+        chart.getData().add(series);
+        container.getChildren().addAll(title, chart);
+        return container;
+    }
+
+    private BarChart<String, Number> createBarChart(String xLabel, String yLabel) {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel(xLabel);
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel(yLabel);
+        BarChart<String, Number> chart = new BarChart<>(xAxis, yAxis);
+        chart.setLegendVisible(false);
+        chart.setCategoryGap(18);
+        chart.setPrefHeight(280);
+        return chart;
     }
 }
