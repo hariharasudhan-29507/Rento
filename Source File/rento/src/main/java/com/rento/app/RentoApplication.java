@@ -1,7 +1,6 @@
 package com.rento.app;
 
 import com.rento.navigation.NavigationManager;
-import com.rento.services.DemoDataService;
 import com.rento.utils.MongoDBConnection;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,7 +12,6 @@ import javafx.stage.Stage;
  * Rento - Vehicle Rental & Booking System
  * Main Application Entry Point
  */
-
 public class RentoApplication extends Application {
 
     private static Stage primaryStage;
@@ -25,7 +23,6 @@ public class RentoApplication extends Application {
         try {
             // Initialize MongoDB connection
             MongoDBConnection.getInstance();
-            new DemoDataService().seedIfRequired();
 
             // Root container
             StackPane root = new StackPane();
