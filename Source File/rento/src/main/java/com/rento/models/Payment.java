@@ -36,6 +36,9 @@ public class Payment {
     private boolean cashVerified;
     private String cashVerifiedBy;
     private Date cashVerifiedAt;
+    private boolean fundsDistributed;
+    private String distributedBy;
+    private Date distributedAt;
     private String receiptPath;
     private Date paymentDate;
     private Date createdAt;
@@ -106,6 +109,15 @@ public class Payment {
 
     public Date getCashVerifiedAt() { return cashVerifiedAt; }
     public void setCashVerifiedAt(Date cashVerifiedAt) { this.cashVerifiedAt = cashVerifiedAt; }
+
+    public boolean isFundsDistributed() { return fundsDistributed; }
+    public void setFundsDistributed(boolean fundsDistributed) { this.fundsDistributed = fundsDistributed; }
+
+    public String getDistributedBy() { return distributedBy; }
+    public void setDistributedBy(String distributedBy) { this.distributedBy = distributedBy; }
+
+    public Date getDistributedAt() { return distributedAt; }
+    public void setDistributedAt(Date distributedAt) { this.distributedAt = distributedAt; }
 
     public String getReceiptPath() { return receiptPath; }
     public void setReceiptPath(String receiptPath) { this.receiptPath = receiptPath; }
