@@ -1,10 +1,10 @@
 package com.rento.dao;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.rento.models.Rental;
+import com.rento.utils.MongoCollections;
 import com.rento.utils.MongoDBConnection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class RentalDAO {
 
-    private static final String COLLECTION_NAME = "rentals";
+    public static final String COLLECTION_NAME = MongoCollections.RENTALS;
 
     private MongoCollection<Document> getCollection() {
-        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
-        if (db == null) return null;
-        return db.getCollection(COLLECTION_NAME);
+        return MongoDBConnection.getInstance().getCollection(COLLECTION_NAME);
     }
 
     public boolean insertRental(Rental rental) {
@@ -228,7 +226,7 @@ public class RentalDAO {
         r.setVehicleName(doc.getString("vehicleName"));
         r.setSupplierName(doc.getString("supplierName"));
         r.setRenterName(doc.getString("renterName"));
-        r.setPricePerDay(doc.getDouble("pricePerDay") != null ? doc.getDouble("pricePerDay") : 0);
+        r.setPricePerDay(readDouble(doc, "pricePerDay"));
         r.setStartDate(doc.getDate("startDate"));
         r.setEndDate(doc.getDate("endDate"));
         try { r.setStatus(Rental.RentalStatus.valueOf(doc.getString("status"))); } catch (Exception ignored) {}
@@ -243,13 +241,18 @@ public class RentalDAO {
         r.setPaidVerifiedBy(doc.getString("paidVerifiedBy"));
         r.setPaidVerifiedAt(doc.getDate("paidVerifiedAt"));
         r.setReceiptPath(doc.getString("receiptPath"));
-        r.setTotalAmount(doc.getDouble("totalAmount") != null ? doc.getDouble("totalAmount") : 0);
-        r.setPenaltyAmount(doc.getDouble("penaltyAmount") != null ? doc.getDouble("penaltyAmount") : 0);
+        r.setTotalAmount(readDouble(doc, "totalAmount"));
+        r.setPenaltyAmount(readDouble(doc, "penaltyAmount"));
         r.setRequestedAt(doc.getDate("requestedAt"));
         r.setApprovedAt(doc.getDate("approvedAt"));
         r.setCompletedAt(doc.getDate("completedAt"));
         r.setCreatedAt(doc.getDate("createdAt"));
         r.setUpdatedAt(doc.getDate("updatedAt"));
         return r;
+    }
+
+    private double readDouble(Document doc, String field) {
+        Object value = doc.get(field);
+        return value instanceof Number ? ((Number) value).doubleValue() : 0;
     }
 }
