@@ -1,6 +1,7 @@
 package com.rento.controllers;
 
 import com.rento.dao.VehicleDAO;
+import com.rento.models.User;
 import com.rento.models.Vehicle;
 import com.rento.navigation.NavigationManager;
 import com.rento.security.SessionManager;
@@ -13,11 +14,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
 
 /**
  * Controller for the vehicle booking page.
@@ -37,6 +36,10 @@ public class BookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (isRestrictedRole()) {
+            NavigationManager.navigateTo(resolveRoleDashboard());
+            return;
+        }
         updateProfileButton();
 
         // Setup filters
@@ -70,11 +73,6 @@ public class BookingController implements Initializable {
 
     private void loadVehicles() {
         allVehicles = vehicleDAO.findAvailable();
-
-        // If no vehicles from DB, show demo vehicles
-        if (allVehicles.isEmpty()) {
-            allVehicles = createDemoVehicles();
-        }
         filterVehicles();
     }
 
@@ -192,43 +190,6 @@ public class BookingController implements Initializable {
         });
     }
 
-    private List<Vehicle> createDemoVehicles() {
-        return Arrays.asList(
-            createDemo("Toyota", "Camry", 2024, Vehicle.Category.SEDAN, Vehicle.FuelType.PETROL, 2500, 5, "Silver"),
-            createDemo("Hyundai", "Creta", 2024, Vehicle.Category.SUV, Vehicle.FuelType.DIESEL, 3500, 5, "White"),
-            createDemo("Maruti", "Swift", 2023, Vehicle.Category.HATCHBACK, Vehicle.FuelType.PETROL, 1500, 5, "Red"),
-            createDemo("Tesla", "Model 3", 2024, Vehicle.Category.SEDAN, Vehicle.FuelType.ELECTRIC, 5000, 5, "Black"),
-            createDemo("Mahindra", "Thar", 2024, Vehicle.Category.SUV, Vehicle.FuelType.DIESEL, 4000, 4, "Green"),
-            createDemo("Royal Enfield", "Classic 350", 2023, Vehicle.Category.BIKE, Vehicle.FuelType.PETROL, 800, 2, "Black"),
-            createDemo("Tata", "Nexon EV", 2024, Vehicle.Category.SUV, Vehicle.FuelType.ELECTRIC, 3800, 5, "Blue"),
-            createDemo("Honda", "City", 2023, Vehicle.Category.SEDAN, Vehicle.FuelType.PETROL, 2800, 5, "Grey"),
-            createDemo("BMW", "X5", 2024, Vehicle.Category.SUV, Vehicle.FuelType.DIESEL, 8000, 5, "White"),
-            createDemo("Ford", "EcoSport", 2023, Vehicle.Category.SUV, Vehicle.FuelType.PETROL, 3000, 5, "Orange"),
-            createDemo("Tata", "Ace", 2022, Vehicle.Category.TRUCK, Vehicle.FuelType.DIESEL, 2000, 2, "White"),
-            createDemo("Mercedes", "V-Class", 2024, Vehicle.Category.VAN, Vehicle.FuelType.DIESEL, 7500, 7, "Black"),
-            createDemo("Kia", "Seltos", 2024, Vehicle.Category.SUV, Vehicle.FuelType.PETROL, 3600, 5, "Blue"),
-            createDemo("Audi", "A4", 2024, Vehicle.Category.SEDAN, Vehicle.FuelType.PETROL, 7200, 5, "Grey"),
-            createDemo("TVS", "Ntorq", 2023, Vehicle.Category.BIKE, Vehicle.FuelType.PETROL, 700, 2, "Yellow"),
-            createDemo("Ashok Leyland", "Dost", 2023, Vehicle.Category.TRUCK, Vehicle.FuelType.DIESEL, 2600, 2, "White"),
-            createDemo("Honda", "City", 2024, Vehicle.Category.SEDAN, Vehicle.FuelType.PETROL, 2700, 5, "Brown"),
-            createDemo("Skoda", "Slavia", 2024, Vehicle.Category.SEDAN, Vehicle.FuelType.PETROL, 2900, 5, "Blue"),
-            createDemo("Mahindra", "XUV700", 2025, Vehicle.Category.SUV, Vehicle.FuelType.DIESEL, 4700, 7, "Navy"),
-            createDemo("Ather", "450X", 2025, Vehicle.Category.BIKE, Vehicle.FuelType.ELECTRIC, 850, 2, "Grey"),
-            createDemo("Yamaha", "FZ-S", 2024, Vehicle.Category.BIKE, Vehicle.FuelType.PETROL, 750, 2, "Matte Black"),
-            createDemo("Suzuki", "Access 125", 2024, Vehicle.Category.BIKE, Vehicle.FuelType.PETROL, 600, 2, "White"),
-            createDemo("Kia", "Carens", 2024, Vehicle.Category.VAN, Vehicle.FuelType.PETROL, 4300, 6, "Silver")
-        );
-    }
-
-    private Vehicle createDemo(String make, String model, int year, Vehicle.Category cat, Vehicle.FuelType fuel,
-                                double rate, int seats, String color) {
-        Vehicle v = new Vehicle(make, model, year, cat, fuel, rate);
-        v.setSeats(seats);
-        v.setColor(color);
-        v.setStatus(Vehicle.Status.AVAILABLE);
-        return v;
-    }
-
     @FXML private void onRefresh() { loadVehicles(); }
     @FXML private void onNavHome() { NavigationManager.navigateTo("/fxml/landing.fxml"); }
     @FXML private void onNavAbout() { NavigationManager.navigateTo("/fxml/about.fxml"); }
@@ -240,5 +201,19 @@ public class BookingController implements Initializable {
         } else {
             NavigationManager.navigateTo("/fxml/profile.fxml");
         }
+    }
+
+    private boolean isRestrictedRole() {
+        User.Role role = SessionManager.getInstance().getCurrentRole();
+        return role == User.Role.ADMIN || role == User.Role.DRIVER || role == User.Role.SUPPLIER;
+    }
+
+    private String resolveRoleDashboard() {
+        return switch (SessionManager.getInstance().getCurrentRole()) {
+            case ADMIN -> "/fxml/admin_dashboard.fxml";
+            case DRIVER -> "/fxml/driver_dashboard.fxml";
+            case SUPPLIER -> "/fxml/supplier_dashboard.fxml";
+            default -> "/fxml/landing.fxml";
+        };
     }
 }
