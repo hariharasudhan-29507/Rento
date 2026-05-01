@@ -2,10 +2,10 @@
 package com.rento.dao;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.InsertOneResult;
 import com.rento.models.Payment;
+import com.rento.utils.MongoCollections;
 import com.rento.utils.MongoDBConnection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class PaymentDAO {
 
-    private static final String COLLECTION_NAME = "payments";
+    public static final String COLLECTION_NAME = MongoCollections.PAYMENTS;
 
     private MongoCollection<Document> getCollection() {
-        MongoDatabase db = MongoDBConnection.getInstance().getDatabase();
-        if (db == null) return null;
-        return db.getCollection(COLLECTION_NAME);
+        return MongoDBConnection.getInstance().getCollection(COLLECTION_NAME);
     }
 
     public boolean insertPayment(Payment payment) {
@@ -148,6 +146,9 @@ public class PaymentDAO {
         doc.append("cashVerified", p.isCashVerified());
         doc.append("cashVerifiedBy", p.getCashVerifiedBy());
         doc.append("cashVerifiedAt", p.getCashVerifiedAt());
+        doc.append("fundsDistributed", p.isFundsDistributed());
+        doc.append("distributedBy", p.getDistributedBy());
+        doc.append("distributedAt", p.getDistributedAt());
         doc.append("receiptPath", p.getReceiptPath());
         doc.append("paymentDate", p.getPaymentDate());
         doc.append("createdAt", p.getCreatedAt());
@@ -161,10 +162,10 @@ public class PaymentDAO {
         p.setRentalId(doc.getObjectId("rentalId"));
         p.setUserId(doc.getObjectId("userId"));
         p.setPaymentMethodProfileId(doc.getObjectId("paymentMethodProfileId"));
-        p.setAmount(doc.getDouble("amount") != null ? doc.getDouble("amount") : 0);
-        p.setTaxAmount(doc.getDouble("taxAmount") != null ? doc.getDouble("taxAmount") : 0);
-        p.setDiscountAmount(doc.getDouble("discountAmount") != null ? doc.getDouble("discountAmount") : 0);
-        p.setTotalAmount(doc.getDouble("totalAmount") != null ? doc.getDouble("totalAmount") : 0);
+        p.setAmount(readDouble(doc, "amount"));
+        p.setTaxAmount(readDouble(doc, "taxAmount"));
+        p.setDiscountAmount(readDouble(doc, "discountAmount"));
+        p.setTotalAmount(readDouble(doc, "totalAmount"));
         try { p.setPaymentMethod(Payment.PaymentMethod.valueOf(doc.getString("paymentMethod"))); } catch (Exception ignored) {}
         try { p.setStatus(Payment.PaymentStatus.valueOf(doc.getString("status"))); } catch (Exception ignored) {}
         p.setCardNumber(doc.getString("cardNumber"));
@@ -176,9 +177,17 @@ public class PaymentDAO {
         p.setCashVerified(doc.getBoolean("cashVerified", false));
         p.setCashVerifiedBy(doc.getString("cashVerifiedBy"));
         p.setCashVerifiedAt(doc.getDate("cashVerifiedAt"));
+        p.setFundsDistributed(doc.getBoolean("fundsDistributed", false));
+        p.setDistributedBy(doc.getString("distributedBy"));
+        p.setDistributedAt(doc.getDate("distributedAt"));
         p.setReceiptPath(doc.getString("receiptPath"));
         p.setPaymentDate(doc.getDate("paymentDate"));
         p.setCreatedAt(doc.getDate("createdAt"));
         return p;
+    }
+
+    private double readDouble(Document doc, String field) {
+        Object value = doc.get(field);
+        return value instanceof Number ? ((Number) value).doubleValue() : 0;
     }
 }
